@@ -5,5 +5,5 @@ export interface userRepository {
   updateUser(id: string, user: userModel): Promise<boolean>;
   deleteUser(id: string): Promise<boolean>;
   getUserById(id: string): Promise<userModel>;
-  getAllUsers(): Promise<userModel[]>;
+  getAllUser(): Promise<userModel[]>;
 }

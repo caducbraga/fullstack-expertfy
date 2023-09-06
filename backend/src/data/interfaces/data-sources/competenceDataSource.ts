@@ -5,5 +5,5 @@ export interface competenceDataSource {
     updateCompetence(id: string, competence: competenceModel): Promise<boolean>;
     deleteCompetence(id: string): Promise<boolean>;
     getCompetenceById(id: string): Promise<competenceModel> ;
-    getAllCompetences(): Promise<competenceModel[]>;
+    getAllCompetence(): Promise<competenceModel[]>;
 }

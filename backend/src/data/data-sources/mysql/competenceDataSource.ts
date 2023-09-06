@@ -18,7 +18,7 @@ export class competenceDataSourceImpl implements competenceDataSource {
         VALUES (
             '${competence.name}',
             '${competence.description}',
-            '${competence.type}',
+            '${competence.type}'
         )`);
 
       if (Array.isArray(rows)) {
@@ -40,7 +40,7 @@ export class competenceDataSourceImpl implements competenceDataSource {
       const [rows, fields] = await this.db.query(`UPDATE ${competenceTable} SET
             name='${competence.name}',
             description='${competence.description}',
-            type='${competence.type}',
+            type='${competence.type}'
             WHERE id='${id}'`);
 
       if (Array.isArray(rows)) {
@@ -89,7 +89,7 @@ export class competenceDataSourceImpl implements competenceDataSource {
     }
   }
 
-  public async getAllCompetences(): Promise<competenceModel[]> {
+  public async getAllCompetence(): Promise<competenceModel[]> {
     try {
       const [rows, fields] = await this.db.query(`SELECT * FROM ${competenceTable}`);
 

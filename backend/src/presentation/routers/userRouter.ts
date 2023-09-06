@@ -65,8 +65,5 @@ export default function userRouter(
 
   return router;
 }
-// router.get("/user/:id", userController.getById);
-// router.post("/user", userController.create);
-// router.put("/user/:id", userController.update);
-// router.delete("/user/:id", userController.delete);
+
 

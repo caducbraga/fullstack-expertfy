@@ -11,7 +11,7 @@ export class getAllUserUseCaseImpl implements getAllUserUseCase {
 
   public async execute(): Promise<userModel[]> {
     console.log("getAllUserUseCaseImpl")
-    const users = await this.userRepository.getAllUsers();
+    const users = await this.userRepository.getAllUser();
     return users;
   }
 }
