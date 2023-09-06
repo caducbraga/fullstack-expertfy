@@ -1,5 +1,6 @@
 import { userModel } from "../../../domain/models/userModel";
 
+//* This interface is used to define the methods that will be used to interact with the user table.
 export interface userDataSource {
   createUser(user: userModel): Promise<boolean>;
   updateUser(id: string, user: userModel): Promise<boolean>;

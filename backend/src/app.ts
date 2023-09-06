@@ -1,7 +1,12 @@
+//FOR ALL ROUTES
 import express from "express";
 import server from './server'
-import userRouter from './presentation/routers/userRouter'
+import mysql from "mysql2/promise";
+import dotenv from "dotenv";
 import { connection } from './data/connection'
+
+//FOR USER ROUTES
+import userRouter from './presentation/routers/userRouter'
 import { getAllUserUseCaseImpl } from './domain/use-cases/user/getAllUser'
 import { createUserUseCaseImpl } from './domain/use-cases/user/createUser'
 import { updateUserUseCaseImpl } from './domain/use-cases/user/updateUser'
@@ -10,10 +15,7 @@ import { getUserByIdUseCaseImpl } from './domain/use-cases/user/getUserById'
 import { userRepositoryImpl } from './domain/respositories/userRepository'
 import { userDataSourceImpl } from "./data/data-sources/mysql/userDataSource";
 
-
-import mysql from "mysql2/promise";
-import dotenv from "dotenv";
-
+//FOR COMPETENCE ROUTES
 import competenceRouter from "./presentation/routers/competenceRouter";
 import { createCompetenceUseCaseImpl } from "./domain/use-cases/competence/createCompetence";
 import { updateCompetenceUseCaseImpl } from "./domain/use-cases/competence/updateCompetence";
@@ -22,6 +24,17 @@ import { getCompetenceByIdUseCaseImpl } from "./domain/use-cases/competence/getC
 import { getAllCompetenceUseCaseImpl } from "./domain/use-cases/competence/getAllCompetence";
 import { competenceRepositoryImpl } from "./domain/respositories/competenceRepository";
 import { competenceDataSourceImpl } from "./data/data-sources/mysql/competenceDataSource";
+
+//FOR MANIFESTCOMP ROUTES
+import manifestCompRouter from "./presentation/routers/manifestCompRouter";
+import { createManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/createManifestComp";
+import { updateManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/updateManifestComp";
+import { deleteManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/deleteManifestComp";
+import { getManifestCompByIdUseCaseImpl } from "./domain/use-cases/manifestComp/getManifestCompById";
+import { getAllManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/getAllManifestComp";
+import { manifestCompRepositoryImpl } from "./domain/respositories/manifestCompRepository";
+import { manifestCompDataSourceImpl } from "./data/data-sources/mysql/manifestCompDataSource";
+
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -61,10 +74,20 @@ async function getMSQL_DS(dataSourceClass: any) {
     new getCompetenceByIdUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
   )
 
+  const manifestCompDS = await getMSQL_DS(manifestCompDataSourceImpl)
+
+  const manifestCompMiddleWare = manifestCompRouter(
+    new getAllManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
+    new createManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
+    new updateManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
+    new deleteManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
+    new getManifestCompByIdUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
+  )
 
 
   server.use("/user", userMiddleWare)
   server.use("/competence", competenceMiddleWare)
+  server.use("/manifest", manifestCompMiddleWare)
   server.get("/", (req, res) => res.send("Hello World"))
   server.listen(3000, () => console.log("Running on http://localhost:3000"))
 
