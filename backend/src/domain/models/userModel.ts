@@ -6,7 +6,7 @@ export interface userModel extends personModel {
   password: string;
   role: string;
   seniority: string;
-  timeInCompany: string;
+  employmentStartDate: Date;
   languages: string[];
   phone: string;
   email: string;

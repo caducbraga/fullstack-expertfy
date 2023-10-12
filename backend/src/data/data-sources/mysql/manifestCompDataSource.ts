@@ -14,12 +14,12 @@ export class manifestCompDataSourceImpl implements manifestCompDataSource {
   public async createManifestComp(manifestComp: manifestCompetenceModel): Promise<boolean> {
     try {
       const [rows, fields] = await this.db.query(`INSERT INTO 
-        ${manifestCompTable} (quantity, time, userId, competenceId)
+        ${manifestCompTable} (timestamp, description, userId, competenceId)
         VALUES (
-            '${manifestComp.quantity}',
-            '${manifestComp.time}',
-            '${manifestComp.userId}',
-            '${manifestComp.competenceId}'
+          '${manifestComp.timestamp}',
+          '${manifestComp.description}',
+          '${manifestComp.user.id}',
+          '${manifestComp.competence.id}'
         )`);
 
       if (Array.isArray(rows)) {
@@ -40,10 +40,10 @@ export class manifestCompDataSourceImpl implements manifestCompDataSource {
       try {
         const [rows, fields] = await this.db.query(`UPDATE ${manifestCompTable} SET
               id='${manifestComp.id}',
-              quantity='${manifestComp.quantity}',
-              time='${manifestComp.time}',
-              userId='${manifestComp.userId}',
-              competenceId='${manifestComp.competenceId}'
+              timestamp='${manifestComp.timestamp}',
+              description='${manifestComp.description}',
+              userId='${manifestComp.user.id}',
+              competenceId='${manifestComp.competence.id}'
               WHERE id='${id}'`);
   
         if (Array.isArray(rows)) {

@@ -13,20 +13,20 @@ export class userDataSourceImpl implements userDataSource {
   public async createUser(user: userModel) : Promise<boolean>{
     try {
       const [rows, fields] = await this.db.query(`INSERT INTO 
-      ${userTable} (login, password, role, seniority, timeInCompany, languages, phone, email, linkedin, name, lastName, dateBorn) 
+      ${userTable} (login, password, role, seniority, employmentStartDate, languages, phone, email, linkedin, name, lastName, birthDate) 
       VALUES (
         '${user.login}',
         '${user.password}',
         '${user.role}',
         '${user.seniority}',
-        '${user.timeInCompany}',
+        '${user.employmentStartDate}',
         '${user.languages}',
         '${user.phone}',
         '${user.email}',
         '${user.linkedin}',
         '${user.name}',
         '${user.lastName}',
-        '${user.dateBorn}'
+        '${user.birthDate}'
       )`);
 
       if (Array.isArray(rows)) {
@@ -50,14 +50,14 @@ export class userDataSourceImpl implements userDataSource {
       password='${user.password}',
       role='${user.role}',
       seniority='${user.seniority}',
-      timeInCompany='${user.timeInCompany}',
+      employmentStartDate='${user.employmentStartDate}',
       languages='${user.languages}',
       phone='${user.phone}',
       email='${user.email}',
       linkedin='${user.linkedin}',
       name='${user.name}',
       lastName='${user.lastName}',
-      dateBorn='${user.dateBorn}'
+      birthDate='${user.birthDate}'
       WHERE id='${id}'`);
       return true;
     }
@@ -89,14 +89,14 @@ export class userDataSourceImpl implements userDataSource {
             password: newrows[0].password,
             role: newrows[0].role,
             seniority: newrows[0].seniority,
-            timeInCompany: newrows[0].timeInCompany,
+            employmentStartDate: newrows[0].employmentStartDate,
             languages: newrows[0].languages,
             phone: newrows[0].phone,
             email: newrows[0].email,
             linkedin: newrows[0].linkedin,
             name: newrows[0].name,
             lastName: newrows[0].lastName,
-            dateBorn: newrows[0].dateBorn
+            birthDate: newrows[0].birthDate
         };
         return user;
       }
@@ -121,14 +121,14 @@ export class userDataSourceImpl implements userDataSource {
               password: row.password,
               role: row.role,
               seniority: row.seniority,
-              timeInCompany: row.timeInCompany,
+              employmentStartDate: row.employmentStartDate,
               languages: row.languages,
               phone: row.phone,
               email: row.email,
               linkedin: row.linkedin,
               name: row.name,
               lastName: row.lastName,
-              dateBorn: row.dateBorn
+              birthDate: row.birthDate
           };
       });
 
