@@ -1,4 +1,4 @@
-.search-container {
+.search-box {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -6,7 +6,7 @@
   
 }
 
-.search-container img {
+.search-box img {
   width: 100%;
   max-width: 500px;
   margin-bottom: 2rem;
@@ -45,4 +45,17 @@
 
 .search button:hover {
   background-color: #3e0f6b;
+}
+
+.search-container ul li {
+  
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #17191f;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.search-container ul li:hover {
+  background-color: #0a0f16;
 }

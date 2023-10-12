@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import axios from 'axios'
 import Logo from "../../assets/logo.png"
 
@@ -7,32 +7,64 @@ import Logo from "../../assets/logo.png"
 
 import './Search.css'
 
-const Search = () => {
-  const [search, setSearch] = useState('')
-  const [results, setResults] = useState([])
+interface Competence {
+  id: number;
+  name: string;
+  description: string;
+}
 
-  const getUsers = async () => {
+const Search = () => {
+  
+  const [search, setSearch] = useState('');
+  const [suggestions, setSuggestions] = useState<Competence[]>([]);;
+
+  //when user types in the search field
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
+    setSearch(name);
+
+    if (name.length >= 2) {
+      getSuggestions(name);
+    } else {
+      setSuggestions([]); 
+    }
+  };
+
+  //when user clicks on a suggestion, update the search field
+  const handleSelectSuggestion = (suggestion: Competence) => {
+    setSearch(suggestion.name);
+    setSuggestions([]);
+  }
+
+  const getSuggestions = async (name : string) => {
     try {
-      const response = await axios.get('http://localhost:3000/user')
-      console.log(response.data)
+      const response = await axios.get(`http://localhost:3000/competence/findByName/${name}`);
+      setSuggestions(response.data); // Atualiza as sugestões com os resultados da API
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  useEffect(() => {
-    // getUsers()
-  }, [])
 
   return (
-    <div className="search-container">
+    <div className="search-box">
       {/* Logo */}
-      <img src={Logo} alt="Logo da Empresa" />
+      <img src={Logo} alt="Logo ExpertFY" />
 
       {/* Campo de Busca e Botão de Pesquisa */}
-      <div className="search">
-        <input type="text" placeholder="Digite sua pesquisa" />
-        <button>🔍</button>
+      <div className="search-container">
+        <div className="search">
+          <input type="text" placeholder="Digite sua pesquisa"
+          value={search} onChange={handleInputChange}/>
+          <button>🔍</button>
+        </div>
+        {/* Lista de Competências */}
+        <ul>
+          {suggestions.map((suggestion) => (
+            <li key={suggestion.id}
+            onClick={() => handleSelectSuggestion(suggestion)}>{suggestion.name}</li>
+          ))}
+        </ul>
       </div>
     </div>
   )
