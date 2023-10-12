@@ -17,8 +17,7 @@ export class competenceDataSourceImpl implements competenceDataSource {
         ${competenceTable} (name, description, type) 
         VALUES (
             '${competence.name}',
-            '${competence.description}',
-            '${competence.type}'
+            '${competence.description}'
         )`);
 
       if (Array.isArray(rows)) {
@@ -39,8 +38,7 @@ export class competenceDataSourceImpl implements competenceDataSource {
     try {
       const [rows, fields] = await this.db.query(`UPDATE ${competenceTable} SET
             name='${competence.name}',
-            description='${competence.description}',
-            type='${competence.type}'
+            description='${competence.description}'
             WHERE id='${id}'`);
 
       if (Array.isArray(rows)) {
@@ -92,6 +90,23 @@ export class competenceDataSourceImpl implements competenceDataSource {
   public async getAllCompetence(): Promise<competenceModel[]> {
     try {
       const [rows, fields] = await this.db.query(`SELECT * FROM ${competenceTable}`);
+
+      if (Array.isArray(rows)) {
+        const newrows = rows as RowDataPacket[];
+        const competences = newrows as competenceModel[];
+        return competences;
+      }
+      return [] as competenceModel[];
+    } catch (error) {
+      console.log(error);
+      return [] as competenceModel[];
+    }
+  }
+
+  public async getCompetenceByName(name: string): Promise<competenceModel[]> {
+    try {
+      const [rows, fields] = await this.db.query(`SELECT * FROM 
+      ${competenceTable} WHERE name LIKE '%${name}%'`);
 
       if (Array.isArray(rows)) {
         const newrows = rows as RowDataPacket[];

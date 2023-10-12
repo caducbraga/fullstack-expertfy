@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 
 // Import pages
-import Home from "./pages/Home.tsx"
-import Search from "./pages/Search.tsx"
-import Contact from "./pages/Contact.tsx"
+import Home from "./pages/Home/Home.tsx"
+import Search from "./pages/Search/Search.tsx"
+import Contact from "./pages/Contact/Contact.tsx"
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 

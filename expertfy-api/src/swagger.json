@@ -215,6 +215,41 @@
         }
       }
     },
+    "/competence/findbyname/{name}":{
+      "get": {
+        "tags": ["Competence"],
+        "summary": "Find a competence by name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "Competence name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Competences found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Competence"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
     "/manifest":{
       "post": {
         "tags": [
@@ -382,9 +417,6 @@
             "type": "string"
           },
           "description": {
-            "type": "string"
-          },
-          "type": {
             "type": "string"
           }
         }

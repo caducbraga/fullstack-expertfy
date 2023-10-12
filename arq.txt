@@ -1,1 +1,0 @@
-router(call) > controllers(call) > services(call) > models(call) > database(call)

@@ -33,4 +33,9 @@ export class competenceRepositoryImpl implements competenceRepository {
     const updatedCompetence = await this.competenceDataSource.updateCompetence(id, competence);
     return updatedCompetence;
   }
+
+  public async getCompetenceByName(name: string): Promise<competenceModel[]> {
+    const competence = await this.competenceDataSource.getCompetenceByName(name);
+    return competence;
+  }
 }

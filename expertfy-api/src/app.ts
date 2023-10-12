@@ -5,36 +5,39 @@ import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import { connection } from './data/connection'
 
-//FOR USER ROUTES
+//ROUTES AREA
 import userRouter from './presentation/routers/userRouter'
+import { userRepositoryImpl } from './domain/respositories/userRepository'
+import { userDataSourceImpl } from "./data/data-sources/mysql/userDataSource";
+//use-cases
 import { getAllUserUseCaseImpl } from './domain/use-cases/user/getAllUser'
 import { createUserUseCaseImpl } from './domain/use-cases/user/createUser'
 import { updateUserUseCaseImpl } from './domain/use-cases/user/updateUser'
 import { deleteUserUseCaseImpl } from './domain/use-cases/user/deleteUser'
 import { getUserByIdUseCaseImpl } from './domain/use-cases/user/getUserById'
-import { userRepositoryImpl } from './domain/respositories/userRepository'
-import { userDataSourceImpl } from "./data/data-sources/mysql/userDataSource";
 
-//FOR COMPETENCE ROUTES
+//COMPETENCE AREA
 import competenceRouter from "./presentation/routers/competenceRouter";
+import { competenceRepositoryImpl } from "./domain/respositories/competenceRepository";
+import { competenceDataSourceImpl } from "./data/data-sources/mysql/competenceDataSource";
+//use-cases
 import { createCompetenceUseCaseImpl } from "./domain/use-cases/competence/createCompetence";
 import { updateCompetenceUseCaseImpl } from "./domain/use-cases/competence/updateCompetence";
 import { deleteCompetenceUseCaseImpl } from "./domain/use-cases/competence/deleteCompetence";
 import { getCompetenceByIdUseCaseImpl } from "./domain/use-cases/competence/getCompetenceById";
 import { getAllCompetenceUseCaseImpl } from "./domain/use-cases/competence/getAllCompetence";
-import { competenceRepositoryImpl } from "./domain/respositories/competenceRepository";
-import { competenceDataSourceImpl } from "./data/data-sources/mysql/competenceDataSource";
+import { getCompetenceByNameUseCaseImpl } from "./domain/use-cases/competence/getCompetenceByName";
 
-//FOR MANIFESTCOMP ROUTES
+//MANIFESTCOMP AREA
 import manifestCompRouter from "./presentation/routers/manifestCompRouter";
+import { manifestCompRepositoryImpl } from "./domain/respositories/manifestCompRepository";
+import { manifestCompDataSourceImpl } from "./data/data-sources/mysql/manifestCompDataSource";
+//use-cases
 import { createManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/createManifestComp";
 import { updateManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/updateManifestComp";
 import { deleteManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/deleteManifestComp";
 import { getManifestCompByIdUseCaseImpl } from "./domain/use-cases/manifestComp/getManifestCompById";
 import { getAllManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/getAllManifestComp";
-import { manifestCompRepositoryImpl } from "./domain/respositories/manifestCompRepository";
-import { manifestCompDataSourceImpl } from "./data/data-sources/mysql/manifestCompDataSource";
-
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -72,6 +75,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new updateCompetenceUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
     new deleteCompetenceUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
     new getCompetenceByIdUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
+    new getCompetenceByNameUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
   )
 
   const manifestCompDS = await getMSQL_DS(manifestCompDataSourceImpl)

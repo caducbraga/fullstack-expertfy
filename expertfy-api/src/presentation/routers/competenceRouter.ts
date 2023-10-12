@@ -5,6 +5,7 @@ import { deleteCompetenceUseCase } from "../../domain/interfaces/use-cases/compe
 import { getAllCompetenceUseCase } from "../../domain/interfaces/use-cases/competence/getAllCompetence";
 import { getCompetenceByIdUseCase } from "../../domain/interfaces/use-cases/competence/getCompetenceById";
 import { updateCompetenceUseCase } from "../../domain/interfaces/use-cases/competence/updateCompetence";
+import { getCompetenceByNameUseCase } from "../../domain/interfaces/use-cases/competence/getCompetenceByName";
 
 export default function competenceRouter(
   getAllCompetenceUseCase: getAllCompetenceUseCase,
@@ -12,6 +13,7 @@ export default function competenceRouter(
   updateCompetenceUseCase: updateCompetenceUseCase,
   deleteCompetenceUseCase: deleteCompetenceUseCase,
   getCompetenceByIdUseCase: getCompetenceByIdUseCase,
+  getCompetenceByNameUseCase: getCompetenceByNameUseCase,
 ) {
 
   const router = express.Router();
@@ -58,6 +60,15 @@ export default function competenceRouter(
       res.status(200).send(deletedCompetence);
     } catch (error) {
       res.status(500).send({ error: "error deleting data", message: error });
+    }
+  });
+
+  router.get('/findByName/:name', async (req: Request, res: Response) => {
+    try {
+      const competence = await getCompetenceByNameUseCase.execute(req.params.name);
+      res.status(200).send(competence);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
     }
   });
 
