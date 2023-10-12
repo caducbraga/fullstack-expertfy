@@ -1,5 +1,4 @@
 //FOR ALL ROUTES
-import express from "express";
 import server from './server'
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
