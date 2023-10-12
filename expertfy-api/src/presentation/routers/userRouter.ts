@@ -5,13 +5,15 @@ import { createUserUseCase } from "../../domain/interfaces/use-cases/user/create
 import { updateUserUseCase } from "../../domain/interfaces/use-cases/user/updateUser";
 import { deleteUserUseCase } from "../../domain/interfaces/use-cases/user/deleteUser";
 import { getUserByIdUseCase } from "../../domain/interfaces/use-cases/user/getUserById";
+import { getUsersAndCountByCompetenceIdUseCase } from "../../domain/interfaces/use-cases/user/getUsersAndCountByCompetenceId";
 
 export default function userRouter(
   getAllUserUseCase: getAllUserUseCase,
   createUserUseCase: createUserUseCase,
   updateUserUseCase: updateUserUseCase,
   deleteUserUseCase: deleteUserUseCase,
-  getUserByIdUseCase: getUserByIdUseCase
+  getUserByIdUseCase: getUserByIdUseCase,
+  getAllUserByCompetenceIdUseCase: getUsersAndCountByCompetenceIdUseCase
 ) {
 
   const router = express.Router();
@@ -20,7 +22,6 @@ export default function userRouter(
     try {
       
       const users = await getAllUserUseCase.execute();
-      console.log(users)
       res.status(200).send(users);
     } catch (error) {
       res.status(500).send({ error: "error fetching data", message: error });
@@ -60,6 +61,15 @@ export default function userRouter(
       res.status(200).send(deletedUser);
     } catch (error) {
       res.status(500).send({ error: "error deleting data" , message: error});
+    }
+  });
+
+  router.get("/listAllByCompetenceId/:id", async (req: Request, res: Response) => {
+    try {
+      const users = await getAllUserByCompetenceIdUseCase.execute(req.params.id);
+      res.status(200).send(users);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
     }
   });
 

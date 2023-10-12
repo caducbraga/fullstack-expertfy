@@ -1,3 +1,4 @@
+import { expertListModel } from "../../models/expertListModel";
 import { userModel } from "../../models/userModel";
 
 export interface userRepository {
@@ -6,4 +7,5 @@ export interface userRepository {
   deleteUser(id: string): Promise<boolean>;
   getUserById(id: string): Promise<userModel>;
   getAllUser(): Promise<userModel[]>;
+  getUsersAndCountByCompetenceId(competenceId: string): Promise<expertListModel[]>;
 }

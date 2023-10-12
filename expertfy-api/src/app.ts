@@ -15,6 +15,7 @@ import { createUserUseCaseImpl } from './domain/use-cases/user/createUser'
 import { updateUserUseCaseImpl } from './domain/use-cases/user/updateUser'
 import { deleteUserUseCaseImpl } from './domain/use-cases/user/deleteUser'
 import { getUserByIdUseCaseImpl } from './domain/use-cases/user/getUserById'
+import { getUsersAndCountByCompetenceIdUseCaseImpl } from './domain/use-cases/user/getUsersAndCountByCompetenceId'
 
 //COMPETENCE AREA
 import competenceRouter from "./presentation/routers/competenceRouter";
@@ -65,6 +66,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new updateUserUseCaseImpl(new userRepositoryImpl(userDS)),
     new deleteUserUseCaseImpl(new userRepositoryImpl(userDS)),
     new getUserByIdUseCaseImpl(new userRepositoryImpl(userDS)),
+    new getUsersAndCountByCompetenceIdUseCaseImpl(new userRepositoryImpl(userDS)),
   )
 
   const competenceDS = await getMSQL_DS(competenceDataSourceImpl)

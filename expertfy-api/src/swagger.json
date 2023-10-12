@@ -111,6 +111,41 @@
         }
       }
     },
+    "/user/listAllByCompetenceId/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "List all users by competence id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Competence id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
     "/competence":{
       "post": {
         "tags": [

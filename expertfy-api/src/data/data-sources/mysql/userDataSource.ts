@@ -1,8 +1,11 @@
 import { userModel } from "../../../domain/models/userModel";
+import { expertListModel } from "../../../domain/models/expertListModel";
 import { userDataSource } from "../../interfaces/data-sources/userDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const userTable = "user";
+const manifestTable = "manifestcompetence";
+
 export class userDataSourceImpl implements userDataSource {
   private db: mysql.Connection;
 
@@ -32,7 +35,6 @@ export class userDataSourceImpl implements userDataSource {
       if (Array.isArray(rows)) {
         const newrows = rows as RowDataPacket[];
         const id = newrows[0].id;
-        console.log(id);
         return true;
       }
       return true
@@ -134,9 +136,50 @@ export class userDataSourceImpl implements userDataSource {
 
       return users;
     }
-
     return [];
-    
+  }
+
+  public async getUsersAndCountByCompetenceId(competenceId: string): Promise<expertListModel[]> {
+    try {
+      const query = `
+      SELECT
+        users.*,
+        (SELECT COUNT(*) FROM ${manifestTable} WHERE userId = users.id AND competenceId = '${competenceId}') AS competenceCount
+      FROM ${userTable} users
+      WHERE users.id IN (SELECT userId FROM ${manifestTable} WHERE competenceId = '${competenceId}')
+      ORDER BY competenceCount DESC;
+    `;
+      const [rows, fields] = await this.db.query(query);
+      
+      if (Array.isArray(rows)) {
+        const newrows = rows as RowDataPacket[];
+        const users: expertListModel[] = newrows.map((row: RowDataPacket) => {
+          const user: expertListModel = {
+            id: row.id,
+            login: row.login,
+            password: row.password,
+            role: row.role,
+            seniority: row.seniority,
+            employmentStartDate: row.employmentStartDate,
+            languages: row.languages,
+            phone: row.phone,
+            email: row.email,
+            linkedin: row.linkedin,
+            name: row.name,
+            lastName: row.lastName,
+            birthDate: row.birthDate,
+            competenceCount: row.competenceCount || 0,
+          };
+          return user;
+        });
+  
+        return users;
+      }
+      return [] as expertListModel[];
+    } catch (error) {
+      console.log(error);
+      return [] as expertListModel[];
+    }
   }
   
 }
