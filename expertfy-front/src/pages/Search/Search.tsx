@@ -16,7 +16,9 @@ interface Competence {
 const Search = () => {
   
   const [search, setSearch] = useState('');
-  const [suggestions, setSuggestions] = useState<Competence[]>([]);;
+  const [suggestions, setSuggestions] = useState<Competence[]>([]);
+  const [selectedSuggestion, setSelectedSuggestion] = useState<Competence | null>(null); //sugestão selecionada pelo usuário
+  const [expertList, setExpertList] = useState<any[]>([]); //lista de especialistas 
 
   //when user types in the search field
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +35,7 @@ const Search = () => {
   //when user clicks on a suggestion, update the search field
   const handleSelectSuggestion = (suggestion: Competence) => {
     setSearch(suggestion.name);
+    setSelectedSuggestion(suggestion);
     setSuggestions([]);
   }
 
@@ -45,6 +48,17 @@ const Search = () => {
     }
   }
 
+  const getExpertList = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
+      setExpertList(response.data); // Atualiza a lista de especialistas com os resultados da API
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+  
+
 
   return (
     <div className="search-box">
@@ -56,7 +70,7 @@ const Search = () => {
         <div className="search">
           <input type="text" placeholder="Digite sua pesquisa"
           value={search} onChange={handleInputChange}/>
-          <button>🔍</button>
+          <button onClick={() => getExpertList()}>🔍</button>
         </div>
         {/* Lista de Competências */}
         <ul>
@@ -66,6 +80,16 @@ const Search = () => {
           ))}
         </ul>
       </div>
+        
+        {/* Lista de Especialistas */}
+        <div className="expert-list">
+          <ul>
+            {expertList.map((expert) => (
+              <li key={expert.id}>{expert.name} {expert.competenceCount}</li>
+              //Todo: criar componente que recebe uma lista de especialistas e exibe os dados
+            ))}
+          </ul>
+        </div>
     </div>
   )
 }
