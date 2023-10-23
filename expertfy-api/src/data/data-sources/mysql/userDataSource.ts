@@ -13,14 +13,15 @@ export class userDataSourceImpl implements userDataSource {
     this.db = db;
   }
 
-  public async createUser(user: userModel) : Promise<boolean>{
+  public async createUser(user: userModel) : Promise<boolean> {
     try {
       const [rows, fields] = await this.db.query(`INSERT INTO 
-      ${userTable} (login, password, role, seniority, employmentStartDate, languages, phone, email, linkedin, name, lastName, birthDate) 
+      ${userTable} (login, password, seniority, 
+        employmentStartDate, languages, phone, 
+        email, linkedin, name, lastName, birthDate, photo) 
       VALUES (
         '${user.login}',
         '${user.password}',
-        '${user.role}',
         '${user.seniority}',
         '${user.employmentStartDate}',
         '${user.languages}',
@@ -29,7 +30,8 @@ export class userDataSourceImpl implements userDataSource {
         '${user.linkedin}',
         '${user.name}',
         '${user.lastName}',
-        '${user.birthDate}'
+        '${user.birthDate}',
+        '${user.photo}' 
       )`);
 
       if (Array.isArray(rows)) {
@@ -37,11 +39,11 @@ export class userDataSourceImpl implements userDataSource {
         const id = newrows[0].id;
         return true;
       }
-      return true
+      return true;
     } catch (error) {
       console.log(error);
       return false;
-    } 
+    }
   }
 
   public async updateUser(id: string, user: userModel): Promise<boolean>{
@@ -50,7 +52,6 @@ export class userDataSourceImpl implements userDataSource {
       const [rows, fields] = await this.db.query(`UPDATE ${userTable} SET
       login='${user.login}',
       password='${user.password}',
-      role='${user.role}',
       seniority='${user.seniority}',
       employmentStartDate='${user.employmentStartDate}',
       languages='${user.languages}',
@@ -59,7 +60,8 @@ export class userDataSourceImpl implements userDataSource {
       linkedin='${user.linkedin}',
       name='${user.name}',
       lastName='${user.lastName}',
-      birthDate='${user.birthDate}'
+      birthDate='${user.birthDate}',
+      photo='${user.photo}'
       WHERE id='${id}'`);
       return true;
     }
@@ -89,7 +91,6 @@ export class userDataSourceImpl implements userDataSource {
             id: newrows[0].id,
             login: newrows[0].login,
             password: newrows[0].password,
-            role: newrows[0].role,
             seniority: newrows[0].seniority,
             employmentStartDate: newrows[0].employmentStartDate,
             languages: newrows[0].languages,
@@ -98,7 +99,8 @@ export class userDataSourceImpl implements userDataSource {
             linkedin: newrows[0].linkedin,
             name: newrows[0].name,
             lastName: newrows[0].lastName,
-            birthDate: newrows[0].birthDate
+            birthDate: newrows[0].birthDate,
+            photo: newrows[0].photo
         };
         return user;
       }
@@ -121,7 +123,6 @@ export class userDataSourceImpl implements userDataSource {
               id: row.id,
               login: row.login,
               password: row.password,
-              role: row.role,
               seniority: row.seniority,
               employmentStartDate: row.employmentStartDate,
               languages: row.languages,
@@ -130,7 +131,8 @@ export class userDataSourceImpl implements userDataSource {
               linkedin: row.linkedin,
               name: row.name,
               lastName: row.lastName,
-              birthDate: row.birthDate
+              birthDate: row.birthDate,
+              photo: row.photo,
           };
       });
 
@@ -158,7 +160,6 @@ export class userDataSourceImpl implements userDataSource {
             id: row.id,
             login: row.login,
             password: row.password,
-            role: row.role,
             seniority: row.seniority,
             employmentStartDate: row.employmentStartDate,
             languages: row.languages,
@@ -169,6 +170,7 @@ export class userDataSourceImpl implements userDataSource {
             lastName: row.lastName,
             birthDate: row.birthDate,
             competenceCount: row.competenceCount || 0,
+            photo: row.photo,
           };
           return user;
         });
