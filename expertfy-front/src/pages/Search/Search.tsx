@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from 'react'
 import axios from 'axios'
 import Logo from "../../assets/logo.png"
+import ElementList from '../../components/elementListUser/ElementList'
 
 //exibir listagem de competências após digitar 2 caracteres 
 //Listar competência por parte do nome
@@ -65,14 +66,14 @@ const Search = () => {
       {/* Logo */}
       <img src={Logo} alt="Logo ExpertFY" />
 
-      {/* Campo de Busca e Botão de Pesquisa */}
+      {/*  Search */}
       <div className="search-container">
         <div className="search">
           <input type="text" placeholder="Digite sua pesquisa"
           value={search} onChange={handleInputChange}/>
           <button onClick={() => getExpertList()}>🔍</button>
         </div>
-        {/* Lista de Competências */}
+        {/* Competence List */}
         <ul>
           {suggestions.map((suggestion) => (
             <li key={suggestion.id}
@@ -81,15 +82,15 @@ const Search = () => {
         </ul>
       </div>
         
-        {/* Lista de Especialistas */}
-        <div className="expert-list">
-          <ul>
-            {expertList.map((expert) => (
-              <li key={expert.id}>{expert.name} {expert.competenceCount}</li>
-              //Todo: criar componente que recebe uma lista de especialistas e exibe os dados
-            ))}
-          </ul>
+        {/* Expert List */}
+        <div>
+          {expertList.length > 0 ? (
+            <ElementList userList={expertList} />
+          ) : (
+            <p>Carregando especialistas...</p>
+          )}
         </div>
+        
     </div>
   )
 }
