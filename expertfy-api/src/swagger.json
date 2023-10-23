@@ -415,8 +415,9 @@
             "type": "string",
             "format": "password"
           },
-          "role": {
-            "type": "string"
+          "photo": {
+            "type": "Buffer",
+            "format": "binary"
           },
           "seniority": {
             "type": "string"

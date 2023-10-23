@@ -6,6 +6,7 @@ import App from './App.tsx'
 import Home from "./pages/Home/Home.tsx"
 import Search from "./pages/Search/Search.tsx"
 import Contact from "./pages/Contact/Contact.tsx"
+import Signup from "./pages/RegisterUser/RegisterUser.tsx"
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -17,10 +18,11 @@ const router = createBrowserRouter([
       { path: '/', element: <Home /> },
       { path: '/search', element: <Search /> },
       { path: '/contact', element: <Contact /> },
+      { path: '/signup', element: <Signup /> }
     ]
   }
 ])
-  
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
