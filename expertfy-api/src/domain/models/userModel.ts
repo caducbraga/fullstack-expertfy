@@ -4,7 +4,7 @@ export interface userModel extends personModel {
   id?: string;
   login: string;
   password: string;
-  role: string;
+  photo?: string;
   seniority: string;
   employmentStartDate: Date;
   languages: string[];
