@@ -14,7 +14,6 @@ const RegisterUser = () => {
   const [formData, setFormData] = useState({
     login: '',
     password: '',
-    photo: null, // File
     seniority: '',
     employmentStartDate: formatDateForMySQL(new Date()),
     languages: [],
@@ -26,24 +25,54 @@ const RegisterUser = () => {
     birthDate: formatDateForMySQL(new Date()),
   });
 
+  const [photo, setPhoto] = useState<Blob>();
+
   // when user types in the input field
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, files } = e.target;
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === 'file' ? (files ? files[0] : null) : value,
+      [name]: value,
     }));
   };
+
+  const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setPhoto(file);
+  }
 
   // when user clicks on the submit button
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendFormData();
+    if (photo !== undefined) {
+      console.log(photo);
+      sendFormData();
+    }
+    else {
+      console.log('Foto vazia');
+    }
   };
 
   const sendFormData = async () => {
     try {
-      await axios.post('http://localhost:3000/user', formData);
+      const data = new FormData();
+      if (photo !== undefined) {
+        data.append('photo', photo);
+      }
+      data.append('login', formData.login);
+      data.append('password', formData.password);
+      data.append('seniority', formData.seniority);
+      data.append('employmentStartDate', formData.employmentStartDate);
+      data.append('languages', formData.languages.toString());
+      data.append('phone', formData.phone);
+      data.append('email', formData.email);
+      data.append('linkedin', formData.linkedin);
+      data.append('name', formData.name);
+      data.append('lastName', formData.lastName);
+      data.append('birthDate', formData.birthDate);
+      
+      const response = await axios.post('http://localhost:3000/user', data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -59,9 +88,8 @@ const RegisterUser = () => {
         <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nome" />
         <input type="text" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email" />
         <input type="password" name="password" value={formData.password} onChange={handleInputChange} placeholder="Senha" />
-        <input type="file" name="photo" onChange={handleInputChange} />
+        <input type="file" name="photo" onChange={handlePhotoChange} />
         <input type="text" name="seniority" value={formData.seniority} onChange={handleInputChange} placeholder="Seniority" />
-        {/* Adicione os campos restantes aqui */}
         <button type="submit">Cadastrar</button>
       </form>
     </div>

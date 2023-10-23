@@ -54,6 +54,7 @@ const Search = () => {
     try {
       const response = await axios.get(`http://localhost:3000/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
       setExpertList(response.data); // Atualiza a lista de especialistas com os resultados da API
+      console.log(response.data);
     }
     catch (error) {
       console.log(error);
@@ -86,7 +87,7 @@ const Search = () => {
       {/* Expert List */}
       <div hidden={showExpertList}>
         {expertList.length > 0 ? (
-          <ElementList userList={expertList} />
+          <ElementList userList={expertList} /> 
         ) : (
           <p>Carregando especialistas...</p>
         )}

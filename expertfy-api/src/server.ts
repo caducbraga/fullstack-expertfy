@@ -7,7 +7,7 @@ import cors from 'cors';
 
 
 const server = express();
-server.use(express.json());
+server.use(express.json( { limit: '50mb' }));
 server.use(cors());
 server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 export default server
