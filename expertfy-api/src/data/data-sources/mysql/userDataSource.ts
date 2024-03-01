@@ -112,7 +112,7 @@ export class userDataSourceImpl implements userDataSource {
           name: newrows[0].name,
           lastName: newrows[0].lastName,
           birthDate: newrows[0].birthDate,
-          photo: newrows[0].photo, // Presumindo que seja um Buffer
+          photo: newrows[0].photo, // TODO: fazer o caminho correto para a imagem
         };
         return user;
       }
@@ -136,14 +136,14 @@ export class userDataSourceImpl implements userDataSource {
           password: row.password,
           seniority: row.seniority,
           employmentStartDate: row.employmentStartDate,
-          languages: JSON.parse(row.languages), // Novamente, ajuste conforme necessário
+          languages: JSON.parse(row.languages), 
           phone: row.phone,
           email: row.email,
           linkedin: row.linkedin,
           name: row.name,
           lastName: row.lastName,
           birthDate: row.birthDate,
-          photo: row.photo, // Suponho que seja um Buffer
+          photo: row.photo, 
         };
       });
   
