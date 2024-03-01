@@ -12,21 +12,20 @@ const formatDateForMySQL = (date : Date) => {
 }
 const RegisterUser = () => {
   const [formData, setFormData] = useState({
-    login: '',
-    password: '',
-    seniority: '',
-    employmentStartDate: formatDateForMySQL(new Date()),
-    languages: [],
-    phone: '',
-    email: '',
-    linkedin: '',
     name: '',
     lastName: '',
     birthDate: formatDateForMySQL(new Date()),
+    email: '',
+    photo: '',
+    phone: '',
+    linkedin: '',
     team:'',
+    employmentStartDate: formatDateForMySQL(new Date()),
+    languageId: '',
+    seniorityId: '',
+    areaId: '',
   });
 
-  // const [photo, setPhoto] = useState<Blob>();
 
   // when user types in the input field
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,10 +36,6 @@ const RegisterUser = () => {
     }));
   };
 
-  // const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   setPhoto(file);
-  // }
 
   // when user clicks on the submit button
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,18 +49,18 @@ const RegisterUser = () => {
     try {
       const data = new FormData();
       
-      data.append('login', formData.login);
-      data.append('password', formData.password);
-      data.append('seniority', formData.seniority);
-      data.append('employmentStartDate', formData.employmentStartDate);
-      data.append('languages', formData.languages.toString());
-      data.append('phone', formData.phone);
-      data.append('email', formData.email);
-      data.append('linkedin', formData.linkedin);
       data.append('name', formData.name);
       data.append('lastName', formData.lastName);
       data.append('birthDate', formData.birthDate);
+      data.append('email', formData.email);
+      data.append('photo', formData.photo);
+      data.append('phone', formData.phone);
+      data.append('linkedin', formData.linkedin);
       data.append('team', formData.team);
+      data.append('employmentStartDate', formData.employmentStartDate);
+      data.append('languageId', formData.languageId);
+      data.append('seniorityId', formData.seniorityId);
+      data.append('areaId', formData.areaId);
       
       const response = await axios.post('http://localhost:3000/user', data);
       console.log(response);
@@ -83,9 +78,7 @@ const RegisterUser = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nome" />
         <input type="text" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email" />
-        <input type="password" name="password" value={formData.password} onChange={handleInputChange} placeholder="Senha" />
         {/* <input type="file" name="photo" onChange={handlePhotoChange} /> */}
-        <input type="text" name="seniority" value={formData.seniority} onChange={handleInputChange} placeholder="Seniority" />
         <input type="text" name="team" value={formData.team} onChange={handleInputChange} placeholder="Time" />
         <button type="submit">Cadastrar</button>
       </form>

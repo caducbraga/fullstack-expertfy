@@ -16,18 +16,18 @@ const EditUser = () => {
   const { id } = useParams();
   
   const [formData, setFormData] = useState({
-    login: '',
-    password: '',
-    seniority: '',
-    employmentStartDate: formatDateForMySQL(new Date()),
-    languages: [],
-    phone: '',
-    email: '',
-    linkedin: '',
     name: '',
     lastName: '',
     birthDate: formatDateForMySQL(new Date()),
-    team: '',
+    email: '',
+    photo: '',
+    phone: '',
+    linkedin: '',
+    team:'',
+    employmentStartDate: formatDateForMySQL(new Date()),
+    languageId: '',
+    seniorityId: '',
+    areaId: '',
   });
 
   useEffect(() => {
@@ -37,19 +37,20 @@ const EditUser = () => {
         const userData = response.data;
 
         setFormData({
-          login: userData.login,
-          password: userData.password,
-          seniority: userData.seniority,
-          employmentStartDate: userData.employmentStartDate,
-          languages: userData.languages,
-          phone: userData.phone,
-          email: userData.email,
-          linkedin: userData.linkedin,
           name: userData.name,
           lastName: userData.lastName,
           birthDate: userData.birthDate,
+          email: userData.email,
+          photo: userData.photo,
+          phone: userData.phone,
+          linkedin: userData.linkedin,
           team: userData.team,
+          employmentStartDate: userData.employmentStartDate,
+          languageId: userData.languageId,
+          seniorityId: userData.seniorityId,
+          areaId: userData.areaId,
         });
+        console.log(userData);
       } catch (error) {
         console.log(error);
       }
@@ -75,18 +76,18 @@ const EditUser = () => {
     try {
       const data = new FormData();
 
-      data.append('login', formData.login);
-      data.append('password', formData.password);
-      data.append('seniority', formData.seniority);
-      data.append('employmentStartDate', formData.employmentStartDate);
-      data.append('languages', formData.languages.toString());
-      data.append('phone', formData.phone);
-      data.append('email', formData.email);
-      data.append('linkedin', formData.linkedin);
       data.append('name', formData.name);
       data.append('lastName', formData.lastName);
       data.append('birthDate', formData.birthDate);
+      data.append('email', formData.email);
+      data.append('photo', formData.photo);
+      data.append('phone', formData.phone);
+      data.append('linkedin', formData.linkedin);
       data.append('team', formData.team);
+      data.append('employmentStartDate', formData.employmentStartDate);
+      data.append('languageId', formData.languageId);
+      data.append('seniorityId', formData.seniorityId);
+      data.append('areaId', formData.areaId);
 
       const response = await axios.put(`http://localhost:3000/user/${id}`, data);
       console.log(response);
@@ -101,8 +102,6 @@ const EditUser = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nome" />
         <input type="text" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email" />
-        <input type="password" name="password" value={formData.password} onChange={handleInputChange} placeholder="Senha" />
-        <input type="text" name="seniority" value={formData.seniority} onChange={handleInputChange} placeholder="Seniority" />
         <input type="text" name="team" value={formData.team} onChange={handleInputChange} placeholder="Time" />
         <button type="submit">Salvar Alterações</button>
       </form>
