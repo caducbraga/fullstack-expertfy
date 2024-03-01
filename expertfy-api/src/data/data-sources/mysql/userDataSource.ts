@@ -16,22 +16,23 @@ export class userDataSourceImpl implements userDataSource {
   public async createUser(user: userModel): Promise<boolean> {
     try {
       const query = `INSERT INTO ${userTable} 
-        (login, password, seniority, employmentStartDate, languages, phone, email, linkedin, name, lastName, birthDate, photo) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  
+      (name, lastName, birthDate, email, photo, phone, linkedin, 
+        team, employmentStartDate, languageId, seniorityId, areaId)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      
       const values = [
-        user.login,
-        user.password,
-        user.seniority,
-        user.employmentStartDate,
-        JSON.stringify(user.languages), 
-        user.phone,
-        user.email,
-        user.linkedin,
         user.name,
         user.lastName,
         user.birthDate,
-        user.photo, // Use o valor da imagem diretamente
+        user.email,
+        user.photo, 
+        user.phone,
+        user.linkedin,
+        user.team,
+        user.employmentStartDate,
+        user.languageId,
+        user.seniorityId,
+        user.areaId,
       ];
   
       const [rows, fields] = await this.db.query(query, values);
@@ -53,23 +54,23 @@ export class userDataSourceImpl implements userDataSource {
   public async updateUser(id: string, user: userModel): Promise<boolean> {
     try {
       const query = `UPDATE ${userTable} SET
-        login=?, password=?, seniority=?, employmentStartDate=?, languages=?, 
-        phone=?, email=?, linkedin=?, name=?, lastName=?, birthDate=?, photo=?
-        WHERE id=?`;
+      name=?, lastName=?, birthDate=?, email=?, photo=?, phone=?, linkedin=?, 
+      team=?, employmentStartDate=?, languageId=?, seniorityId=?, areaId=? 
+      WHERE id=?`;
   
       const values = [
-        user.login,
-        user.password,
-        user.seniority,
-        user.employmentStartDate,
-        JSON.stringify(user.languages), 
-        user.phone,
-        user.email,
-        user.linkedin,
         user.name,
         user.lastName,
         user.birthDate,
+        user.email,
         user.photo, 
+        user.phone,
+        user.linkedin,
+        user.team,
+        user.employmentStartDate,
+        user.languageId,
+        user.seniorityId,
+        user.areaId,
         id, 
       ];
   
@@ -146,20 +147,21 @@ export class userDataSourceImpl implements userDataSource {
         const users: expertListModel[] = newrows.map((row: RowDataPacket) => {
           const user: expertListModel = {
             id: row.id,
-            login: row.login,
-            password: row.password,
-            seniority: row.seniority,
-            employmentStartDate: row.employmentStartDate,
-            languages: row.languages,
-            phone: row.phone,
-            email: row.email,
-            linkedin: row.linkedin,
             name: row.name,
             lastName: row.lastName,
             birthDate: row.birthDate,
-            competenceCount: row.competenceCount || 0,
+            email: row.email,
             photo: row.photo,
+            phone: row.phone,
+            linkedin: row.linkedin,
+            team: row.team,
+            employmentStartDate: row.employmentStartDate,
+            languageId: row.languageId,
+            seniorityId: row.senior,
+            areaId: row.areaId,
+            competenceCount: row.competenceCount,
           };
+            
           return user;
         });
   
