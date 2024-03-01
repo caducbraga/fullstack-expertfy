@@ -99,21 +99,7 @@ export class userDataSourceImpl implements userDataSource {
   
       if (Array.isArray(rows)) {
         const newrows = rows as RowDataPacket[];
-        const user: userModel = {
-          id: newrows[0].id,
-          login: newrows[0].login,
-          password: newrows[0].password,
-          seniority: newrows[0].seniority,
-          employmentStartDate: newrows[0].employmentStartDate,
-          languages: JSON.parse(newrows[0].languages), // Assumindo que foi armazenado como JSON
-          phone: newrows[0].phone,
-          email: newrows[0].email,
-          linkedin: newrows[0].linkedin,
-          name: newrows[0].name,
-          lastName: newrows[0].lastName,
-          birthDate: newrows[0].birthDate,
-          photo: newrows[0].photo, // TODO: fazer o caminho correto para a imagem
-        };
+        const user = newrows[0] as userModel; 
         return user;
       }
       return {} as userModel;
@@ -125,29 +111,19 @@ export class userDataSourceImpl implements userDataSource {
   
   public async getAllUsers(): Promise<userModel[]> {
     const query = `SELECT * FROM ${userTable}`;
-    const [rows, fields] = await this.db.query(query);
-  
-    if (Array.isArray(rows)) {
-      const newrows = rows as RowDataPacket[];
-      const users: userModel[] = newrows.map((row: RowDataPacket) => {
-        return {
-          id: row.id,
-          login: row.login,
-          password: row.password,
-          seniority: row.seniority,
-          employmentStartDate: row.employmentStartDate,
-          languages: JSON.parse(row.languages), 
-          phone: row.phone,
-          email: row.email,
-          linkedin: row.linkedin,
-          name: row.name,
-          lastName: row.lastName,
-          birthDate: row.birthDate,
-          photo: row.photo, 
-        };
-      });
-  
-      return users;
+    
+    try {
+      const [rows, fields] = await this.db.query(query);
+
+      if (Array.isArray(rows)){
+        const newrows = rows as RowDataPacket[];
+        const users = newrows as userModel[];
+        return users;
+      }
+
+    } catch (error) {
+      console.log(error);
+      return [] as userModel[];
     }
     return [];
   }
