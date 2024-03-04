@@ -3,12 +3,45 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './EditUser.css';
 
+import example_photo from '../../assets/user/profile-example.jpg';
 
 const formatDateForMySQL = (date: Date) => {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
   return `${year}-${month}-${day}`;
+}
+
+const list_language_test = [
+  { id: 1, name: 'Português' },
+  { id: 2, name: 'Inglês' },
+  { id: 3, name: 'Espanhol' },
+  { id: 4, name: 'Francês' },
+  { id: 5, name: 'Alemão' },
+];
+
+const basicInfo = (label: string, list: any) => {
+  return (
+    <div className='edit-user-basic-info-content'>
+      <label>{label}</label>
+      <select>
+        {list.map((item: any) => (
+          <option key={item.id} value={item.id}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+const contactInfo = (label: string, value: string, name: string, onchange: any) => {
+  return (
+    <div className='edit-user-contact-content'>
+      <label>{label}</label>
+      <input type='text' value={value} name={name} onChange={onchange} />
+    </div>
+  );
 }
 
 const EditUser = () => {
@@ -65,11 +98,12 @@ const EditUser = () => {
       ...prevData,
       [name]: value,
     }));
+    console.log(formData);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendFormData();
+    // sendFormData();
   };
 
   const sendFormData = async () => {
@@ -98,12 +132,41 @@ const EditUser = () => {
 
   return (
     <div className='edit-user-form'>
-      <h1>Editar Informações do Usuário</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nome" />
-        <input type="text" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email" />
-        <input type="text" name="team" value={formData.team} onChange={handleInputChange} placeholder="Time" />
-        <button type="submit">Salvar Alterações</button>
+        {/* Profile  */}
+        <span className='edit-user-subtitles'>Perfil</span>
+        <div className='edit-user-profile'>
+          <div className='edit-user-profile-photo'>
+            <img src={example_photo} alt='profile' />
+            <label>
+              <span>Alterar foto</span>
+              <input type="file" name="photo" accept="image/*"  />
+            </label>  
+          </div>
+          <div className='edit-user-profile-info'>
+            <h3>{formData.name}</h3>
+            <p>{formData.team}</p>
+            </div>
+        </div>
+        {/* Basic-info */}
+        <span className='edit-user-subtitles'>Informações</span>
+        <div className='edit-user-basic-info'>
+          {basicInfo('Idioma:', list_language_test)}
+          {basicInfo('Área:', list_language_test)}
+          {basicInfo('Senioridade:', list_language_test)}
+        </div>
+        {/* Contact */}
+        <span className='edit-user-subtitles'>Links Externos</span>
+        <div className='edit-user-contact'>
+          {contactInfo('Linkedin:', formData.linkedin, 'linkedin', handleInputChange)}
+          {contactInfo('E-mail:', formData.email, 'email', handleInputChange)}
+          {contactInfo('GitHub:', formData.email, 'email', handleInputChange)}
+        </div>
+        {/* Buttons */}
+        <div className='edit-user-buttons'>
+          <button type="button">Cancelar</button>
+          <button type="submit">Salvar</button>
+        </div>
       </form>
     </div>
   );
