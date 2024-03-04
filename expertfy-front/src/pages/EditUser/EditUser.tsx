@@ -20,6 +20,22 @@ const list_language_test = [
   { id: 5, name: 'Alemão' },
 ];
 
+const list_area_test = [
+  { id: 1, name: 'Desenvolvimento' },
+  { id: 2, name: 'Design' },
+  { id: 3, name: 'Gestão' },
+  { id: 4, name: 'Marketing' },
+  { id: 5, name: 'Vendas' },
+];
+
+const list_seniority_test = [
+  { id: 1, name: 'Estagiário' },
+  { id: 2, name: 'Júnior' },
+  { id: 3, name: 'Pleno' },
+  { id: 4, name: 'Sênior' },
+  { id: 5, name: 'Master' },
+];
+
 const basicInfo = (label: string, list: any) => {
   return (
     <div className='edit-user-basic-info-content'>
@@ -152,8 +168,8 @@ const EditUser = () => {
         <span className='edit-user-subtitles'>Informações</span>
         <div className='edit-user-basic-info'>
           {basicInfo('Idioma:', list_language_test)}
-          {basicInfo('Área:', list_language_test)}
-          {basicInfo('Senioridade:', list_language_test)}
+          {basicInfo('Área:', list_area_test)}
+          {basicInfo('Senioridade:', list_seniority_test)}
         </div>
         {/* Contact */}
         <span className='edit-user-subtitles'>Links Externos</span>
