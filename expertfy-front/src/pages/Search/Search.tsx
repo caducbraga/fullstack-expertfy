@@ -43,7 +43,7 @@ const Search = () => {
 
   const getSuggestions = async (name: string) => {
     try {
-      const response = await axios.get(`http://localhost:3000/competence/findByName/${name}`);
+      const response = await axios.get(`http://api-expertfy:3000/competence/findByName/${name}`);
       setSuggestions(response.data); // Atualiza as sugestões com os resultados da API
     } catch (error) {
       console.log(error);
@@ -52,7 +52,7 @@ const Search = () => {
 
   const getExpertList = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
+      const response = await axios.get(`http://api-expertfy:3000/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
       setExpertList(response.data); // Atualiza a lista de especialistas com os resultados da API
       console.log(response.data);
     }

@@ -71,7 +71,7 @@ const RegisterUser = () => {
       data.append('lastName', formData.lastName);
       data.append('birthDate', formData.birthDate);
       
-      const response = await axios.post('http://localhost:3000/user', data);
+      const response = await axios.post('http://api-expertfy:3000/user', data);
       console.log(response);
     } catch (error) {
       console.log(error);
