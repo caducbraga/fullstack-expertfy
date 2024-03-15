@@ -11,4 +11,5 @@ export interface userModel extends personModel {
   languageId: string;
   seniorityId: string;
   areaId: string;
+  office: string;
 }
