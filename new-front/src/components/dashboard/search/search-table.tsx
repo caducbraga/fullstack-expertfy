@@ -26,7 +26,7 @@ function noop(): void {
 export interface Expert {
   id: number;
   name: string;
-  seniorityId: string;
+  seniorityName: string;
   email: string;
   photo: string; //way for the image in backend
   team: string;
@@ -107,7 +107,7 @@ export function SearchTable({
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
                   <TableCell>
-                    {row.seniorityId}
+                    {row.seniorityName}
                   </TableCell>
                   <TableCell>{row.team}</TableCell>
                   <TableCell>{row.competenceCount}</TableCell>
