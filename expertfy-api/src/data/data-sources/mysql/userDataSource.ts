@@ -157,8 +157,9 @@ export class userDataSourceImpl implements userDataSource {
             team: row.team,
             employmentStartDate: row.employmentStartDate,
             languageId: row.languageId,
-            seniorityId: row.senior,
+            seniorityId: row.seniorityId,
             areaId: row.areaId,
+            office: row.office,
             competenceCount: row.competenceCount,
           };
             
