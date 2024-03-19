@@ -135,8 +135,9 @@ export class userDataSourceImpl implements userDataSource {
       const query = `
       SELECT
         users.*,
-        (SELECT COUNT(*) FROM ${manifestTable} WHERE userId = users.id AND competenceId = '${competenceId}') AS competenceCount
-      FROM ${userTable} users
+        (SELECT COUNT(*) FROM ${manifestTable} WHERE userId = users.id AND competenceId = '${competenceId}') AS competenceCount,
+        s.name AS seniorityName
+      FROM ${userTable} users JOIN seniority s ON users.seniorityId = s.id
       WHERE users.id IN (SELECT userId FROM ${manifestTable} WHERE competenceId = '${competenceId}')
       ORDER BY competenceCount DESC;
     `;
@@ -161,6 +162,7 @@ export class userDataSourceImpl implements userDataSource {
             areaId: row.areaId,
             office: row.office,
             competenceCount: row.competenceCount,
+            seniorityName: row.seniorityName,
           };
             
           return user;
