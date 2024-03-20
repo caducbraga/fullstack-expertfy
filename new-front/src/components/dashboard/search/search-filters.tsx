@@ -4,10 +4,11 @@ import Card from '@mui/material/Card';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { MagnifyingGlass as MagnifyingGlassIcon } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass';
-import { Stack } from '@mui/system';
+import { Box, Stack } from '@mui/system';
 
 import { searchExpert } from '@/lib/search/search';
 import type { Competence } from '@/lib/search/search';
+import { List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
 
 export interface SearchFiltersProps {
   selection: (selection: Competence) => void;
@@ -15,14 +16,13 @@ export interface SearchFiltersProps {
 
 export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Element {
   
-  const [handlechange, setHandleChange] = React.useState('');
+  const [inputSearch, setinputSearch] = React.useState('');
   const [suggestions, setSuggestions] = React.useState<Competence[]>([]);
-  const [selectedSuggestion, setSelectedSuggestion] = React.useState<Competence | null>(null); //sugestão selecionada pelo usuário
 
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInputSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value;
-    setHandleChange(name);
+    setinputSearch(name);
 
     if (name.length >= 2) {
       const promisse_sug = searchExpert.getSuggestions(name);
@@ -30,24 +30,33 @@ export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Ele
         setSuggestions(data);
       });
     }
+    else {
+      setSuggestions([]);
+    }
   };
 
   //when user clicks on a suggestion, update the search field
   const handleSelectSuggestion = (suggestion: Competence) => {
-    setHandleChange(suggestion.name);
-    setSelectedSuggestion(suggestion);
+    //Change the search field name
+    setinputSearch(suggestion.name);
+    //Call the parent function to update the expert list
     selection(suggestion);
+    //Clear the suggestions list
     setSuggestions([]);
   }
 
+  
+
   return (
     <Stack spacing={2}>
+      {/* Input search */}
       <Card sx={{ p: 2 }}>
         <OutlinedInput
           fullWidth
           placeholder="Type your search query..."
-          value={handlechange}
-          onChange={handleChange}
+          value={inputSearch}
+          onChange={handleChangeInputSearch}
+          
           startAdornment={
             <InputAdornment position="start">
               <MagnifyingGlassIcon fontSize="var(--icon-fontSize-md)" />
@@ -55,16 +64,25 @@ export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Ele
           }
           sx={{ maxWidth: '500px' }}
         />
-
       </Card>
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mt: 2 }}>
-        <ul>
+
+      {/* Suggestions List */}
+      {suggestions.length > 0 && (
+      <Box sx={{ mt: 2, bgcolor: 'primary.main', p: 2, borderRadius: '4px' }}>
+        <Typography variant="h6" sx={{ color: 'primary.contrastText', mb: 1 }}>Suggestions:</Typography>
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
           {suggestions.map((suggestion) => (
-            <li key={suggestion.id}
-              onClick={() => handleSelectSuggestion(suggestion)}>{suggestion.name}</li>
+            <ListItemButton
+              key={suggestion.id}
+              onClick={() => handleSelectSuggestion(suggestion)}
+              sx={{ borderRadius: '4px', marginBottom: '4px' }}
+            >
+              <ListItemText primary={suggestion.name} />
+            </ListItemButton>
           ))}
-        </ul>
-      </Stack>
+        </List>
+      </Box>
+    )}
     </Stack>
     
   );
