@@ -9,6 +9,7 @@ import { Box, Stack } from '@mui/system';
 import { searchExpert } from '@/lib/search/search';
 import type { Competence } from '@/lib/search/search';
 import { List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { boolean } from 'zod';
 
 export interface SearchFiltersProps {
   selection: (selection: Competence) => void;
@@ -45,7 +46,12 @@ export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Ele
     setSuggestions([]);
   }
 
-  
+  const checkSuggestionForHidding = (s: Competence[]) => {
+    if (s !== undefined && s.length > 0) {
+      return true;
+    }
+    return false;
+  }
 
   return (
     <Stack spacing={2}>
@@ -67,7 +73,7 @@ export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Ele
       </Card>
 
       {/* Suggestions List */}
-      {suggestions.length > 0 && (
+      {checkSuggestionForHidding(suggestions) && (
       <Box sx={{ mt: 2, bgcolor: 'primary.main', p: 2, borderRadius: '4px' }}>
         <Typography variant="h6" sx={{ color: 'primary.contrastText', mb: 1 }}>Suggestions:</Typography>
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
