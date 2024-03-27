@@ -25,7 +25,7 @@ export interface Expert {
 class SearchExpert {
   async getSuggestions(name: string) {
     try {
-      const response = await axios.get(`http://api-expertfy:3000/competence/findByName/${name}`);
+      const response = await axios.get(`http://localhost:3000/competence/findByName/${name}`);
       return response.data;
       
     } catch (error) {
@@ -35,11 +35,21 @@ class SearchExpert {
 
   async getExpertList(selectedSuggestion: Competence | null) {
     try {
-      const response = await axios.get(`http://api-expertfy:3000/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
+      const response = await axios.get(`http://localhost:3000/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
       return response.data;
     }
     catch (error) {
       console.log("Error: get Expert List" + error);
+    }
+  }
+
+  async getAllSuggestions() {
+    try {
+      const response = await axios.get(`http://localhost:3000/competence`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get All Suggestions" + error);
     }
   }
 }
