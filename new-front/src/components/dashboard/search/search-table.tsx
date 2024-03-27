@@ -95,7 +95,7 @@ export function SearchTable({
         onRowsPerPageChange={noop}
         page={page}
         rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[10, 25]}
       />
     </Card>
   );
