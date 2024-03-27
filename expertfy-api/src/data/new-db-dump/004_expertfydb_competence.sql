@@ -18,6 +18,7 @@
 --
 -- Table structure for table `competence`
 --
+USE expertfydb;
 
 DROP TABLE IF EXISTS `competence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

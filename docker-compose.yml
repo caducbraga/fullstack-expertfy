@@ -5,13 +5,13 @@ services:
     restart: always
     env_file:
       - .env.dev
-    environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: true
     ports:
       - "3306:3306"
     volumes:
       - db-volume:/var/lib/mysql
       - ./expertfy-api/src/data/new-db-dump:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
   api-expertfy:
     build:
       context: ./expertfy-api

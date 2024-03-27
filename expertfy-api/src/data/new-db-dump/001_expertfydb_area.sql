@@ -18,6 +18,8 @@
 --
 -- Table structure for table `area`
 --
+-- Seleciona o banco de dados expertfydb
+USE expertfydb;
 
 DROP TABLE IF EXISTS `area`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
