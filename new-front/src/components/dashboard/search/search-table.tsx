@@ -57,11 +57,11 @@ export function SearchTable({
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
+              <TableCell>Nome</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Seniority</TableCell>
-              <TableCell>Team</TableCell>
-              <TableCell>Expertise Level</TableCell>
+              <TableCell>Senioridade</TableCell>
+              <TableCell>Time</TableCell>
+              <TableCell>Nível de Conhecimento</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
