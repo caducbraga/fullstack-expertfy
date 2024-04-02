@@ -9,5 +9,9 @@ export const paths = {
     settings: '/dashboard/settings',
     search: '/dashboard/search',
   },
+  search: {
+    account: '/search/account',
+    search: '/search',
+  },
   errors: { notFound: '/errors/not-found' },
 } as const;

@@ -29,32 +29,32 @@ export function AccountDetailsForm(): React.JSX.Element {
       }}
     >
       <Card>
-        <CardHeader subheader="The information can be edited" title="Profile" />
+        <CardHeader title="Detalhes da Conta" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>First name</InputLabel>
-                <OutlinedInput defaultValue="Sofia" label="First name" name="firstName" />
+                <InputLabel>Nome</InputLabel>
+                <OutlinedInput defaultValue="Sofia" label="Nome" name="firstName" />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>Last name</InputLabel>
-                <OutlinedInput defaultValue="Rivers" label="Last name" name="lastName" />
+                <InputLabel>Sobrenome</InputLabel>
+                <OutlinedInput defaultValue="Rivers" label="Sobrenome" name="lastName" />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>Email address</InputLabel>
-                <OutlinedInput defaultValue="sofia@devias.io" label="Email address" name="email" />
+                <InputLabel>Email</InputLabel>
+                <OutlinedInput defaultValue="sofia@devias.io" label="Email" name="email" />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Phone number</InputLabel>
-                <OutlinedInput label="Phone number" name="phone" type="tel" />
+                <InputLabel>Telefone</InputLabel>
+                <OutlinedInput label="Telefone" name="phone" type="tel" />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
@@ -77,10 +77,6 @@ export function AccountDetailsForm(): React.JSX.Element {
             </Grid>
           </Grid>
         </CardContent>
-        <Divider />
-        <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Save details</Button>
-        </CardActions>
       </Card>
     </form>
   );
