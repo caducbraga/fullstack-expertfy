@@ -40,19 +40,20 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <InputLabel>Email</InputLabel>
-                <OutlinedInput defaultValue={'Email'} label="Email" name="email" value={user.email}/>
+                <OutlinedInput readOnly defaultValue={'Email'} label="Email" name="email" value={user.email}/>
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Telefone</InputLabel>
-                <OutlinedInput defaultValue={'Telefone'} label="Telefone" name="phone" value={formatPhoneNumber(user.phone)} type="tel" />
+                <OutlinedInput readOnly defaultValue={'Telefone'} label="Telefone" name="phone" value={formatPhoneNumber(user.phone)} type="tel" />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Data de Nascimento</InputLabel>
                 <OutlinedInput
+                  readOnly
                   defaultValue={''}
                   value={formatDateOfBirth(user.birthDate)}
                   label="Data de Nascimento"
@@ -64,19 +65,19 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Área</InputLabel>
-                <OutlinedInput defaultValue={'Área'} label="Área" name="area" value={user.area} />
+                <OutlinedInput readOnly defaultValue={'Área'} label="Área" name="area" value={user.area} />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Time</InputLabel>
-                <OutlinedInput defaultValue={'Time'} label="Time" name="team" value={user.team} />
+                <OutlinedInput readOnly defaultValue={'Time'} label="Time" name="team" value={user.team} />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Idioma</InputLabel>
-                <OutlinedInput defaultValue={'Idioma'} label="Idioma" name="language" value={user.language} />
+                <OutlinedInput readOnly defaultValue={'Idioma'} label="Idioma" name="language" value={user.language} />
               </FormControl>
             </Grid>
           </Grid>
