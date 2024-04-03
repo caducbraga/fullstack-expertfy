@@ -54,6 +54,20 @@ O aplicativo React estará em execução em `http://localhost:5173`.
 
 Acesse o aplicativo em seu navegador acessando `http://localhost:5173` e utilize as funcionalidades conforme apropriado para o projeto.
 
+## Comandos uteis
+
+Caso deseje rebuildar as imagens dos containers utilize os comandos
+
+   ```
+   docker-compose build api-expertfy
+   ```
+
+   ou
+
+   ```
+   docker-compose build fe-expertfy
+   ```
+
 ## Contribuição
 
 Se desejar contribuir para o projeto, siga as melhores práticas de contribuição e crie um pull request.
