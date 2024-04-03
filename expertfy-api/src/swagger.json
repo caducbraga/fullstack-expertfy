@@ -146,6 +146,38 @@
         }
       }
     },
+    "/user/accountInfo/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user account info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account info found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAccountInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
     "/competence":{
       "post": {
         "tags": [
@@ -427,6 +459,9 @@
             "type": "string",
             "format": "date"
           },
+          "office": {
+            "type": "string"
+          },
           "languageId": {
             "type": "number"
           },
@@ -469,6 +504,64 @@
             "type": "number"
           },
           "competenceId": {
+            "type": "number"
+          }
+        }
+      },
+      "UserAccountInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "email": {
+            "type": "string"
+          },
+          "photo": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "linkedin": {
+            "type": "string"
+          },
+          "team": {
+            "type": "string"
+          },
+          "employmentStartDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "office": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "seniority": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
+          },
+          "languageId": {
+            "type": "number"
+          },
+          "seniorityId": {
+            "type": "number"
+          },
+          "areaId": {
             "type": "number"
           }
         }

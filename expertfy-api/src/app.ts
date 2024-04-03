@@ -4,7 +4,7 @@ import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import { connection } from './data/connection'
 
-//ROUTES AREA
+//USER AREA
 import userRouter from './presentation/routers/userRouter'
 import { userRepositoryImpl } from './domain/respositories/userRepository'
 import { userDataSourceImpl } from "./data/data-sources/mysql/userDataSource";
@@ -15,6 +15,7 @@ import { updateUserUseCaseImpl } from './domain/use-cases/user/updateUser'
 import { deleteUserUseCaseImpl } from './domain/use-cases/user/deleteUser'
 import { getUserByIdUseCaseImpl } from './domain/use-cases/user/getUserById'
 import { getUsersAndCountByCompetenceIdUseCaseImpl } from './domain/use-cases/user/getUsersAndCountByCompetenceId'
+import { getUserAccountInfoUseCaseImpl } from './domain/use-cases/user/getUserAccountInfo'
 
 //COMPETENCE AREA
 import competenceRouter from "./presentation/routers/competenceRouter";
@@ -66,6 +67,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new deleteUserUseCaseImpl(new userRepositoryImpl(userDS)),
     new getUserByIdUseCaseImpl(new userRepositoryImpl(userDS)),
     new getUsersAndCountByCompetenceIdUseCaseImpl(new userRepositoryImpl(userDS)),
+    new getUserAccountInfoUseCaseImpl(new userRepositoryImpl(userDS)),
   )
 
   const competenceDS = await getMSQL_DS(competenceDataSourceImpl)

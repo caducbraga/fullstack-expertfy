@@ -7,6 +7,7 @@ import { updateUserUseCase } from "../../domain/interfaces/use-cases/user/update
 import { deleteUserUseCase } from "../../domain/interfaces/use-cases/user/deleteUser";
 import { getUserByIdUseCase } from "../../domain/interfaces/use-cases/user/getUserById";
 import { getUsersAndCountByCompetenceIdUseCase } from "../../domain/interfaces/use-cases/user/getUsersAndCountByCompetenceId";
+import { getUserAccountInfoUseCaseImpl } from '../../domain/use-cases/user/getUserAccountInfo';
 
 export default function userRouter(
   getAllUserUseCase: getAllUserUseCase,
@@ -14,7 +15,8 @@ export default function userRouter(
   updateUserUseCase: updateUserUseCase,
   deleteUserUseCase: deleteUserUseCase,
   getUserByIdUseCase: getUserByIdUseCase,
-  getAllUserByCompetenceIdUseCase: getUsersAndCountByCompetenceIdUseCase
+  getAllUserByCompetenceIdUseCase: getUsersAndCountByCompetenceIdUseCase,
+  getUserAccountInfoUseCaseImpl: getUserAccountInfoUseCaseImpl
 ) {
 
   const router = express.Router();
@@ -76,6 +78,15 @@ export default function userRouter(
       const users = await getAllUserByCompetenceIdUseCase.execute(req.params.id);
       console.log(users);
       res.status(200).send(users);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
+    }
+  });
+
+  router.get("/accountInfo/:id", async (req: Request, res: Response) => {
+    try {
+      const accountInfo = await getUserAccountInfoUseCaseImpl.execute(req.params.id);
+      res.status(200).send(accountInfo);
     } catch (error) {
       res.status(500).send({ error: "error fetching data", message: error });
     }
