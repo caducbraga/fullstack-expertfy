@@ -43,14 +43,16 @@ export default function Page(): React.JSX.Element {
       
       </Stack>
       <SearchFilters selection={handleFilterSelect} />
-      <SearchTable
-        count={experts.length}
-        page={page}
-        rows={paginatedCustomers}
-        rowsPerPage={rowsPerPage}
-        setPage={setPage}
-        setRowsPerPage={setRowsPerPage}
-      />
+      {experts.length > 0 && (
+        <SearchTable
+          count={experts.length}
+          page={page}
+          rows={paginatedCustomers}
+          rowsPerPage={rowsPerPage}
+          setPage={setPage}
+          setRowsPerPage={setRowsPerPage}
+        />
+      )}
     </Stack>
   );
 }

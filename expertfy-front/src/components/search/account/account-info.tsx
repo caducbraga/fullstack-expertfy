@@ -19,7 +19,7 @@ export function AccountInfo(user : User): React.JSX.Element {
             <Avatar src={user.photo} sx={{ height: '100px', width: '100px' }} />
           </div>
           <Stack spacing={1} sx={{ textAlign: 'center' }}>
-            <Typography variant="h5">{user.name}</Typography>
+            <Typography variant="h5">{user.name} {user.lastName}</Typography>
             <Typography color="text.secondary" variant="body2">
               {user.office}
             </Typography>

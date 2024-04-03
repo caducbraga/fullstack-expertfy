@@ -3,7 +3,7 @@ import axios from 'axios'
 class Account {
   async getAccountInfo(id : string) {
     try {
-      const response = await axios.get(`http://localhost:3000/user/${id}`);
+      const response = await axios.get(`http://localhost:3000/user/accountInfo/${id}`);
       return response.data;
     }
     catch (error) {

@@ -13,15 +13,19 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
+import { User } from '@/types/user';
 
-const states = [
-  { value: 'alabama', label: 'Alabama' },
-  { value: 'new-york', label: 'New York' },
-  { value: 'san-francisco', label: 'San Francisco' },
-  { value: 'los-angeles', label: 'Los Angeles' },
-] as const;
 
-export function AccountDetailsForm(): React.JSX.Element {
+export function AccountDetailsForm(user: User): React.JSX.Element {
+  const formatDateOfBirth = (date: Date): string => {
+    const dateObj = new Date(date);
+    return dateObj.toISOString().split('T')[0];
+  };
+
+  const formatPhoneNumber = (phone: string): string => {
+    return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  }
+
   return (
     <form
       onSubmit={(event) => {
@@ -35,44 +39,44 @@ export function AccountDetailsForm(): React.JSX.Element {
           <Grid container spacing={3}>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>Nome</InputLabel>
-                <OutlinedInput defaultValue="Sofia" label="Nome" name="firstName" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>Sobrenome</InputLabel>
-                <OutlinedInput defaultValue="Rivers" label="Sobrenome" name="lastName" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth required>
                 <InputLabel>Email</InputLabel>
-                <OutlinedInput defaultValue="sofia@devias.io" label="Email" name="email" />
+                <OutlinedInput defaultValue={'Email'} label="Email" name="email" value={user.email}/>
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Telefone</InputLabel>
-                <OutlinedInput label="Telefone" name="phone" type="tel" />
+                <OutlinedInput defaultValue={'Telefone'} label="Telefone" name="phone" value={formatPhoneNumber(user.phone)} type="tel" />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>State</InputLabel>
-                <Select defaultValue="New York" label="State" name="state" variant="outlined">
-                  {states.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </Select>
+                <InputLabel>Data de Nascimento</InputLabel>
+                <OutlinedInput
+                  defaultValue={''}
+                  value={formatDateOfBirth(user.birthDate)}
+                  label="Data de Nascimento"
+                  name="birthDate"
+                  type="date"
+                /> 
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>City</InputLabel>
-                <OutlinedInput label="City" />
+                <InputLabel>Área</InputLabel>
+                <OutlinedInput defaultValue={'Área'} label="Área" name="area" value={user.area} />
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Time</InputLabel>
+                <OutlinedInput defaultValue={'Time'} label="Time" name="team" value={user.team} />
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Idioma</InputLabel>
+                <OutlinedInput defaultValue={'Idioma'} label="Idioma" name="language" value={user.language} />
               </FormControl>
             </Grid>
           </Grid>
@@ -81,3 +85,4 @@ export function AccountDetailsForm(): React.JSX.Element {
     </form>
   );
 }
+
