@@ -1,12 +1,9 @@
 "use client"
 import * as React from 'react';
-import type { Metadata } from 'next';
-import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 
-import { config } from '@/config';
 import { SearchFilters } from '@/components/search/search-filters';
 import { Expert, SearchTable } from '@/components/search/search-table';
 import type { Competence } from '@/lib/search/search';
@@ -21,7 +18,6 @@ export default function Page(): React.JSX.Element {
   const [experts, setExperts] = React.useState<Expert[]>([]);
 
   const handleFilterSelect = (selection: Competence) => {
-    console.log('Selected:', selection);
     const expert_list_pr = searchExpert.getExpertList(selection);
     expert_list_pr.then((data) => {
       console.log(data);

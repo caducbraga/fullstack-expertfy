@@ -1,7 +1,7 @@
 "use client";
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import { Box, Stack } from '@mui/system';
+import { Stack } from '@mui/system';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
