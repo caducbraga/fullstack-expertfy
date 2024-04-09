@@ -9,15 +9,17 @@ import { searchExpert } from '@/lib/search/search';
 import type { Competence } from '@/lib/search/search';
 import { InputAdornment } from '@mui/material';
 import { MagnifyingGlass as MagnifyingGlassIcon } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass';
+import useSearchStore from '@/store/searchStore';
 
 export interface SearchFiltersProps {
-  selection: (selection: Competence) => void;
+  selection: (selection: Competence | null) => void;
 }
 
 export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Element {
   
-  const [value, setValue] = React.useState<Competence | null>(null);
   const [suggestions, setSuggestions] = React.useState<Competence[]>([]);
+
+  const { competence, setCompetence } = useSearchStore();
 
   React.useEffect(() => {
     searchExpert.getAllSuggestions().then((data) => {
@@ -27,10 +29,8 @@ export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Ele
 
   const defaultProps = {
     options: suggestions,
-    getOptionLabel: (option: Competence) => option.name,
+    getOptionLabel: (option: Competence | null) => option?.name || '',
   };
-  
-  const emptyValue: Competence = {id: 0, name: '', description: ''};
 
   return (
     <Stack spacing={2}>
@@ -40,32 +40,28 @@ export function SearchFilters( {selection} : SearchFiltersProps ): React.JSX.Ele
           {...defaultProps}
           id="combo-box-demo"
           sx={{ maxWidth: '500px' }}
-          value={value}
-            onChange={(event: any, newValue: Competence | null) => {
-              setValue(newValue);
-              // Pass the selected value to the parent component
-              if (newValue !== null) {
-                selection(newValue);
-              }
-              else {
-                selection(emptyValue);
-              }
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Digite Sua Busca"
-                variant="standard"
-                InputProps={{
-                  ...params.InputProps,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <MagnifyingGlassIcon fontSize="var(--icon-fontSize-md)" />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            )}
+          value={competence}
+          onChange={(event: React.SyntheticEvent, newValue: Competence | null ) => {
+            // Pass the selected value to the parent component
+            setCompetence(newValue);
+            selection(newValue);
+            
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Digite Sua Busca"
+              variant="standard"
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MagnifyingGlassIcon fontSize="var(--icon-fontSize-md)" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
         />
       </Card>
     </Stack>

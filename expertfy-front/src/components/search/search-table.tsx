@@ -77,9 +77,15 @@ export function SearchTable({
             {rows.map((row) => {
 
               return (
-                <TableRow hover key={row.id} onClick={() => {handleRowClick(row)}} >
+                <TableRow key={row.id} >
                   <TableCell>
-                    <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
+                    <Stack sx={{alignItems: 'center',
+                                cursor: 'pointer', 
+                                '&:hover': { 
+                                  backgroundColor: 'lightgray', 
+                                }
+                              }} 
+                    direction="row" spacing={2} onClick={() => {handleRowClick(row)}}>
                       <Avatar src={row.photo} />
                       <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>

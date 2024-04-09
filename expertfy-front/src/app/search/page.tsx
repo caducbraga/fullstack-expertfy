@@ -8,26 +8,26 @@ import { SearchFilters } from '@/components/search/search-filters';
 import { Expert, SearchTable } from '@/components/search/search-table';
 import type { Competence } from '@/lib/search/search';
 import { searchExpert } from '@/lib/search/search';
+import useSearchStore from '@/store/searchStore';
 
 
 export default function Page(): React.JSX.Element {
-  const [page, setPage] = React.useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  
+  const { page, setPage, rowsPerPage, setRowsPerPage, experts, setExperts, paginatedExperts, setPaginatedExperts } = useSearchStore();
 
-  const [paginatedCustomers, setPaginatedCustomers] = React.useState<Expert[]>([]);
-  const [experts, setExperts] = React.useState<Expert[]>([]);
-
-  const handleFilterSelect = (selection: Competence) => {
-    const expert_list_pr = searchExpert.getExpertList(selection);
-    expert_list_pr.then((data) => {
-      console.log(data);
-      setExperts(data);
-      setPaginatedCustomers(applyPagination(data, page, rowsPerPage));
-    });
+  const handleFilterSelect = (selection: Competence | null) => {
+    if (selection !== null) {
+      const expert_list_pr = searchExpert.getExpertList(selection);
+      expert_list_pr.then((data) => {
+        console.log(data);
+        setExperts(data);
+        setPaginatedExperts(applyPagination(data, page, rowsPerPage));
+      });
+    }
   }
 
   React.useEffect(() => {
-    setPaginatedCustomers(applyPagination(experts, page, rowsPerPage));
+    setPaginatedExperts(applyPagination(experts, page, rowsPerPage));
   }, [page, rowsPerPage]);
 
   return (
@@ -43,7 +43,7 @@ export default function Page(): React.JSX.Element {
         <SearchTable
           count={experts.length}
           page={page}
-          rows={paginatedCustomers}
+          rows={paginatedExperts}
           rowsPerPage={rowsPerPage}
           setPage={setPage}
           setRowsPerPage={setRowsPerPage}
