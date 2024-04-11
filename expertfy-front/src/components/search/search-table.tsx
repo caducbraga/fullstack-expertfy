@@ -4,7 +4,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -14,9 +13,8 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 
-import { useSelection } from '@/hooks/use-selection';
 
 function noop(): void {
   // do nothing
@@ -38,6 +36,8 @@ interface SearchTableProps {
   page?: number;
   rows?: Expert[];
   rowsPerPage?: number;
+  setPage?: (page: number) => void;
+  setRowsPerPage?: (rowsPerPage: number) => void;
 }
 
 export function SearchTable({
@@ -45,11 +45,20 @@ export function SearchTable({
   rows = [],
   page = 0,
   rowsPerPage = 0,
+  setPage = noop,
+  setRowsPerPage = noop,
 }: SearchTableProps): React.JSX.Element {
+
+  const router = useRouter();
+
+  const handleRowClick = (user: Expert) => {
+    router.push(`/search/account/?id=${user.id}`);  
+  }
+  
+  
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
-
 
   return (
     <Card>
@@ -68,9 +77,15 @@ export function SearchTable({
             {rows.map((row) => {
 
               return (
-                <TableRow hover key={row.id} >
+                <TableRow key={row.id} >
                   <TableCell>
-                    <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
+                    <Stack sx={{alignItems: 'center',
+                                cursor: 'pointer', 
+                                '&:hover': { 
+                                  backgroundColor: 'lightgray', 
+                                }
+                              }} 
+                    direction="row" spacing={2} onClick={() => {handleRowClick(row)}}>
                       <Avatar src={row.photo} />
                       <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>
@@ -91,11 +106,11 @@ export function SearchTable({
       <TablePagination
         component="div"
         count={count}
-        onPageChange={noop}
-        onRowsPerPageChange={noop}
+        onPageChange={(e, newPage) => setPage(newPage)}
+        onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
         page={page}
         rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[10, 25]}
+        rowsPerPageOptions={[5, 10, 25]}
       />
     </Card>
   );

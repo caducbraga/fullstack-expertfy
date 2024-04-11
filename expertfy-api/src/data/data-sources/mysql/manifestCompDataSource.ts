@@ -1,8 +1,10 @@
+import { manifestCompList } from "../../../domain/models/manifestCompList";
 import { manifestCompetenceModel } from "../../../domain/models/manifestCompetenceModel"; 
 import { manifestCompDataSource } from "../../interfaces/data-sources/manifestCompDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const manifestCompTable = "manifestcompetence";
+const competenceTable = "competence";
 
 export class manifestCompDataSourceImpl implements manifestCompDataSource {
   private db: mysql.Connection;
@@ -106,5 +108,20 @@ export class manifestCompDataSourceImpl implements manifestCompDataSource {
     }
   }
 
+  public async getAllManifestCompAndCompetenceByUserId(userId: string): Promise<manifestCompList[]> {
+    try {
+      const [rows, fields] = await this.db.query(`SELECT * FROM ${competenceTable} as c 
+      JOIN ${manifestCompTable} as mc ON c.id = mc.competenceId WHERE mc.userId='${userId}'`);
+      if (Array.isArray(rows)) {
+        const newrows = rows as RowDataPacket[];
+        const manifestComp = newrows as manifestCompList[];
+        return manifestComp;
+      }
+      return [] as manifestCompList[];
+    } catch (error) {
+      console.log(error);
+      return [] as manifestCompList[];
+    }
+  }
 }
 

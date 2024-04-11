@@ -1,6 +1,7 @@
-export interface User {
-  id: string;
-  name?: string;
+
+export interface accountInfoModel  {
+  id?: string;
+  name: string;
   lastName: string;
   birthDate: Date;
   email: string;
@@ -13,6 +14,4 @@ export interface User {
   seniority: string;
   area: string;
   office: string;
-
-  [key: string]: unknown;
 }

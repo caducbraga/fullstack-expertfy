@@ -2,6 +2,7 @@ import { userModel } from "../../../domain/models/userModel";
 import { expertListModel } from "../../../domain/models/expertListModel";
 import { userDataSource } from "../../interfaces/data-sources/userDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
+import { accountInfoModel } from "../../../domain/models/accountInfoModel";
 
 const userTable = "user";
 const manifestTable = "manifestcompetence";
@@ -177,4 +178,31 @@ export class userDataSourceImpl implements userDataSource {
     }
   }
   
+  public async getUserAccountInfo(id: string): Promise<accountInfoModel> {
+    try {
+      const query = `
+      SELECT
+        users.*,
+        l.name AS language,
+        s.name AS seniority,
+        a.name AS area
+      FROM ${userTable} users
+      JOIN language l ON users.languageId = l.id
+      JOIN seniority s ON users.seniorityId = s.id
+      JOIN area a ON users.areaId = a.id
+      WHERE users.id = ?;
+    `;
+      const [rows, fields] = await this.db.query(query, [id]);
+      
+      if (Array.isArray(rows)) {
+        const newrows = rows as RowDataPacket[];
+        const user = newrows[0] as accountInfoModel;
+        return user;
+      }
+      return {} as accountInfoModel;
+    } catch (error) {
+      console.log(error);
+      return {} as accountInfoModel;
+    }
+  }
 }

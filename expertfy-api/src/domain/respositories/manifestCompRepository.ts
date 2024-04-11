@@ -1,6 +1,7 @@
 import { manifestCompetenceModel } from "../models/manifestCompetenceModel";
 import { manifestCompRepository } from "../interfaces/repositories/manifestCompRepository";
 import { manifestCompDataSource } from "../../data/interfaces/data-sources/manifestCompDataSource";
+import { manifestCompList } from "../models/manifestCompList";
 
 export class manifestCompRepositoryImpl implements manifestCompRepository {
   private manifestCompDataSource: manifestCompDataSource;
@@ -32,6 +33,11 @@ export class manifestCompRepositoryImpl implements manifestCompRepository {
   public async getAllManifestComp(): Promise<manifestCompetenceModel[]> {
     const allManifestComp = await this.manifestCompDataSource.getAllManifestComp();
     return allManifestComp;
+  }
+
+  public async getAllManifestCompAndCompetenceByUserId(userId: string): Promise<manifestCompList[]> {
+    const manifestCompAndCompetence = await this.manifestCompDataSource.getAllManifestCompAndCompetenceByUserId(userId);
+    return manifestCompAndCompetence;
   }
 
 

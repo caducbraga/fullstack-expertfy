@@ -1,3 +1,4 @@
+import { accountInfoModel } from "../../../domain/models/accountInfoModel";
 import { expertListModel } from "../../../domain/models/expertListModel";
 import { userModel } from "../../../domain/models/userModel";
 
@@ -9,4 +10,5 @@ export interface userDataSource {
   getUserById(id: string): Promise<userModel>;
   getAllUsers(): Promise<userModel[]>;
   getUsersAndCountByCompetenceId(competenceId: string): Promise<expertListModel[]>;
+  getUserAccountInfo(id: string): Promise<accountInfoModel>;
 }

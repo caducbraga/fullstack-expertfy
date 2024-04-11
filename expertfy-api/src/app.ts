@@ -4,7 +4,7 @@ import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import { connection } from './data/connection'
 
-//ROUTES AREA
+//USER AREA
 import userRouter from './presentation/routers/userRouter'
 import { userRepositoryImpl } from './domain/respositories/userRepository'
 import { userDataSourceImpl } from "./data/data-sources/mysql/userDataSource";
@@ -15,6 +15,7 @@ import { updateUserUseCaseImpl } from './domain/use-cases/user/updateUser'
 import { deleteUserUseCaseImpl } from './domain/use-cases/user/deleteUser'
 import { getUserByIdUseCaseImpl } from './domain/use-cases/user/getUserById'
 import { getUsersAndCountByCompetenceIdUseCaseImpl } from './domain/use-cases/user/getUsersAndCountByCompetenceId'
+import { getUserAccountInfoUseCaseImpl } from './domain/use-cases/user/getUserAccountInfo'
 
 //COMPETENCE AREA
 import competenceRouter from "./presentation/routers/competenceRouter";
@@ -38,6 +39,7 @@ import { updateManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/u
 import { deleteManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/deleteManifestComp";
 import { getManifestCompByIdUseCaseImpl } from "./domain/use-cases/manifestComp/getManifestCompById";
 import { getAllManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/getAllManifestComp";
+import { getAllManifestCompAndCompetenceUseCaseImpl } from './domain/use-cases/manifestComp/getAllManifestCompAndCompetence'; 
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -66,6 +68,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new deleteUserUseCaseImpl(new userRepositoryImpl(userDS)),
     new getUserByIdUseCaseImpl(new userRepositoryImpl(userDS)),
     new getUsersAndCountByCompetenceIdUseCaseImpl(new userRepositoryImpl(userDS)),
+    new getUserAccountInfoUseCaseImpl(new userRepositoryImpl(userDS)),
   )
 
   const competenceDS = await getMSQL_DS(competenceDataSourceImpl)
@@ -87,13 +90,14 @@ async function getMSQL_DS(dataSourceClass: any) {
     new updateManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
     new deleteManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
     new getManifestCompByIdUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
+    new getAllManifestCompAndCompetenceUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
   )
 
 
   server.use("/user", userMiddleWare)
   server.use("/competence", competenceMiddleWare)
   server.use("/manifest", manifestCompMiddleWare)
-  server.get("/", (req, res) => res.send("Hello World"))
+  server.get("/", (req, res) => res.send("This is our API!"))
   server.listen(3000, () => console.log("Running on http://localhost:3000"))
 
 })()
