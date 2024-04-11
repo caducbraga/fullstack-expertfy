@@ -13,8 +13,15 @@ import { format } from 'date-fns';
 
 interface ManifestTableProps {
 
-  rows?: any[];
+  rows?: ManifestTableContent[];
 
+}
+
+export interface ManifestTableContent{
+  id: string;
+  name: string;
+  description: string;
+  timestamp: string;
 }
 
 export function ManifestTable({
@@ -41,8 +48,8 @@ export function ManifestTable({
 
               return (
                 <TableRow hover key={row.id} >
-                  <TableCell>{row.competence}</TableCell>
-                  <TableCell>{row.manifestCompetence}</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.description}</TableCell>
                   <TableCell>{format(new Date(row.timestamp), 'dd/MM/yyyy')}</TableCell>
                 </TableRow>
               );
