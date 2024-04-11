@@ -420,6 +420,41 @@
           }
         }
       }
+    },
+    "/manifest/user/{id}":{
+      "get": {
+        "tags": ["manifestCompetence"],
+        "summary": "Get all manifestCompetences by user id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "manifestCompetences found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/manifestCompAndCompetence"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -563,6 +598,30 @@
           },
           "areaId": {
             "type": "number"
+          }
+        }
+      },
+      "manifestCompAndCompetence": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string"
+          },
+          "userId": {
+            "number": "number"
+          },
+          "competenceId": {
+            "number": "number"
+          },
+          "competenceName": {
+            "type": "string"
           }
         }
       }

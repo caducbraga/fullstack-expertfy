@@ -39,6 +39,7 @@ import { updateManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/u
 import { deleteManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/deleteManifestComp";
 import { getManifestCompByIdUseCaseImpl } from "./domain/use-cases/manifestComp/getManifestCompById";
 import { getAllManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/getAllManifestComp";
+import { getAllManifestCompAndCompetenceUseCaseImpl } from './domain/use-cases/manifestComp/getAllManifestCompAndCompetence'; 
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -89,13 +90,14 @@ async function getMSQL_DS(dataSourceClass: any) {
     new updateManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
     new deleteManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
     new getManifestCompByIdUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
+    new getAllManifestCompAndCompetenceUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
   )
 
 
   server.use("/user", userMiddleWare)
   server.use("/competence", competenceMiddleWare)
   server.use("/manifest", manifestCompMiddleWare)
-  server.get("/", (req, res) => res.send("Hello World"))
+  server.get("/", (req, res) => res.send("This is our API!"))
   server.listen(3000, () => console.log("Running on http://localhost:3000"))
 
 })()

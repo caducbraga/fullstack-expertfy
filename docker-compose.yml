@@ -35,7 +35,7 @@ services:
     depends_on:
       - api-expertfy
     volumes:
-      - ./expertfy-front:/usr/src/app/src # Descomente para utilizar o recurso de hot reload (ctrl + s = atualiza a página)
+      - ./expertfy-front/src:/usr/src/app/src # Descomente para utilizar o recurso de hot reload (ctrl + s = atualiza a página)
 
 volumes:
   db-volume:

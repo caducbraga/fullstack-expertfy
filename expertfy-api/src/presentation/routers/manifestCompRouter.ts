@@ -5,13 +5,15 @@ import { deleteManifestCompUseCase } from "../../domain/interfaces/use-cases/man
 import { getAllManifestCompUseCase } from "../../domain/interfaces/use-cases/manifestComp/getAllManifestComp";
 import { getManifestCompByIdUseCase } from "../../domain/interfaces/use-cases/manifestComp/getManifestCompById";
 import { updateManifestCompUseCase } from "../../domain/interfaces/use-cases/manifestComp/updateManifestComp";
+import { getAllManifestCompAndCompetenceUseCase } from "../../domain/interfaces/use-cases/manifestComp/getAllManifestCompAndCompetence";
 
 export default function manifestCompRouter(
   getAllManifestCompUseCase: getAllManifestCompUseCase,
   createManifestCompUseCase: createManifestCompUseCase,
   updatedManifestCompUseCase: updateManifestCompUseCase,
   deleteManifestCompUseCase: deleteManifestCompUseCase,
-  getManifestCompByIdUseCase: getManifestCompByIdUseCase
+  getManifestCompByIdUseCase: getManifestCompByIdUseCase,
+  getAllManifestCompAndCompetenceUseCase: getAllManifestCompAndCompetenceUseCase,
 ) {
   const router = express.Router();
 
@@ -57,6 +59,15 @@ export default function manifestCompRouter(
       res.status(200).send(deletedManifestComp);
     } catch (error) {
       res.status(500).send({ error: "error deleting data", message: error });
+    }
+  });
+
+  router.get("/user/:userId", async (req: Request, res: Response) => {
+    try {
+      const manifestCompAndCompetence = await getAllManifestCompAndCompetenceUseCase.execute(req.params.userId);
+      res.status(200).send(manifestCompAndCompetence);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
     }
   });
 
