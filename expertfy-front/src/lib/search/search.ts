@@ -1,5 +1,6 @@
 import axios from 'axios'
 import dotenv from "dotenv";
+import path from 'path';
 
 export interface Competence {
   id: number;
@@ -23,12 +24,9 @@ export interface Expert {
   competenceCount: number;
 }
 
+
 class SearchExpert {
   constructor() {
-    dotenv.config();
-    // this.baseApiUrl = process.env.BASE_API;
-    //TODO: Change this to the real API URL
-    // this.baseApiUrl = "http://localhost:3000";
     this.baseApiUrl = "https://66e6-186-241-116-65.ngrok-free.app";
     // Adicionando cabeçalho padrão para todas as requisições
     axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
