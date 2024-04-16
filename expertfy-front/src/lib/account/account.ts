@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 
 class Account {
   constructor() {
-    dotenv.config();
-    // this.baseApiUrl = process.env.BASE_API;
-    //TODO: Change this to the real API URL
-    this.baseApiUrl = "http://localhost:3000";
+    // this.baseApiUrl = "http://localhost:3000";
+    this.baseApiUrl = "https://66e6-186-241-116-65.ngrok-free.app";
+
+    axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
   }
 
   private baseApiUrl: string | undefined;
