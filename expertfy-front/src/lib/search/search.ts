@@ -28,7 +28,10 @@ class SearchExpert {
     dotenv.config();
     // this.baseApiUrl = process.env.BASE_API;
     //TODO: Change this to the real API URL
-    this.baseApiUrl = "http://localhost:3000";
+    // this.baseApiUrl = "http://localhost:3000";
+    this.baseApiUrl = "https://66e6-186-241-116-65.ngrok-free.app";
+    // Adicionando cabeçalho padrão para todas as requisições
+    axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
   }
 
   private baseApiUrl: string | undefined;
@@ -56,8 +59,10 @@ class SearchExpert {
   }
 
   async getAllSuggestions() {
+    console.log(this.baseApiUrl + `/competence`);
     try {
       const response = await axios.get(this.baseApiUrl + `/competence`);
+      console.log(response.data);
       return response.data;
     }
     catch (error) {
