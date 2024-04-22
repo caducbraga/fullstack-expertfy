@@ -15,7 +15,7 @@ export default function Page(): React.JSX.Element {
   
   const { page, setPage, rowsPerPage, setRowsPerPage, experts, setExperts, paginatedExperts, setPaginatedExperts } = useSearchStore();
 
-  const handleFilterSelect = (selection: Competence | null) => {
+  const handleFilterSelect = (selection: Competence | null, advancedSearch?: Competence) => {
     if (selection !== null) {
       const expert_list_pr = searchExpert.getExpertList(selection);
       expert_list_pr.then((data) => {
