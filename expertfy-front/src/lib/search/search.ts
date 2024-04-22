@@ -27,7 +27,8 @@ export interface Expert {
 
 class SearchExpert {
   constructor() {
-    this.baseApiUrl = "https://aceb-186-241-116-65.ngrok-free.app";
+    this.baseApiUrl = "http://localhost:3000";
+    // this.baseApiUrl = "https://aceb-186-241-116-65.ngrok-free.app";
     // Adicionando cabeçalho padrão para todas as requisições
     axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
   }

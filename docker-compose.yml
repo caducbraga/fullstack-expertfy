@@ -34,8 +34,8 @@ services:
     command: npm run dev
     depends_on:
       - api-expertfy
-    volumes:
-      - ./expertfy-front/src:/usr/src/app/src # Descomente para utilizar o recurso de hot reload (ctrl + s = atualiza a página)
+    # volumes:
+      # - ./expertfy-front/src:/usr/src/app/src # Descomente para utilizar o recurso de hot reload (ctrl + s = atualiza a página)
 
 volumes:
   db-volume:

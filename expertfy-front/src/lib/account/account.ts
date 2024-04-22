@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 
 class Account {
   constructor() {
-    // this.baseApiUrl = "http://localhost:3000";
-    this.baseApiUrl = "https://aceb-186-241-116-65.ngrok-free.app";
+    this.baseApiUrl = "http://localhost:3000";
+    // this.baseApiUrl = "https://aceb-186-241-116-65.ngrok-free.app";
 
     axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
   }
