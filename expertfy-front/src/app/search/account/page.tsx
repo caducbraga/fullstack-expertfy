@@ -32,7 +32,6 @@ export default function Page(): React.JSX.Element {
       });
 
       accountInfo.getManifestCompListByUser(userId).then((data) => {
-        console.log(data);
         setManifestCompetences(data);
       });
     }

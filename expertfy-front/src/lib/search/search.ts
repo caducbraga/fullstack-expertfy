@@ -36,8 +36,6 @@ class SearchExpert {
   private baseApiUrl: string | undefined;
 
   async getSuggestions(name: string) {
-    console.log("getSuggestions");
-    console.log(this.baseApiUrl + `/competence/findByName/${name}`);
     try {
       const response = await axios.get(this.baseApiUrl + `/competence/findByName/${name}`);
       return response.data;
@@ -61,11 +59,40 @@ class SearchExpert {
     console.log(this.baseApiUrl + `/competence`);
     try {
       const response = await axios.get(this.baseApiUrl + `/competence`);
-      console.log(response.data);
       return response.data;
     }
     catch (error) {
       console.log("Error: get All Suggestions" + error);
+    }
+  }
+
+  async getAllAreas() {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/area`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get All Areas" + error);
+    }
+  }
+
+  async getAllLanguages() {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/language`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get All Languages" + error);
+    }
+  }
+
+  async getAllSeniorities() {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/seniority`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get All Seniorities" + error);
     }
   }
 }

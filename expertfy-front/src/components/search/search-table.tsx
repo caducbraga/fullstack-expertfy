@@ -14,6 +14,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
+import type { User } from '@/types/user';
 
 
 function noop(): void {
@@ -21,13 +22,7 @@ function noop(): void {
 }
 
 
-export interface Expert {
-  id: number;
-  name: string;
-  seniorityName: string;
-  email: string;
-  photo: string; //way for the image in backend
-  team: string;
+export interface Expert extends User{
   competenceCount: number;
 }
 
@@ -92,7 +87,7 @@ export function SearchTable({
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
                   <TableCell>
-                    {row.seniorityName}
+                    {row.seniority}
                   </TableCell>
                   <TableCell>{row.team}</TableCell>
                   <TableCell>{row.competenceCount}</TableCell>
