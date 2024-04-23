@@ -71,13 +71,20 @@ export default function Page(): React.JSX.Element {
     }
   }, [page, rowsPerPage]);
 
+  const getUpdatedLength = () => {
+    if (filteredExperts.length > 0) {
+      return filteredExperts.length;
+    }
+    return experts.length;
+  }
+
   return (
     <Stack spacing={3}>
       <SearchFilters selection={handleFilterSelect} filter={handleAdvancedFilters} />
       {showAlertWarningEmptyExperts && <Alert severity="warning">Busque por uma competência antes de utilizar os filtros avançados</Alert>}
       {experts.length > 0 && (
         <SearchTable
-          count={experts.length}
+          count={getUpdatedLength()}
           page={page}
           rows={paginatedExperts}
           rowsPerPage={rowsPerPage}

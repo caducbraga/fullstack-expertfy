@@ -3,7 +3,6 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-
 import { AccountDetailsForm } from '@/components/search/account/account-details-form';
 import { AccountInfo } from '@/components/search/account/account-info';
 import { User } from '@/types/user';

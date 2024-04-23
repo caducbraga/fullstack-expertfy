@@ -2,12 +2,11 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import { Stack } from '@mui/system';
-import { styled } from '@mui/material/styles';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { searchExpert } from '@/lib/search/search';
 import type { Competence } from '@/lib/search/search';
-import { Alert, Button, CardActions, CardContent, CardMedia, Collapse, Divider, FormControl, Grid, IconButton, IconButtonProps, InputAdornment, InputLabel, Select, Typography } from '@mui/material';
+import { Alert, CardContent, CardMedia, InputAdornment } from '@mui/material';
 import { MagnifyingGlass as MagnifyingGlassIcon } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass';
 import useSearchStore from '@/store/searchStore';
 import { AdvancedSearch } from './advanced-search';
