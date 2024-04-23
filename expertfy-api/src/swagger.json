@@ -134,7 +134,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/ExpertList"
                   }
                 }
               }
@@ -167,7 +167,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserAccountInfo"
+                  "$ref": "#/components/schemas/ExpertList"
                 }
               }
             }
@@ -615,7 +615,7 @@
           }
         }
       },
-      "UserAccountInfo": {
+      "ExpertList": {
         "type": "object",
         "properties": {
           "id": {
