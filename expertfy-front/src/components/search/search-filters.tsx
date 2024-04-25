@@ -56,9 +56,9 @@ export function SearchFilters( {selection, filter} : SearchFiltersProps ): React
       {/* Input search */}
       <Card sx={{ p: 2 }}>
         <CardMedia
-          sx={{ height: 500, maxWidth: 600, margin: 'auto', borderRadius: '15px'}}
+          sx={{ width: '200px', margin: 'auto', borderRadius: '15px'}}
           component="img"
-          src='/logo.jpg'
+          src='/logo.png'
           title="expertfy logo"
         />
         <CardContent>
