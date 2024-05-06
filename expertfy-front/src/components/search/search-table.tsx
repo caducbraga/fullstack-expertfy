@@ -63,7 +63,7 @@ export function SearchTable({
             <TableRow>
               <TableCell>Nome</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Linguagem</TableCell>
+              <TableCell>Idioma</TableCell>
               <TableCell>Área</TableCell>
               <TableCell>Senioridade</TableCell>
               <TableCell>Time</TableCell>
