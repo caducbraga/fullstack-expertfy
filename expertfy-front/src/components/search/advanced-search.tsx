@@ -117,7 +117,7 @@ export function AdvancedSearch({setShowAlert, filter} : AdvancedFiltersProps): R
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
-                    <InputLabel id="advanced-select-label-language">Linguagem</InputLabel>
+                    <InputLabel id="advanced-select-label-language">Idioma</InputLabel>
                     <Select
                       labelId="advanced-select-label-language"
                       id="select-label-language"
