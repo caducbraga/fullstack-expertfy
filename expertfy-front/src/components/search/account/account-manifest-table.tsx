@@ -39,7 +39,7 @@ export function ManifestTable({
           <TableHead>
             <TableRow>
               <TableCell>Competência</TableCell>
-              <TableCell>Manifestação da Competência</TableCell>
+              <TableCell>Evidência</TableCell>
               <TableCell>Data de Ocorrência</TableCell>
             </TableRow>
           </TableHead>

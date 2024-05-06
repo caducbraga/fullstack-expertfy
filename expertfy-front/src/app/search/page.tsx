@@ -15,7 +15,7 @@ import { Alert } from '@mui/material';
 export default function Page(): React.JSX.Element {
   
   const { experts, filteredExperts, setExperts, setFilteredExperts } = useSearchStore();
-  const { page, rowsPerPage, paginatedExperts, setPage, setRowsPerPage, setPaginatedExperts } = useTableStore();
+  const { count,  page, rowsPerPage, paginatedExperts, setCount, setPage, setRowsPerPage, setPaginatedExperts } = useTableStore();
 
   const [showAlertWarningEmptyExperts, setShowAlertWarningEmptyExperts] = React.useState<boolean>(false);
 
@@ -24,59 +24,68 @@ export default function Page(): React.JSX.Element {
     if (selection !== null) {
       const expert_list_pr = searchExpert.getExpertList(selection);
       expert_list_pr.then((data) => {
+        //initial experts list
         setExperts(data);
+        setFilteredExperts(data);
+        setCount(data.length);
         setPaginatedExperts(applyPagination(data, page, rowsPerPage));
         setShowAlertWarningEmptyExperts(false);
       });
+
     }
   }
 
   // Get the filters values for the advanced search and apply the filter
   const handleAdvancedFilters = (filters: AdvancedFilters) => {
     // Check if the expert list is empty
+    console.log(filters)
     if(experts.length === 0) {
       setShowAlertWarningEmptyExperts(true);
       return;
     }
-    var filteredExperts = experts;
+    let filteredExpertsLocal: Expert[] = [];
+    if (filteredExperts.length !== 0) {
+      filteredExpertsLocal = filteredExperts;
+    }
+    else {
+      filteredExpertsLocal = experts;
+    }
+    
     // Default: none filter
-    if (filters.useArea && filters.useLanguage && filters.useSeniority) {
+    if (!filters.useArea && !filters.useLanguage && !filters.useSeniority) {
       setPaginatedExperts(applyPagination(experts, page, rowsPerPage));
+      setFilteredExperts(experts);
+      setCount(experts.length);
+    
     }
     // Some filter was selected
     else {
       if(filters.useLanguage) {
-        filteredExperts = experts.filter((e) => e.language === filters.perLanguage);
+        filteredExpertsLocal = filteredExpertsLocal.filter((e) => e.language === filters.perLanguage);
       }
       if(filters.useArea) {
-        filteredExperts = experts.filter((e) => e.area === filters.perArea);
+        filteredExpertsLocal = filteredExpertsLocal.filter((e) => e.area === filters.perArea);
       }
       if(filters.useSeniority) {
-        filteredExperts = experts.filter((e) => e.seniority === filters.perSeniority);
+        filteredExpertsLocal = filteredExpertsLocal.filter((e) => e.seniority === filters.perSeniority);
       }
-      setPaginatedExperts(applyPagination(filteredExperts, page, rowsPerPage));
-      setFilteredExperts(filteredExperts);
+      // Update the filtered experts list
+      setPaginatedExperts(applyPagination(filteredExpertsLocal, page, rowsPerPage));
+      setFilteredExperts(filteredExpertsLocal);
+      setCount(filteredExpertsLocal.length);
     }
+     // Reset the page to 0 when the filters are applied
+    setPage(0);
   }
-
-
 
   // Pagination control
   React.useEffect(() => {
-    if (filteredExperts.length > 0) {
-      setPaginatedExperts(applyPagination(filteredExperts, page, rowsPerPage));
-    }
-    else {
-      setPaginatedExperts(applyPagination(experts, page, rowsPerPage));
-    }
+    
+    setPaginatedExperts(applyPagination(filteredExperts, page, rowsPerPage));
+    
+    
   }, [page, rowsPerPage]);
 
-  const getUpdatedLength = () => {
-    if (filteredExperts.length > 0) {
-      return filteredExperts.length;
-    }
-    return experts.length;
-  }
 
   return (
     <Stack spacing={3}>
@@ -84,7 +93,7 @@ export default function Page(): React.JSX.Element {
       {showAlertWarningEmptyExperts && <Alert severity="warning">Busque por uma competência antes de utilizar os filtros avançados</Alert>}
       {experts.length > 0 && (
         <SearchTable
-          count={getUpdatedLength()}
+          count={count}
           page={page}
           rows={paginatedExperts}
           rowsPerPage={rowsPerPage}

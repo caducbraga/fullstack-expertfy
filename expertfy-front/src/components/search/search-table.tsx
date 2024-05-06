@@ -63,14 +63,24 @@ export function SearchTable({
             <TableRow>
               <TableCell>Nome</TableCell>
               <TableCell>Email</TableCell>
+              <TableCell>Linguagem</TableCell>
+              <TableCell>Área</TableCell>
               <TableCell>Senioridade</TableCell>
               <TableCell>Time</TableCell>
               <TableCell>Nível de Conhecimento</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            {rows.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <Typography variant="subtitle1" align="left">
+                    Nenhum resultado encontrado
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
             {rows.map((row) => {
-
               return (
                 <TableRow key={row.id} >
                   <TableCell>
@@ -86,9 +96,9 @@ export function SearchTable({
                     </Stack>
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>
-                    {row.seniority}
-                  </TableCell>
+                  <TableCell>{row.language}</TableCell>
+                  <TableCell>{row.area}</TableCell>
+                  <TableCell>{row.seniority}</TableCell>
                   <TableCell>{row.team}</TableCell>
                   <TableCell>{row.competenceCount}</TableCell>
                 </TableRow>
