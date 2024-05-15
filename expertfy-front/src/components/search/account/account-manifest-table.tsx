@@ -22,6 +22,7 @@ export interface ManifestTableContent{
   name: string;
   description: string;
   timestamp: string;
+  link: string;
 }
 
 export function ManifestTable({
@@ -40,6 +41,7 @@ export function ManifestTable({
             <TableRow>
               <TableCell>Competência</TableCell>
               <TableCell>Evidência</TableCell>
+              <TableCell>Link</TableCell>
               <TableCell>Data de Ocorrência</TableCell>
             </TableRow>
           </TableHead>
@@ -50,6 +52,7 @@ export function ManifestTable({
                 <TableRow hover key={row.id} >
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.description}</TableCell>
+                  <TableCell><a href={row.link}>{row.link}</a></TableCell>
                   <TableCell>{format(new Date(row.timestamp), 'dd/MM/yyyy')}</TableCell>
                 </TableRow>
               );

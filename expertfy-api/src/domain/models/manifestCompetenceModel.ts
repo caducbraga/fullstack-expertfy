@@ -7,4 +7,5 @@ export interface manifestCompetenceModel {
     description: string;
     user: userModel;
     competence: competenceModel;
+    link: string;
 }

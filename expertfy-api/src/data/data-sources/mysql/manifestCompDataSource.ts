@@ -21,7 +21,8 @@ export class manifestCompDataSourceImpl implements manifestCompDataSource {
           '${manifestComp.timestamp}',
           '${manifestComp.description}',
           '${manifestComp.user.id}',
-          '${manifestComp.competence.id}'
+          '${manifestComp.competence.id}',
+          '${manifestComp.link}'
         )`);
 
       if (Array.isArray(rows)) {
@@ -45,7 +46,8 @@ export class manifestCompDataSourceImpl implements manifestCompDataSource {
               timestamp='${manifestComp.timestamp}',
               description='${manifestComp.description}',
               userId='${manifestComp.user.id}',
-              competenceId='${manifestComp.competence.id}'
+              competenceId='${manifestComp.competence.id}',
+              link='${manifestComp.link}'
               WHERE id='${id}'`);
   
         if (Array.isArray(rows)) {

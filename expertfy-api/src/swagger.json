@@ -612,6 +612,9 @@
           },
           "competenceId": {
             "type": "number"
+          },
+          "link": {
+            "type": "string"
           }
         }
       },
