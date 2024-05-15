@@ -21,6 +21,13 @@ function noop(): void {
   // do nothing
 }
 
+function dateToRealYear(date: Date): string {
+  const today = new Date();
+  const employmentStartDate = new Date(date);
+  const years = today.getFullYear() - employmentStartDate.getFullYear();
+  console.log(years);
+  return `${years} anos`;
+}
 
 export interface Expert extends User{
   competenceCount: number;
@@ -66,6 +73,7 @@ export function SearchTable({
               <TableCell>Idioma</TableCell>
               <TableCell>Área</TableCell>
               <TableCell>Senioridade</TableCell>
+              <TableCell>Tempo na Organização</TableCell>
               <TableCell>Time</TableCell>
               <TableCell>Nível de Conhecimento</TableCell>
             </TableRow>
@@ -99,6 +107,7 @@ export function SearchTable({
                   <TableCell>{row.language}</TableCell>
                   <TableCell>{row.area}</TableCell>
                   <TableCell>{row.seniority}</TableCell>
+                  <TableCell>{dateToRealYear(row.employmentStartDate)}</TableCell>
                   <TableCell>{row.team}</TableCell>
                   <TableCell>{row.competenceCount}</TableCell>
                 </TableRow>
