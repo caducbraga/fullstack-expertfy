@@ -41,7 +41,7 @@ export function ManifestTable({
             <TableRow>
               <TableCell>Competência</TableCell>
               <TableCell>Evidência</TableCell>
-              <TableCell>Link</TableCell>
+              <TableCell>Artefato</TableCell>
               <TableCell>Data de Ocorrência</TableCell>
             </TableRow>
           </TableHead>
