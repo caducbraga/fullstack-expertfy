@@ -1,4 +1,4 @@
-authtoken: 2fBYaQWotPsMkuC69M2GR5SdZO4_2kxPqSTvcdDH5mrmTP9Z7
+authtoken: yourauthtoken
 version: 2
 tunnels:
     frontend:
