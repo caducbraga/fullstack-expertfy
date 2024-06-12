@@ -10,6 +10,7 @@ import { useSearchParams } from 'next/navigation'
 import { accountInfo } from '@/lib/account/account';
 import { ManifestTable } from '@/components/search/account/account-manifest-table';
 import type { ManifestTableContent } from '@/components/search/account/account-manifest-table';
+import AccountScorePanel from '@/components/search/account/account-score-panel';
 
 
 
@@ -56,6 +57,7 @@ export default function Page(): React.JSX.Element {
             {/* competence table */}
             <Stack spacing={3} sx={{ flex: '1 1 auto' }}>
               <Typography variant="h4">Manifestações</Typography>
+              <AccountScorePanel/>
               <ManifestTable rows={manifestCompetences} />
             </Stack>
           </Stack>
