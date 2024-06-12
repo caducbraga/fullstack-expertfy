@@ -41,6 +41,22 @@ import { getManifestCompByIdUseCaseImpl } from "./domain/use-cases/manifestComp/
 import { getAllManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/getAllManifestComp";
 import { getAllManifestCompAndCompetenceUseCaseImpl } from './domain/use-cases/manifestComp/getAllManifestCompAndCompetence'; 
 
+//ADVANCED SEARCH AREA
+import { areaDataSourceImpl } from './data/data-sources/mysql/areaDataSource';
+import { areaRepositoryImpl } from './domain/respositories/areaRepository';
+import { getAllAreasUseCaseImpl } from './domain/use-cases/area/getAllArea';
+
+import { languageDataSourceImpl } from './data/data-sources/mysql/languageDataSource';
+import { languageRepositoryImpl } from './domain/respositories/languageRepository';
+import { getAllLanguagesUseCaseImpl } from './domain/use-cases/language/getAllLanguage';
+
+import { seniorityDataSourceImpl } from './data/data-sources/mysql/seniorityDataSource';
+import { seniorityRepositoryImpl } from './domain/respositories/seniorityRepository';
+import { getAllSeniorityUseCaseImpl } from './domain/use-cases/seniority/getAllArea';
+import areaRouter from './presentation/routers/areaRouter';
+import languageRouter from './presentation/routers/languageRouter';
+import seniorityRouter from './presentation/routers/seniorityRouter';
+
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
 
@@ -93,7 +109,18 @@ async function getMSQL_DS(dataSourceClass: any) {
     new getAllManifestCompAndCompetenceUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
   )
 
+  //New routes for advanced search
 
+  const areaDS = await getMSQL_DS(areaDataSourceImpl)
+  const languageDS = await getMSQL_DS(languageDataSourceImpl)
+  const seniorityDS = await getMSQL_DS(seniorityDataSourceImpl)
+  const areaMiddleWare = areaRouter(new getAllAreasUseCaseImpl(new areaRepositoryImpl(areaDS)))
+  const languageMiddleWare = languageRouter(new getAllLanguagesUseCaseImpl(new languageRepositoryImpl(languageDS)))
+  const seniorityMiddleWare = seniorityRouter(new getAllSeniorityUseCaseImpl(new seniorityRepositoryImpl(seniorityDS)))
+
+  server.use("/area", areaMiddleWare)
+  server.use("/language", languageMiddleWare)
+  server.use("/seniority", seniorityMiddleWare)
   server.use("/user", userMiddleWare)
   server.use("/competence", competenceMiddleWare)
   server.use("/manifest", manifestCompMiddleWare)

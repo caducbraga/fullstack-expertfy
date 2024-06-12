@@ -2,7 +2,6 @@ import { userModel } from "../../../domain/models/userModel";
 import { expertListModel } from "../../../domain/models/expertListModel";
 import { userDataSource } from "../../interfaces/data-sources/userDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
-import { accountInfoModel } from "../../../domain/models/accountInfoModel";
 
 const userTable = "user";
 const manifestTable = "manifestcompetence";
@@ -137,8 +136,13 @@ export class userDataSourceImpl implements userDataSource {
       SELECT
         users.*,
         (SELECT COUNT(*) FROM ${manifestTable} WHERE userId = users.id AND competenceId = '${competenceId}') AS competenceCount,
-        s.name AS seniorityName
-      FROM ${userTable} users JOIN seniority s ON users.seniorityId = s.id
+        l.name AS language,
+        s.name AS seniority,
+        a.name AS area
+      FROM ${userTable} users 
+      JOIN language l ON users.languageId = l.id
+      JOIN seniority s ON users.seniorityId = s.id
+      JOIN area a ON users.areaId = a.id
       WHERE users.id IN (SELECT userId FROM ${manifestTable} WHERE competenceId = '${competenceId}')
       ORDER BY competenceCount DESC;
     `;
@@ -163,7 +167,9 @@ export class userDataSourceImpl implements userDataSource {
             areaId: row.areaId,
             office: row.office,
             competenceCount: row.competenceCount,
-            seniorityName: row.seniorityName,
+            seniority: row.seniority,
+            language: row.language,
+            area: row.area,
           };
             
           return user;
@@ -178,7 +184,7 @@ export class userDataSourceImpl implements userDataSource {
     }
   }
   
-  public async getUserAccountInfo(id: string): Promise<accountInfoModel> {
+  public async getUserAccountInfo(id: string): Promise<expertListModel> {
     try {
       const query = `
       SELECT
@@ -196,13 +202,13 @@ export class userDataSourceImpl implements userDataSource {
       
       if (Array.isArray(rows)) {
         const newrows = rows as RowDataPacket[];
-        const user = newrows[0] as accountInfoModel;
+        const user = newrows[0] as expertListModel;
         return user;
       }
-      return {} as accountInfoModel;
+      return {} as expertListModel;
     } catch (error) {
       console.log(error);
-      return {} as accountInfoModel;
+      return {} as expertListModel;
     }
   }
 }

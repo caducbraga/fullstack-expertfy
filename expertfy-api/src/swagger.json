@@ -134,7 +134,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/ExpertList"
                   }
                 }
               }
@@ -167,7 +167,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserAccountInfo"
+                  "$ref": "#/components/schemas/ExpertList"
                 }
               }
             }
@@ -455,6 +455,78 @@
           }
         }
       }
+    },
+    "/area":{
+      "get": {
+        "tags": ["Area"],
+        "summary": "Get all areas",
+        "responses": {
+          "200": {
+            "description": "Areas found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/simpleList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/language":{
+      "get": {
+        "tags": ["Language"],
+        "summary": "Get all languages",
+        "responses": {
+          "200": {
+            "description": "Languages found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/simpleList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/seniority":{
+      "get": {
+        "tags": ["Seniority"],
+        "summary": "Get all seniorities",
+        "responses": {
+          "200": {
+            "description": "Seniorities found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/simpleList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -540,10 +612,13 @@
           },
           "competenceId": {
             "type": "number"
+          },
+          "link": {
+            "type": "string"
           }
         }
       },
-      "UserAccountInfo": {
+      "ExpertList": {
         "type": "object",
         "properties": {
           "id": {
@@ -619,6 +694,17 @@
           },
           "competenceId": {
             "number": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "simpleList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
           },
           "name": {
             "type": "string"

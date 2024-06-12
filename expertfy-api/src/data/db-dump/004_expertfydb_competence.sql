@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: expertfydb
 -- ------------------------------------------------------
--- Server version	8.1.0
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,6 +18,7 @@
 --
 -- Table structure for table `competence`
 --
+
 USE expertfydb;
 
 DROP TABLE IF EXISTS `competence`;
@@ -29,7 +30,7 @@ CREATE TABLE `competence` (
   `description` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Represents one competence';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Represents one competence';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +39,7 @@ CREATE TABLE `competence` (
 
 LOCK TABLES `competence` WRITE;
 /*!40000 ALTER TABLE `competence` DISABLE KEYS */;
-INSERT INTO `competence` VALUES (1,'Java','Linguagem de Programação'),(2,'Javascript','Linguagem de programação'),(3,'Kubernetes','Orquestrador de container'),(4,'Git','Versionador de código'),(5,'PostgreSQL','Banco de dados'),(6,'MongoDB','Banco de dados'),(7,'Swagger','Documentador de API');
+INSERT INTO `competence` VALUES (1,'Java','Linguagem de Programação'),(2,'Javascript','Linguagem de programação'),(3,'Kubernetes','Orquestrador de container'),(4,'Git','Versionador de código'),(5,'PostgreSQL','Banco de dados'),(6,'MongoDB','Banco de dados'),(7,'Swagger','Documentador de API'),(8,'Otimização de Consultas SQL','Linguagem de Consulta'),(9,'Teste de Unidade','Testes unitários'),(10,'Monitoramento','Análise em Tempo Real'),(11,'Design de API','Criação de Classes Controller'),(12,'Documentação de Software','Criação de Documentos de Software');
 /*!40000 ALTER TABLE `competence` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-19 12:02:33
+-- Dump completed on 2024-05-15 16:21:14

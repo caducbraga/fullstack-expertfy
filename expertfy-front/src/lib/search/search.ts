@@ -27,7 +27,8 @@ export interface Expert {
 
 class SearchExpert {
   constructor() {
-    this.baseApiUrl = "https://66e6-186-241-116-65.ngrok-free.app";
+    this.baseApiUrl = "http://localhost:3000";
+    // this.baseApiUrl = "https://6004-186-241-116-65.ngrok-free.app";
     // Adicionando cabeçalho padrão para todas as requisições
     axios.defaults.headers.common['ngrok-skip-browser-warning'] = true;
   }
@@ -35,8 +36,6 @@ class SearchExpert {
   private baseApiUrl: string | undefined;
 
   async getSuggestions(name: string) {
-    console.log("getSuggestions");
-    console.log(this.baseApiUrl + `/competence/findByName/${name}`);
     try {
       const response = await axios.get(this.baseApiUrl + `/competence/findByName/${name}`);
       return response.data;
@@ -60,11 +59,40 @@ class SearchExpert {
     console.log(this.baseApiUrl + `/competence`);
     try {
       const response = await axios.get(this.baseApiUrl + `/competence`);
-      console.log(response.data);
       return response.data;
     }
     catch (error) {
       console.log("Error: get All Suggestions" + error);
+    }
+  }
+
+  async getAllAreas() {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/area`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get All Areas" + error);
+    }
+  }
+
+  async getAllLanguages() {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/language`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get All Languages" + error);
+    }
+  }
+
+  async getAllSeniorities() {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/seniority`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get All Seniorities" + error);
     }
   }
 }

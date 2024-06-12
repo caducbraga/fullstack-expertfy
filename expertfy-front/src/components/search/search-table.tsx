@@ -14,20 +14,22 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
+import type { User } from '@/types/user';
 
 
 function noop(): void {
   // do nothing
 }
 
+function dateToRealYear(date: Date): string {
+  const today = new Date();
+  const employmentStartDate = new Date(date);
+  const years = today.getFullYear() - employmentStartDate.getFullYear();
+  console.log(years);
+  return `${years} anos`;
+}
 
-export interface Expert {
-  id: number;
-  name: string;
-  seniorityName: string;
-  email: string;
-  photo: string; //way for the image in backend
-  team: string;
+export interface Expert extends User{
   competenceCount: number;
 }
 
@@ -68,14 +70,25 @@ export function SearchTable({
             <TableRow>
               <TableCell>Nome</TableCell>
               <TableCell>Email</TableCell>
+              <TableCell>Idioma</TableCell>
+              <TableCell>Área</TableCell>
               <TableCell>Senioridade</TableCell>
+              <TableCell>Tempo na Organização</TableCell>
               <TableCell>Time</TableCell>
               <TableCell>Nível de Conhecimento</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            {rows.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <Typography variant="subtitle1" align="left">
+                    Nenhum resultado encontrado
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
             {rows.map((row) => {
-
               return (
                 <TableRow key={row.id} >
                   <TableCell>
@@ -91,9 +104,10 @@ export function SearchTable({
                     </Stack>
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>
-                    {row.seniorityName}
-                  </TableCell>
+                  <TableCell>{row.language}</TableCell>
+                  <TableCell>{row.area}</TableCell>
+                  <TableCell>{row.seniority}</TableCell>
+                  <TableCell>{dateToRealYear(row.employmentStartDate)}</TableCell>
                   <TableCell>{row.team}</TableCell>
                   <TableCell>{row.competenceCount}</TableCell>
                 </TableRow>

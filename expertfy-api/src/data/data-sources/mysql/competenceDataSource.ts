@@ -89,7 +89,7 @@ export class competenceDataSourceImpl implements competenceDataSource {
 
   public async getAllCompetence(): Promise<competenceModel[]> {
     try {
-      const [rows, fields] = await this.db.query(`SELECT * FROM ${competenceTable}`);
+      const [rows, fields] = await this.db.query(`SELECT * FROM ${competenceTable} ORDER BY name`);
 
       if (Array.isArray(rows)) {
         const newrows = rows as RowDataPacket[];

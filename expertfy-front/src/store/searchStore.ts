@@ -4,30 +4,27 @@ import { Competence } from '@/lib/search/search';
 
 
 interface SearchState {
-  page: number;
-  rowsPerPage: number;
-  paginatedExperts: Expert[];
   experts: Expert[];
+  filteredExperts: Expert[];
   competence: Competence | null;
-  setPage: (page: number) => void;
-  setRowsPerPage: (rowsPerPage: number) => void;
-  setPaginatedExperts: (Experts: Expert[]) => void;
+  suggestions: Competence[];
+  
   setExperts: (experts: Expert[]) => void;
+  setFilteredExperts: (filteredExperts: Expert[]) => void;
   setCompetence: (competence: Competence | null) => void;
+  setSuggestions: (suggestions: Competence[]) => void;
 }
 
 const useSearchStore = create<SearchState>((set) => ({
-  page: 0,
-  rowsPerPage: 5,
-  paginatedExperts: [],
   experts: [],
+  filteredExperts: [],
   competence: null,
-  setPage: (page) => set({ page }),
-  setRowsPerPage: (rowsPerPage) => set({ rowsPerPage }),
-  setPaginatedExperts: (paginatedExperts) => set({ paginatedExperts }),
-  setExperts: (experts) => set({ experts }),
-  setCompetence: (competence) => set({ competence }),
+  suggestions: [],
 
+  setExperts: (experts) => set({ experts }),
+  setFilteredExperts: (filteredExperts) => set({ filteredExperts }),
+  setCompetence: (competence) => set({ competence }),
+  setSuggestions: (suggestions) => set({ suggestions}),
 }));
 
 export default useSearchStore;
