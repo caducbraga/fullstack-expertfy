@@ -99,7 +99,7 @@ export function AdvancedSearch({setShowAlert, filter} : AdvancedFiltersProps): R
   return (
     <>
         <CardActions sx={{justifyContent:'flex-end'}}>
-          <Typography variant='h6'>Busca Avançada</Typography>
+          <Typography variant='h6'>Filtros Avançados</Typography>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}

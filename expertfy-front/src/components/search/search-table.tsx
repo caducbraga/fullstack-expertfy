@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import type { User } from '@/types/user';
 import { ColorScore } from '@/types/colorScore';
 import { red, yellow, green } from '@mui/material/colors';
+import ScoreTooltip from './tooltip-score';
 
 
 function noop(): void {
@@ -62,11 +63,11 @@ export function SearchTable({
   const setColorView = (score: number, colorScore: ColorScore) => {
     switch (colorScore) {
       case ColorScore.GREEN:
-        return <Avatar sx={{ bgcolor: green[400] }}>{score}</Avatar>;
+        return <Avatar sx={{ bgcolor: green[300] }}>{score}</Avatar>;
       case ColorScore.YELLOW:
-        return <Avatar sx={{ bgcolor: yellow[500] }}>{score}</Avatar>;
+        return <Avatar sx={{ bgcolor: yellow[300] }}>{score}</Avatar>;
       case ColorScore.RED:
-        return <Avatar sx={{ bgcolor: red[400] }}>{score}</Avatar>;
+        return <Avatar sx={{ bgcolor: red[300] }}>{score}</Avatar>;
       default:
         return <Avatar>{score}</Avatar>;
     }
@@ -90,7 +91,7 @@ export function SearchTable({
               <TableCell>Senioridade</TableCell>
               <TableCell>Tempo na Organização</TableCell>
               <TableCell>Time</TableCell>
-              <TableCell>Score</TableCell>
+              <TableCell>Score <ScoreTooltip/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
