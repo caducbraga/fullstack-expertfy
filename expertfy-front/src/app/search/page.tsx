@@ -9,10 +9,14 @@ import useSearchStore from '@/store/searchStore';
 import useTableStore from '@/store/tableStore';
 import type { AdvancedFilters } from '@/components/search/advanced-search';
 import { Alert } from '@mui/material';
+import { ColorScore } from '@/types/colorScore';
+
 
 
 
 export default function Page(): React.JSX.Element {
+
+  
   
   const { experts, filteredExperts, setExperts, setFilteredExperts } = useSearchStore();
   const { count,  page, rowsPerPage, paginatedExperts, setCount, setPage, setRowsPerPage, setPaginatedExperts } = useTableStore();
@@ -25,11 +29,13 @@ export default function Page(): React.JSX.Element {
       const expert_list_pr = searchExpert.getExpertList(selection);
       expert_list_pr.then((data) => {
         //initial experts list
+        calculateAndSetColorScale(data)
         setExperts(data);
         setFilteredExperts(data);
         setCount(data.length);
         setPaginatedExperts(applyPagination(data, page, rowsPerPage));
         setShowAlertWarningEmptyExperts(false);
+        console.log(data)
       });
 
     }
@@ -86,6 +92,27 @@ export default function Page(): React.JSX.Element {
     
   }, [page, rowsPerPage]);
 
+
+  const calculateAndSetColorScale = (experts_local: Expert[]) => {
+    const TENPERCENT = Math.ceil(experts_local.length/10); 
+    const FOURYPERCENT = Math.ceil(experts_local.length * (4/10));
+    console.log(TENPERCENT);
+    console.log(FOURYPERCENT);
+    var count = 1;
+    experts_local.forEach(e => {
+      if (count <= TENPERCENT){
+        e.colorScore = ColorScore.GREEN;
+      }
+      else if(count <= FOURYPERCENT){
+        e.colorScore = ColorScore.YELLOW;
+      }
+      else {
+        e.colorScore = ColorScore.RED;
+      }
+      count++;
+    });
+
+  }
 
   return (
     <Stack spacing={3}>

@@ -15,6 +15,8 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
 import type { User } from '@/types/user';
+import { ColorScore } from '@/types/colorScore';
+import { red, yellow, green } from '@mui/material/colors';
 
 
 function noop(): void {
@@ -25,12 +27,12 @@ function dateToRealYear(date: Date): string {
   const today = new Date();
   const employmentStartDate = new Date(date);
   const years = today.getFullYear() - employmentStartDate.getFullYear();
-  console.log(years);
   return `${years} anos`;
 }
 
 export interface Expert extends User{
   competenceCount: number;
+  colorScore: ColorScore;
 }
 
 interface SearchTableProps {
@@ -57,6 +59,19 @@ export function SearchTable({
     router.push(`/search/account/?id=${user.id}`);  
   }
   
+  const setColorView = (score: number, colorScore: ColorScore) => {
+    switch (colorScore) {
+      case ColorScore.GREEN:
+        return <Avatar sx={{ bgcolor: green[400] }}>{score}</Avatar>;
+      case ColorScore.YELLOW:
+        return <Avatar sx={{ bgcolor: yellow[500] }}>{score}</Avatar>;
+      case ColorScore.RED:
+        return <Avatar sx={{ bgcolor: red[400] }}>{score}</Avatar>;
+      default:
+        return <Avatar>{score}</Avatar>;
+    }
+    
+  }
   
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
@@ -75,7 +90,7 @@ export function SearchTable({
               <TableCell>Senioridade</TableCell>
               <TableCell>Tempo na Organização</TableCell>
               <TableCell>Time</TableCell>
-              <TableCell>Nível de Conhecimento</TableCell>
+              <TableCell>Score</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -109,7 +124,7 @@ export function SearchTable({
                   <TableCell>{row.seniority}</TableCell>
                   <TableCell>{dateToRealYear(row.employmentStartDate)}</TableCell>
                   <TableCell>{row.team}</TableCell>
-                  <TableCell>{row.competenceCount}</TableCell>
+                  <TableCell>{setColorView(row.competenceCount, row.colorScore)}</TableCell>
                 </TableRow>
               );
             })}
