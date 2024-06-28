@@ -2,7 +2,6 @@ import { userModel } from "../models/userModel";
 import { userRepository } from "../interfaces/repositories/userRepository";
 import { userDataSource } from "../../data/interfaces/data-sources/userDataSource";
 import { expertListModel } from "../models/expertListModel";
-import { accountInfoModel } from "../models/accountInfoModel";
 
 export class userRepositoryImpl implements userRepository {
   private userDataSource: userDataSource;
@@ -41,7 +40,7 @@ export class userRepositoryImpl implements userRepository {
     return users;
   }
 
-  public async getUserAccountInfo(id: string): Promise<accountInfoModel> {
+  public async getUserAccountInfo(id: string): Promise<expertListModel> {
     const userAccountInfo = await this.userDataSource.getUserAccountInfo(id);
     return userAccountInfo;
   }
