@@ -1,19 +1,19 @@
-import { SimpleListModel } from "../../../domain/models/simpleListModel";
-import { areaDataSource } from "../../interfaces/data-sources/areaDataSource";
+import { SimpleListModel } from "./models/simple.list.model"
+import { seniorityDataSource } from "../interfaces/data-sources/seniorityDataSource"; 
 import mysql, { RowDataPacket } from "mysql2/promise";
 
-const areaTable = "area";
+const seniorityTable = "seniority";
 
-export class areaDataSourceImpl implements areaDataSource {
+export class seniorityDataSourceImpl implements seniorityDataSource {
   private db: mysql.Connection;
 
   constructor(db: mysql.Connection) {
     this.db = db;
   }
 
-  public async getAllAreas(): Promise<SimpleListModel[]> {
+  public async getAllSeniority(): Promise<SimpleListModel[]> {
     try {
-      const [rows, fields] = await this.db.query(`SELECT * FROM ${areaTable}`);
+      const [rows, fields] = await this.db.query(`SELECT * FROM ${seniorityTable}`);
       if (Array.isArray(rows)) {
         const newrows = rows as RowDataPacket[];
         const languages = newrows.map((row) => {

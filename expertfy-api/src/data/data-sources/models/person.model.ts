@@ -1,7 +1,8 @@
-import { personModel } from './personModel';
-
-export interface userModel extends personModel {
+export interface PersonModel {
   id?: string;
+  name: string;
+  lastName: string;
+  birthDate: Date;
   email: string;
   photo: string;
   phone: string;
