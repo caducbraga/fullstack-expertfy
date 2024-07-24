@@ -5,22 +5,21 @@ import dotenv from "dotenv";
 import { connection } from './data/connection'
 
 //USER AREA
-import userRouter from './presentation/routers/userRouter'
-import { userRepositoryImpl } from './domain/respositories/userRepository'
-import { userDataSourceImpl } from "./data/data-sources/mysql/userDataSource";
+import personRouter from './presentation/routers/personRouter'
+import { personRepositoryImpl } from './domain/respositories/personRepository'
+import { personDataSourceImpl } from './data/data-sources/personDataSource';
 //use-cases
-import { getAllUserUseCaseImpl } from './domain/use-cases/user/getAllUser'
-import { createUserUseCaseImpl } from './domain/use-cases/user/createUser'
-import { updateUserUseCaseImpl } from './domain/use-cases/user/updateUser'
-import { deleteUserUseCaseImpl } from './domain/use-cases/user/deleteUser'
-import { getUserByIdUseCaseImpl } from './domain/use-cases/user/getUserById'
-import { getUsersAndCountByCompetenceIdUseCaseImpl } from './domain/use-cases/user/getUsersAndCountByCompetenceId'
-import { getUserAccountInfoUseCaseImpl } from './domain/use-cases/user/getUserAccountInfo'
+import { getAllPersonUseCaseImpl } from './domain/use-cases/person/getAllPerson'
+import { createPersonUseCaseImpl } from './domain/use-cases/person/createPerson'
+import { updatePersonUseCaseImpl } from './domain/use-cases/person/updatePerson'
+import { deletePersonUseCaseImpl } from './domain/use-cases/person/deletePerson'
+import { getPersonByIdUseCaseImpl } from './domain/use-cases/person/getPersonById'
+import { getPersonAccountInfoUseCaseImpl } from './domain/use-cases/person/getPersonAccountInfo'
 
 //COMPETENCE AREA
 import competenceRouter from "./presentation/routers/competenceRouter";
 import { competenceRepositoryImpl } from "./domain/respositories/competenceRepository";
-import { competenceDataSourceImpl } from "./data/data-sources/mysql/competenceDataSource";
+import { competenceDataSourceImpl } from "./data/data-sources/competenceDataSource";
 //use-cases
 import { createCompetenceUseCaseImpl } from "./domain/use-cases/competence/createCompetence";
 import { updateCompetenceUseCaseImpl } from "./domain/use-cases/competence/updateCompetence";
@@ -32,7 +31,7 @@ import { getCompetenceByNameUseCaseImpl } from "./domain/use-cases/competence/ge
 //MANIFESTCOMP AREA
 import manifestCompRouter from "./presentation/routers/manifestCompRouter";
 import { manifestCompRepositoryImpl } from "./domain/respositories/manifestCompRepository";
-import { manifestCompDataSourceImpl } from "./data/data-sources/mysql/manifestCompDataSource";
+import { manifestCompDataSourceImpl } from "./data/data-sources/manifestCompDataSource";
 //use-cases
 import { createManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/createManifestComp";
 import { updateManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/updateManifestComp";
@@ -42,15 +41,15 @@ import { getAllManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/g
 import { getAllManifestCompAndCompetenceUseCaseImpl } from './domain/use-cases/manifestComp/getAllManifestCompAndCompetence'; 
 
 //ADVANCED SEARCH AREA
-import { areaDataSourceImpl } from './data/data-sources/mysql/areaDataSource';
+import { areaDataSourceImpl } from './data/data-sources/areaDataSource';
 import { areaRepositoryImpl } from './domain/respositories/areaRepository';
 import { getAllAreasUseCaseImpl } from './domain/use-cases/area/getAllArea';
 
-import { languageDataSourceImpl } from './data/data-sources/mysql/languageDataSource';
+import { languageDataSourceImpl } from './data/data-sources/languageDataSource';
 import { languageRepositoryImpl } from './domain/respositories/languageRepository';
 import { getAllLanguagesUseCaseImpl } from './domain/use-cases/language/getAllLanguage';
 
-import { seniorityDataSourceImpl } from './data/data-sources/mysql/seniorityDataSource';
+import { seniorityDataSourceImpl } from './data/data-sources/seniorityDataSource';
 import { seniorityRepositoryImpl } from './domain/respositories/seniorityRepository';
 import { getAllSeniorityUseCaseImpl } from './domain/use-cases/seniority/getAllArea';
 import areaRouter from './presentation/routers/areaRouter';
@@ -75,16 +74,15 @@ async function getMSQL_DS(dataSourceClass: any) {
 }
 
 (async () => {
-  const userDS = await getMSQL_DS(userDataSourceImpl)
+  const personDS = await getMSQL_DS(personDataSourceImpl)
 
-  const userMiddleWare = userRouter(
-    new getAllUserUseCaseImpl(new userRepositoryImpl(userDS)),
-    new createUserUseCaseImpl(new userRepositoryImpl(userDS)),
-    new updateUserUseCaseImpl(new userRepositoryImpl(userDS)),
-    new deleteUserUseCaseImpl(new userRepositoryImpl(userDS)),
-    new getUserByIdUseCaseImpl(new userRepositoryImpl(userDS)),
-    new getUsersAndCountByCompetenceIdUseCaseImpl(new userRepositoryImpl(userDS)),
-    new getUserAccountInfoUseCaseImpl(new userRepositoryImpl(userDS)),
+  const personMiddleWare = personRouter(
+    new getAllPersonUseCaseImpl(new personRepositoryImpl(personDS)),
+    new createPersonUseCaseImpl(new personRepositoryImpl(personDS)),
+    new updatePersonUseCaseImpl(new personRepositoryImpl(personDS)),
+    new deletePersonUseCaseImpl(new personRepositoryImpl(personDS)),
+    new getPersonByIdUseCaseImpl(new personRepositoryImpl(personDS)),
+    new getPersonAccountInfoUseCaseImpl(new personRepositoryImpl(personDS)),
   )
 
   const competenceDS = await getMSQL_DS(competenceDataSourceImpl)
@@ -121,7 +119,7 @@ async function getMSQL_DS(dataSourceClass: any) {
   server.use("/area", areaMiddleWare)
   server.use("/language", languageMiddleWare)
   server.use("/seniority", seniorityMiddleWare)
-  server.use("/user", userMiddleWare)
+  server.use("/person", personMiddleWare)
   server.use("/competence", competenceMiddleWare)
   server.use("/manifest", manifestCompMiddleWare)
   server.get("/", (req, res) => res.send("This is our API!"))
