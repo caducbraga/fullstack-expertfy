@@ -32,13 +32,7 @@ export class PersonDataSourceImpl implements PersonDataSource {
         person.areaId,
       ];
   
-      const [rows, fields] = await this.db.query(query, values);
-  
-      if (Array.isArray(rows)) {
-        const newrows = rows as RowDataPacket[];
-        const id = newrows[0].id;
-        return true;
-      }
+      const [rows] = await this.db.execute<RowDataPacket[]>(query, values);
   
       return true;
     } catch (error) {
@@ -70,7 +64,7 @@ export class PersonDataSourceImpl implements PersonDataSource {
         id, 
       ];
   
-      const [rows, fields] = await this.db.query(query, values);
+      const [rows] = await this.db.execute<RowDataPacket[]>(query, values);
       return true;
     } catch (error) {
       console.log(error);
@@ -81,7 +75,7 @@ export class PersonDataSourceImpl implements PersonDataSource {
   public async deletePerson(id: string): Promise<boolean> {
     try {
       const query = `DELETE FROM ${personTable} WHERE id=?`;
-      const [rows, fields] = await this.db.query(query, [id]);
+      const [rows] = await this.db.execute<RowDataPacket[]>(query, [id]);
       return true;
     } catch (error) {
       console.log(error);
@@ -92,12 +86,10 @@ export class PersonDataSourceImpl implements PersonDataSource {
   public async getPersonById(id: string): Promise<PersonModel> {
     try {
       const query = `SELECT * FROM ${personTable} WHERE id=?`;
-      const [rows, fields] = await this.db.query(query, [id]);
+      const [rows] = await this.db.execute<RowDataPacket[]>(query, [id]);
   
-      if (Array.isArray(rows)) {
-        const newrows = rows as RowDataPacket[];
-        const person = newrows[0] as PersonModel; 
-        return person;
+      if(rows && rows.length > 0){
+        return rows[0] as PersonModel;
       }
       return {} as PersonModel;
     } catch (error) {
@@ -110,13 +102,9 @@ export class PersonDataSourceImpl implements PersonDataSource {
     const query = `SELECT * FROM ${personTable}`;
     
     try {
-      const [rows, fields] = await this.db.query(query);
+      const [rows] = await this.db.execute<RowDataPacket[]>(query);
 
-      if (Array.isArray(rows)){
-        const newrows = rows as RowDataPacket[];
-        const persons = newrows as PersonModel[];
-        return persons;
-      }
+      return rows as PersonModel[];
 
     } catch (error) {
       console.log(error);
@@ -141,12 +129,10 @@ export class PersonDataSourceImpl implements PersonDataSource {
       JOIN area a ON persons.areaId = a.id
       WHERE persons.id = ?;
     `;
-      const [rows, fields] = await this.db.query(query, [id]);
+      const [rows] = await this.db.execute<RowDataPacket[]>(query, [id]);
       
-      if (Array.isArray(rows)) {
-        const newrows = rows as RowDataPacket[];
-        const person = newrows[0] as PersonModel;
-        return person;
+      if(rows && rows.length > 0){
+        return rows[0] as PersonModel;
       }
       return {} as PersonModel;
     } catch (error) {
