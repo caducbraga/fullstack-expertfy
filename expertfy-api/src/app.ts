@@ -16,30 +16,6 @@ import { deletePersonUseCaseImpl } from './domain/use-cases/person/deletePerson'
 import { getPersonByIdUseCaseImpl } from './domain/use-cases/person/getPersonById'
 import { getPersonAccountInfoUseCaseImpl } from './domain/use-cases/person/getPersonAccountInfo'
 
-//COMPETENCE AREA
-import competenceRouter from "./presentation/routers/competenceRouter";
-import { competenceRepositoryImpl } from "./domain/respositories/competenceRepository";
-import { competenceDataSourceImpl } from "./data/data-sources/competenceDataSource";
-//use-cases
-import { createCompetenceUseCaseImpl } from "./domain/use-cases/competence/createCompetence";
-import { updateCompetenceUseCaseImpl } from "./domain/use-cases/competence/updateCompetence";
-import { deleteCompetenceUseCaseImpl } from "./domain/use-cases/competence/deleteCompetence";
-import { getCompetenceByIdUseCaseImpl } from "./domain/use-cases/competence/getCompetenceById";
-import { getAllCompetenceUseCaseImpl } from "./domain/use-cases/competence/getAllCompetence";
-import { getCompetenceByNameUseCaseImpl } from "./domain/use-cases/competence/getCompetenceByName";
-
-//MANIFESTCOMP AREA
-import manifestCompRouter from "./presentation/routers/manifestCompRouter";
-import { manifestCompRepositoryImpl } from "./domain/respositories/manifestCompRepository";
-import { manifestCompDataSourceImpl } from "./data/data-sources/manifestCompDataSource";
-//use-cases
-import { createManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/createManifestComp";
-import { updateManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/updateManifestComp";
-import { deleteManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/deleteManifestComp";
-import { getManifestCompByIdUseCaseImpl } from "./domain/use-cases/manifestComp/getManifestCompById";
-import { getAllManifestCompUseCaseImpl } from "./domain/use-cases/manifestComp/getAllManifestComp";
-import { getAllManifestCompAndCompetenceUseCaseImpl } from './domain/use-cases/manifestComp/getAllManifestCompAndCompetence'; 
-
 //ADVANCED SEARCH AREA
 import { areaDataSourceImpl } from './data/data-sources/areaDataSource';
 import { areaRepositoryImpl } from './domain/respositories/areaRepository';
@@ -85,28 +61,6 @@ async function getMSQL_DS(dataSourceClass: any) {
     new getPersonAccountInfoUseCaseImpl(new personRepositoryImpl(personDS)),
   )
 
-  const competenceDS = await getMSQL_DS(competenceDataSourceImpl)
-
-  const competenceMiddleWare = competenceRouter(
-    new getAllCompetenceUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
-    new createCompetenceUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
-    new updateCompetenceUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
-    new deleteCompetenceUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
-    new getCompetenceByIdUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
-    new getCompetenceByNameUseCaseImpl(new competenceRepositoryImpl(competenceDS)),
-  )
-
-  const manifestCompDS = await getMSQL_DS(manifestCompDataSourceImpl)
-
-  const manifestCompMiddleWare = manifestCompRouter(
-    new getAllManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
-    new createManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
-    new updateManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
-    new deleteManifestCompUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
-    new getManifestCompByIdUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
-    new getAllManifestCompAndCompetenceUseCaseImpl(new manifestCompRepositoryImpl(manifestCompDS)),
-  )
-
   //New routes for advanced search
 
   const areaDS = await getMSQL_DS(areaDataSourceImpl)
@@ -120,8 +74,6 @@ async function getMSQL_DS(dataSourceClass: any) {
   server.use("/language", languageMiddleWare)
   server.use("/seniority", seniorityMiddleWare)
   server.use("/person", personMiddleWare)
-  server.use("/competence", competenceMiddleWare)
-  server.use("/manifest", manifestCompMiddleWare)
   server.get("/", (req, res) => res.send("This is our API!"))
   server.listen(3000, () => console.log("Running on http://localhost:3000"))
 
