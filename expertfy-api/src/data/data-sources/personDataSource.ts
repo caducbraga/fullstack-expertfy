@@ -1,11 +1,10 @@
 import { PersonModel } from "./models/person.model";
-import { personDataSource } from "../interfaces/data-sources/personDataSource";
+import { PersonDataSource } from "../interfaces/data-sources/personDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const personTable = "person";
-const manifestTable = "manifestcompetence";
 
-export class personDataSourceImpl implements personDataSource {
+export class PersonDataSourceImpl implements PersonDataSource {
   private db: mysql.Connection;
 
   constructor(db: mysql.Connection) {
@@ -29,7 +28,6 @@ export class personDataSourceImpl implements personDataSource {
         person.linkedin,
         person.team,
         person.employmentStartDate,
-        person.languageId,
         person.seniorityId,
         person.areaId,
       ];
@@ -67,7 +65,6 @@ export class personDataSourceImpl implements personDataSource {
         person.linkedin,
         person.team,
         person.employmentStartDate,
-        person.languageId,
         person.seniorityId,
         person.areaId,
         id, 

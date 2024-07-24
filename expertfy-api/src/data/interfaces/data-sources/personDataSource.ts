@@ -1,7 +1,7 @@
 import { PersonModel } from "../../data-sources/models/person.model";
 
-//* This interface is used to define the methods that will be used to interact with the user table.
-export interface personDataSource {
+//* This interface is used to define the methods that will be used to interact with the person table.
+export interface PersonDataSource {
   createPerson(person: PersonModel): Promise<boolean>;
   updatePerson(id: string, person: PersonModel): Promise<boolean>;
   deletePerson(id: string): Promise<boolean>;

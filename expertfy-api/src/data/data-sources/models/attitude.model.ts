@@ -2,7 +2,7 @@ import { PersonModel } from "./person.model";
 
 export interface AttitudeModel {
   id?: string;
-  person: PersonModel;
+  personId: string;
   attitudeType: string;
   
 }

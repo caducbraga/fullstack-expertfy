@@ -1,10 +1,10 @@
-import { SimpleListModel } from "../../../domain/models/simpleListModel";
-import { languageDataSource } from "../../interfaces/data-sources/languageDataSource";
+import { SimpleListModel } from "./models/simple.list.model"
+import { LanguageDataSource } from "../interfaces/data-sources/languageDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const languageTable = "language";
 
-export class languageDataSourceImpl implements languageDataSource {
+export class LanguageDataSourceImpl implements LanguageDataSource {
   private db: mysql.Connection;
 
   constructor(db: mysql.Connection) {

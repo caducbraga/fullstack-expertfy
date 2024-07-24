@@ -3,7 +3,7 @@ import { TaskOutputModel } from "./task.output.model";
 
 export interface HumanTaskModel {
   id?: string;
-  skill: SkillModel;
-  output: TaskOutputModel;
+  skillId: string;
+  taskOutputId: string;
   taskType: string;
 }

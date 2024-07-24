@@ -9,7 +9,6 @@ export interface PersonModel {
   linkedin?: string;
   team?: string;
   employmentStartDate: Date;
-  languageId: string;
   seniorityId: string;
   areaId: string;
   office: string;

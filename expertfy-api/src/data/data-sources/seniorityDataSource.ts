@@ -1,10 +1,10 @@
 import { SimpleListModel } from "./models/simple.list.model"
-import { seniorityDataSource } from "../interfaces/data-sources/seniorityDataSource"; 
+import { SeniorityDataSource } from "../interfaces/data-sources/seniorityDataSource"; 
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const seniorityTable = "seniority";
 
-export class seniorityDataSourceImpl implements seniorityDataSource {
+export class SeniorityDataSourceImpl implements SeniorityDataSource {
   private db: mysql.Connection;
 
   constructor(db: mysql.Connection) {

@@ -1,10 +1,10 @@
 import { SimpleListModel } from "./models/simple.list.model"
-import { areaDataSource } from "../interfaces/data-sources/areaDataSource";
+import { AreaDataSource } from "../interfaces/data-sources/areaDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const areaTable = "area";
 
-export class areaDataSourceImpl implements areaDataSource {
+export class AreaDataSourceImpl implements AreaDataSource {
   private db: mysql.Connection;
 
   constructor(db: mysql.Connection) {
