@@ -2,10 +2,9 @@ import { AttitudeEndorsementModel } from "../../data-sources/models/attitude.end
 
 
 export interface AttitudeEndorsementDataSource {
-  createAttitude(person: AttitudeEndorsementModel): Promise<boolean>;
-  updateAttitude(id: string, person: AttitudeEndorsementModel): Promise<boolean>;
-  deleteAttitude(id: string): Promise<boolean>;
-  getAttitudeById(id: string): Promise<AttitudeEndorsementModel>;
-  getAllAttitudes(): Promise<AttitudeEndorsementModel[]>;
-  getAttitudeAccountInfo(id: string): Promise<AttitudeEndorsementModel>;
+  createAttitudeEndors(endors: AttitudeEndorsementModel): Promise<boolean>;
+  updateAttitudeEndors(id: string, endors: AttitudeEndorsementModel): Promise<boolean>;
+  deleteAttitudeEndors(id: string): Promise<boolean>;
+  getAttitudeByIdEndors(id: string): Promise<AttitudeEndorsementModel>;
+  getAllAttitudesEndors(): Promise<AttitudeEndorsementModel[]>;
 }
