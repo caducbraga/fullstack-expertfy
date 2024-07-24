@@ -16,31 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `competence`
+-- Table structure for table `attitude_endors`
 --
 
+-- Seleciona o banco de dados expertfydb
 USE expertfydb;
 
-DROP TABLE IF EXISTS `competence`;
+
+DROP TABLE IF EXISTS `attitude_endors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `competence` (
+CREATE TABLE `attitude_endors` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `description` varchar(200) NOT NULL,
+  `attitudeId` int NOT NULL,
+  `personId` int NOT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Represents one competence';
+  KEY `fk-person-endors-attitude_idx` (`personId`),
+  KEY `fk-attitude-endors_idx` (`attitudeId`),
+  CONSTRAINT `fk-attitude-endors` FOREIGN KEY (`attitudeId`) REFERENCES `attitude` (`id`),
+  CONSTRAINT `fk-person-endors-attitude` FOREIGN KEY (`personId`) REFERENCES `person` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `competence`
+-- Dumping data for table `attitude_endors`
 --
 
-LOCK TABLES `competence` WRITE;
-/*!40000 ALTER TABLE `competence` DISABLE KEYS */;
-INSERT INTO `competence` VALUES (1,'Java','Linguagem de Programação'),(2,'Javascript','Linguagem de programação'),(3,'Kubernetes','Orquestrador de container'),(4,'Git','Versionador de código'),(5,'PostgreSQL','Banco de dados'),(6,'MongoDB','Banco de dados'),(7,'Swagger','Documentador de API'),(8,'Otimização de Consultas SQL','Linguagem de Consulta'),(9,'Teste de Unidade','Testes unitários'),(10,'Monitoramento','Análise em Tempo Real'),(11,'Design de API','Criação de Classes Controller'),(12,'Documentação de Software','Criação de Documentos de Software');
-/*!40000 ALTER TABLE `competence` ENABLE KEYS */;
+LOCK TABLES `attitude_endors` WRITE;
+/*!40000 ALTER TABLE `attitude_endors` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attitude_endors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-15 16:21:14
+-- Dump completed on 2024-07-24 11:21:59
