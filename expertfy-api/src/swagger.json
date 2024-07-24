@@ -7,24 +7,24 @@
   },
   "basePath": "/",
   "paths": {
-    "/user": {
+    "/person": {
       "post": {
         "tags": [
-          "User"
+          "Person"
         ],
-        "summary": "Create a new user",
+        "summary": "Create a new person",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Person"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "User created successfully"
+            "description": "Person created successfully"
           },
           "400": {
             "description": "Invalid input"
@@ -32,17 +32,17 @@
         }
       },
       "get": {
-        "tags": ["User"],
-        "summary": "List all users",
+        "tags": ["Person"],
+        "summary": "List all persons",
         "responses": {
           "200": {
-            "description": "Users found",
+            "description": "Persons found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/Person"
                   }
                 }
               }
@@ -54,16 +54,16 @@
         }
       }
     },
-    "/user/{id}": {
+    "/person/{id}": {
       "put": {
-        "tags": ["User"],
-        "summary": "Update a user",
+        "tags": ["Person"],
+        "summary": "Update a person",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "User id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -73,14 +73,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Person"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "User updated successfully"
+            "description": "Person updated successfully"
           },
           "400": {
             "description": "Invalid input"
@@ -88,14 +88,14 @@
         }
       },
       "delete": {
-        "tags": ["User"],
-        "summary": "Delete a user",
+        "tags": ["Person"],
+        "summary": "Delete a person",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "User id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -103,7 +103,7 @@
         ],
         "responses": {
           "200": {
-            "description": "User deleted successfully"
+            "description": "Person deleted successfully"
           },
           "400": {
             "description": "Invalid input"
@@ -111,16 +111,16 @@
         }
       }
     },
-    "/user/listAllByCompetenceId/{id}": {
+    "/person/accountInfo/{id}": {
       "get": {
-        "tags": ["User"],
-        "summary": "List all users by competence id",
+        "tags": ["Person"],
+        "summary": "Get person account info",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Competence id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -128,42 +128,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Users found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExpertList"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/user/accountInfo/{id}": {
-      "get": {
-        "tags": ["User"],
-        "summary": "Get user account info",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "User id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User account info found",
+            "description": "Person account info found",
             "content": {
               "application/json": {
                 "schema": {
@@ -421,16 +386,16 @@
         }
       }
     },
-    "/manifest/user/{id}":{
+    "/manifest/person/{id}":{
       "get": {
         "tags": ["manifestCompetence"],
-        "summary": "Get all manifestCompetences by user id",
+        "summary": "Get all manifestCompetences by person id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "User id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -531,7 +496,7 @@
   },
   "components": {
     "schemas": {
-      "User": {
+      "Person": {
         "type": "object",
         "properties": {
           "id": {
@@ -607,7 +572,7 @@
           "description": {
             "type": "string"
           },
-          "userId": {
+          "personId": {
             "type": "number"
           },
           "competenceId": {
@@ -689,7 +654,7 @@
           "description": {
             "type": "string"
           },
-          "userId": {
+          "personId": {
             "number": "number"
           },
           "competenceId": {

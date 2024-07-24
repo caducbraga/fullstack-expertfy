@@ -15,8 +15,8 @@ export class PersonDataSourceImpl implements PersonDataSource {
     try {
       const query = `INSERT INTO ${personTable} 
       (name, lastName, birthDate, email, photo, phone, linkedin, 
-        team, employmentStartDate, languageId, seniorityId, areaId)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        team, employmentStartDate, seniorityId, areaId)
+      VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
       
       const values = [
         person.name,
@@ -46,7 +46,7 @@ export class PersonDataSourceImpl implements PersonDataSource {
     try {
       const query = `UPDATE ${personTable} SET
       name=?, lastName=?, birthDate=?, email=?, photo=?, phone=?, linkedin=?, 
-      team=?, employmentStartDate=?, languageId=?, seniorityId=?, areaId=? 
+      team=?, employmentStartDate=?, seniorityId=?, areaId=? 
       WHERE id=?`;
   
       const values = [
@@ -120,11 +120,9 @@ export class PersonDataSourceImpl implements PersonDataSource {
       const query = `
       SELECT
         persons.*,
-        l.name AS language,
         s.name AS seniority,
         a.name AS area
       FROM ${personTable} persons
-      JOIN language l ON persons.languageId = l.id
       JOIN seniority s ON persons.seniorityId = s.id
       JOIN area a ON persons.areaId = a.id
       WHERE persons.id = ?;
@@ -134,6 +132,7 @@ export class PersonDataSourceImpl implements PersonDataSource {
       if(rows && rows.length > 0){
         return rows[0] as PersonModel;
       }
+      console.log(rows)
       return {} as PersonModel;
     } catch (error) {
       console.log(error);

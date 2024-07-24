@@ -7,7 +7,7 @@ import { connection } from './data/connection'
 //USER AREA
 import personRouter from './presentation/routers/personRouter'
 import { personRepositoryImpl } from './domain/respositories/personRepository'
-import { personDataSourceImpl } from './data/data-sources/personDataSource';
+import { PersonDataSourceImpl } from './data/data-sources/personDataSource';
 //use-cases
 import { getAllPersonUseCaseImpl } from './domain/use-cases/person/getAllPerson'
 import { createPersonUseCaseImpl } from './domain/use-cases/person/createPerson'
@@ -17,15 +17,15 @@ import { getPersonByIdUseCaseImpl } from './domain/use-cases/person/getPersonByI
 import { getPersonAccountInfoUseCaseImpl } from './domain/use-cases/person/getPersonAccountInfo'
 
 //ADVANCED SEARCH AREA
-import { areaDataSourceImpl } from './data/data-sources/areaDataSource';
+import { AreaDataSourceImpl } from './data/data-sources/areaDataSource';
 import { areaRepositoryImpl } from './domain/respositories/areaRepository';
 import { getAllAreasUseCaseImpl } from './domain/use-cases/area/getAllArea';
 
-import { languageDataSourceImpl } from './data/data-sources/languageDataSource';
+import { LanguageDataSourceImpl } from './data/data-sources/languageDataSource';
 import { languageRepositoryImpl } from './domain/respositories/languageRepository';
 import { getAllLanguagesUseCaseImpl } from './domain/use-cases/language/getAllLanguage';
 
-import { seniorityDataSourceImpl } from './data/data-sources/seniorityDataSource';
+import { SeniorityDataSourceImpl } from './data/data-sources/seniorityDataSource';
 import { seniorityRepositoryImpl } from './domain/respositories/seniorityRepository';
 import { getAllSeniorityUseCaseImpl } from './domain/use-cases/seniority/getAllArea';
 import areaRouter from './presentation/routers/areaRouter';
@@ -50,7 +50,7 @@ async function getMSQL_DS(dataSourceClass: any) {
 }
 
 (async () => {
-  const personDS = await getMSQL_DS(personDataSourceImpl)
+  const personDS = await getMSQL_DS(PersonDataSourceImpl)
 
   const personMiddleWare = personRouter(
     new getAllPersonUseCaseImpl(new personRepositoryImpl(personDS)),
@@ -63,9 +63,9 @@ async function getMSQL_DS(dataSourceClass: any) {
 
   //New routes for advanced search
 
-  const areaDS = await getMSQL_DS(areaDataSourceImpl)
-  const languageDS = await getMSQL_DS(languageDataSourceImpl)
-  const seniorityDS = await getMSQL_DS(seniorityDataSourceImpl)
+  const areaDS = await getMSQL_DS(AreaDataSourceImpl)
+  const languageDS = await getMSQL_DS(LanguageDataSourceImpl)
+  const seniorityDS = await getMSQL_DS(SeniorityDataSourceImpl)
   const areaMiddleWare = areaRouter(new getAllAreasUseCaseImpl(new areaRepositoryImpl(areaDS)))
   const languageMiddleWare = languageRouter(new getAllLanguagesUseCaseImpl(new languageRepositoryImpl(languageDS)))
   const seniorityMiddleWare = seniorityRouter(new getAllSeniorityUseCaseImpl(new seniorityRepositoryImpl(seniorityDS)))
