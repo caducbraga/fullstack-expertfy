@@ -1,9 +1,9 @@
 import { AttitudeEndorsementModel } from "./models/attitude.endorsement.model";
-import { AttitudeEndorsementDataSource } from "../interfaces/data-sources/attitudeEndorsDataSource";
+import { AttitudeEndorsDataSource } from "../interfaces/data-sources/attitudeEndorsDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const attitudeEndorsementTable = "attitude_endors";
-export class AttitudeEndorsementeDataSourceImpl implements AttitudeEndorsementDataSource {
+export class AttitudeEndorsDataSourceImpl implements AttitudeEndorsDataSource {
   private db: mysql.Connection;
   constructor(db: mysql.Connection) {
     this.db = db;

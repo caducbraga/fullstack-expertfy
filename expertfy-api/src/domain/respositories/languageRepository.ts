@@ -1,11 +1,11 @@
 import { SimpleListModel } from "../models/simpleListModel";
-import { languageDataSource } from "../../data/interfaces/data-sources/languageDataSource";
-import { languageRepository } from "../../domain/interfaces/repositories/languageRepository";
+import { LanguageDataSource } from "../../data/interfaces/data-sources/languageDataSource";
+import { LanguageRepository } from "../../domain/interfaces/repositories/languageRepository";
 
-export class languageRepositoryImpl implements languageRepository{
-    private languageDataSource: languageDataSource;
+export class LanguageRepositoryImpl implements LanguageRepository{
+    private languageDataSource: LanguageDataSource;
 
-    constructor(languageDataSource: languageDataSource){
+    constructor(languageDataSource: LanguageDataSource){
         this.languageDataSource = languageDataSource;
     }
     

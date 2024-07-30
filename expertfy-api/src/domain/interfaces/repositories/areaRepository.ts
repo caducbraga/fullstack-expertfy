@@ -1,5 +1,5 @@
 import { SimpleListModel } from "../../models/simpleListModel";
 
-export interface areaRepository{
+export interface AreaRepository{
     getAllAreas(): Promise<SimpleListModel[]>;
 }

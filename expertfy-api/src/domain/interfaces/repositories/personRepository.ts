@@ -1,6 +1,6 @@
 import { PersonModel } from "../../../data/data-sources/models/person.model";
 
-export interface personRepository {
+export interface PersonRepository {
   createPerson(person: PersonModel): Promise<boolean>;
   updatePerson(id: string, person: PersonModel): Promise<boolean>;
   deletePerson(id: string): Promise<boolean>;

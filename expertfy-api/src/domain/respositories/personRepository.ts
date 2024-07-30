@@ -1,11 +1,11 @@
 import { PersonModel } from "../../data/data-sources/models/person.model";
-import { personRepository } from "../interfaces/repositories/personRepository";
-import { personDataSource } from "../../data/interfaces/data-sources/personDataSource";
+import { PersonRepository } from "../interfaces/repositories/personRepository";
+import { PersonDataSource } from "../../data/interfaces/data-sources/personDataSource";
 
-export class personRepositoryImpl implements personRepository {
-  private personDataSource: personDataSource;
+export class PersonRepositoryImpl implements PersonRepository {
+  private personDataSource: PersonDataSource;
 
-  constructor(personDataSource: personDataSource) {
+  constructor(personDataSource: PersonDataSource) {
     this.personDataSource = personDataSource;
   }
 

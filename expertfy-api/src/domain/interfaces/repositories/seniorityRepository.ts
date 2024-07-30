@@ -1,5 +1,5 @@
 import { SimpleListModel } from "../../models/simpleListModel";
 
-export interface seniorityRepository{
+export interface SeniorityRepository{
     getAllSeniority(): Promise<SimpleListModel[]>;
 }

@@ -1,11 +1,11 @@
 import { SimpleListModel } from "../models/simpleListModel";
-import { seniorityRepository } from "../interfaces/repositories/seniorityRepository";
-import { seniorityDataSource } from "../../data/interfaces/data-sources/seniorityDataSource";
+import { SeniorityRepository } from "../interfaces/repositories/seniorityRepository";
+import { SeniorityDataSource } from "../../data/interfaces/data-sources/seniorityDataSource";
 
-export class seniorityRepositoryImpl implements seniorityRepository{
-    private seniorityDataSource: seniorityDataSource;
+export class SeniorityRepositoryImpl implements SeniorityRepository{
+    private seniorityDataSource: SeniorityDataSource;
 
-    constructor(seniorityDataSource: seniorityDataSource){
+    constructor(seniorityDataSource: SeniorityDataSource){
         this.seniorityDataSource = seniorityDataSource;
     }
     

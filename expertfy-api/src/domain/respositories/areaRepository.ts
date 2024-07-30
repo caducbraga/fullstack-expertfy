@@ -1,11 +1,11 @@
 import { SimpleListModel } from "../models/simpleListModel";
-import { areaDataSource } from "../../data/interfaces/data-sources/areaDataSource";
-import { areaRepository } from "../../domain/interfaces/repositories/areaRepository";
+import { AreaDataSource } from "../../data/interfaces/data-sources/areaDataSource";
+import { AreaRepository } from "../../domain/interfaces/repositories/areaRepository";
 
-export class areaRepositoryImpl implements areaRepository{
-    private areaDataSource: areaDataSource;
+export class AreaRepositoryImpl implements AreaRepository{
+    private areaDataSource: AreaDataSource;
 
-    constructor(areaDataSource: areaDataSource){
+    constructor(areaDataSource: AreaDataSource){
         this.areaDataSource = areaDataSource;
     }
 
