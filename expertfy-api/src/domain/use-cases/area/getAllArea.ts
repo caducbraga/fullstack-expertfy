@@ -1,11 +1,11 @@
 import { SimpleListModel } from "../../models/simpleListModel";
-import { areaRepository } from "../../interfaces/repositories/areaRepository";
-import { getAllAreasUseCase } from "../../interfaces/use-cases/area/getAllArea";
+import { AreaRepository } from "../../interfaces/repositories/areaRepository";
+import { GetAllAreasUseCase } from "../../interfaces/use-cases/area/getAllArea";
 
-export class getAllAreasUseCaseImpl implements getAllAreasUseCase{
-    private areaRepository: areaRepository;
+export class getAllAreasUseCaseImpl implements GetAllAreasUseCase{
+    private areaRepository: AreaRepository;
 
-    constructor(areaRepository: areaRepository){
+    constructor(areaRepository: AreaRepository){
         this.areaRepository = areaRepository;
     }
     

@@ -1,11 +1,11 @@
 import { PersonModel } from "../../../data/data-sources/models/person.model";
-import { personRepository } from "../../interfaces/repositories/personRepository";
-import { deletePersonUseCase } from "../../interfaces/use-cases/person/deletePerson";
+import { PersonRepository } from "../../interfaces/repositories/personRepository";
+import { DeletePersonUseCase } from "../../interfaces/use-cases/person/deletePerson";
 
-export class deletePersonUseCaseImpl implements deletePersonUseCase {
-  private personRepository: personRepository;
+export class deletePersonUseCaseImpl implements DeletePersonUseCase {
+  private personRepository: PersonRepository;
 
-  constructor(personRepository: personRepository) {
+  constructor(personRepository: PersonRepository) {
     this.personRepository = personRepository;
   }
 

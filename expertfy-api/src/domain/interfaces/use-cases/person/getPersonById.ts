@@ -1,4 +1,4 @@
 import { PersonModel } from "../../../../data/data-sources/models/person.model";
-export interface getPersonByIdUseCase {
+export interface GetPersonByIdUseCase {
     execute(id: string): Promise<PersonModel>;
 }

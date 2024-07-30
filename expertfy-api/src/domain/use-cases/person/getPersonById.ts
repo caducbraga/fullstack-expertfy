@@ -1,11 +1,11 @@
 import { PersonModel } from "../../../data/data-sources/models/person.model";
-import { getPersonByIdUseCase } from "../../interfaces/use-cases/person/getPersonById";
-import { personRepository } from "../../interfaces/repositories/personRepository";
+import { GetPersonByIdUseCase } from "../../interfaces/use-cases/person/getPersonById";
+import { PersonRepository } from "../../interfaces/repositories/personRepository";
 
-export class getPersonByIdUseCaseImpl implements getPersonByIdUseCase {
-  private personRepository: personRepository;
+export class getPersonByIdUseCaseImpl implements GetPersonByIdUseCase {
+  private personRepository: PersonRepository;
 
-  constructor(personRepository: personRepository) {
+  constructor(personRepository: PersonRepository) {
     this.personRepository = personRepository;
   }
 

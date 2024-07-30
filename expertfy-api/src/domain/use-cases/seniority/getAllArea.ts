@@ -1,11 +1,11 @@
 import { SimpleListModel } from "../../models/simpleListModel";
-import { seniorityRepository } from "../../interfaces/repositories/seniorityRepository";
-import { getAllSeniorityUseCase } from "../../interfaces/use-cases/seniority/getAllSeniority";
+import { SeniorityRepository } from "../../interfaces/repositories/seniorityRepository";
+import { GetAllSeniorityUseCase } from "../../interfaces/use-cases/seniority/getAllSeniority";
 
-export class getAllSeniorityUseCaseImpl implements getAllSeniorityUseCase{
-    private seniorityRepository: seniorityRepository;
+export class getAllSeniorityUseCaseImpl implements GetAllSeniorityUseCase{
+    private seniorityRepository: SeniorityRepository;
 
-    constructor(seniorityRepository: seniorityRepository){
+    constructor(seniorityRepository: SeniorityRepository){
         this.seniorityRepository = seniorityRepository;
     }
     
