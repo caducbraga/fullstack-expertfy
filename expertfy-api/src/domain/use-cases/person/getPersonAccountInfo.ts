@@ -2,7 +2,7 @@ import { PersonModel } from "../../../data/data-sources/models/person.model";
 import { PersonRepository } from "../../interfaces/repositories/personRepository";
 import { GetPersonAccountInfoUseCase } from "../../interfaces/use-cases/person/getPersonAccountInfo";
 
-export class getPersonAccountInfoUseCaseImpl implements GetPersonAccountInfoUseCase {
+export class GetPersonAccountInfoUseCaseImpl implements GetPersonAccountInfoUseCase {
   private personRepository: PersonRepository;
 
   constructor(personRepository: PersonRepository) {

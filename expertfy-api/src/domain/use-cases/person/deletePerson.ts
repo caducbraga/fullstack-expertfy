@@ -2,7 +2,7 @@ import { PersonModel } from "../../../data/data-sources/models/person.model";
 import { PersonRepository } from "../../interfaces/repositories/personRepository";
 import { DeletePersonUseCase } from "../../interfaces/use-cases/person/deletePerson";
 
-export class deletePersonUseCaseImpl implements DeletePersonUseCase {
+export class DeletePersonUseCaseImpl implements DeletePersonUseCase {
   private personRepository: PersonRepository;
 
   constructor(personRepository: PersonRepository) {

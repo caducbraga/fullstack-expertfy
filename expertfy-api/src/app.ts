@@ -4,33 +4,84 @@ import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import { connection } from './data/connection'
 
-//USER AREA
+//PERSON AREA
 import personRouter from './presentation/routers/personRouter'
-import { personRepositoryImpl } from './domain/respositories/personRepository'
+import { PersonRepositoryImpl } from './domain/respositories/personRepository'
 import { PersonDataSourceImpl } from './data/data-sources/personDataSource';
-//use-cases
-import { getAllPersonUseCaseImpl } from './domain/use-cases/person/getAllPerson'
-import { createPersonUseCaseImpl } from './domain/use-cases/person/createPerson'
-import { updatePersonUseCaseImpl } from './domain/use-cases/person/updatePerson'
-import { deletePersonUseCaseImpl } from './domain/use-cases/person/deletePerson'
-import { getPersonByIdUseCaseImpl } from './domain/use-cases/person/getPersonById'
-import { getPersonAccountInfoUseCaseImpl } from './domain/use-cases/person/getPersonAccountInfo'
+import { GetAllPersonUseCaseImpl } from './domain/use-cases/person/getAllPerson'
+import { CreatePersonUseCaseImpl } from './domain/use-cases/person/createPerson'
+import { UpdatePersonUseCaseImpl } from './domain/use-cases/person/updatePerson'
+import { DeletePersonUseCaseImpl } from './domain/use-cases/person/deletePerson'
+import { GetPersonByIdUseCaseImpl } from './domain/use-cases/person/getPersonById'
+import { GetPersonAccountInfoUseCaseImpl } from './domain/use-cases/person/getPersonAccountInfo'
 
 //ADVANCED SEARCH AREA
+
+//Area
 import { AreaDataSourceImpl } from './data/data-sources/areaDataSource';
-import { areaRepositoryImpl } from './domain/respositories/areaRepository';
+import { AreaRepositoryImpl } from './domain/respositories/areaRepository';
 import { getAllAreasUseCaseImpl } from './domain/use-cases/area/getAllArea';
-
-import { LanguageDataSourceImpl } from './data/data-sources/languageDataSource';
-import { languageRepositoryImpl } from './domain/respositories/languageRepository';
-import { getAllLanguagesUseCaseImpl } from './domain/use-cases/language/getAllLanguage';
-
-import { SeniorityDataSourceImpl } from './data/data-sources/seniorityDataSource';
-import { seniorityRepositoryImpl } from './domain/respositories/seniorityRepository';
-import { getAllSeniorityUseCaseImpl } from './domain/use-cases/seniority/getAllArea';
 import areaRouter from './presentation/routers/areaRouter';
+//Language
+import { LanguageDataSourceImpl } from './data/data-sources/languageDataSource';
+import { LanguageRepositoryImpl } from './domain/respositories/languageRepository';
+import { getAllLanguagesUseCaseImpl } from './domain/use-cases/language/getAllLanguage';
 import languageRouter from './presentation/routers/languageRouter';
+//Seniority
+import { SeniorityDataSourceImpl } from './data/data-sources/seniorityDataSource';
+import { SeniorityRepositoryImpl } from './domain/respositories/seniorityRepository';
+import { getAllSeniorityUseCaseImpl } from './domain/use-cases/seniority/getAllArea';
 import seniorityRouter from './presentation/routers/seniorityRouter';
+
+
+//SKILL AREA
+import skillRouter from './presentation/routers/skillRouter';
+import { SkillRepository } from './domain/interfaces/repositories/skillRepository';
+import { SkillDataSource } from './data/interfaces/data-sources/skillDataSource';
+import { SkillDataSourceImpl } from './data/data-sources/skillDataSource';
+import { SkillRepositoryImpl } from './domain/respositories/skillRepository';
+import { GetAllSkillUseCaseImpl } from './domain/use-cases/skill/getAllSkill';
+import { CreateSkillUseCaseImpl } from './domain/use-cases/skill/createSkill';
+import { UpdateSkillUseCaseImpl } from './domain/use-cases/skill/updateSkill';
+import { DeleteSkillUseCaseImpl } from './domain/use-cases/skill/deleteSkill';
+import { GetSkillByIdUseCaseImpl } from './domain/use-cases/skill/getSkillById';
+
+//SKILL ENDORS AREA
+import skillEndorsRouter from './presentation/routers/skillEndorsRouter';
+import { SkillEndorsRepository } from './domain/interfaces/repositories/skillEndorsRepository';
+import { SkillEndorsDataSource } from './data/interfaces/data-sources/skillEndorsDataSource';
+import { SkillEndorsDataSourceImpl } from './data/data-sources/skillEndorsDataSource';
+import { SkillEndorsRepositoryImpl } from './domain/respositories/skillEndorsRepository';
+import { GetAllSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/getAllSkillEndors';
+import { CreateSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/createSkillEndors';
+import { UpdateSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/updateSkillEndors';
+import { DeleteSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/deleteSkillEndors';
+import { GetSkillEndorsByIdUseCaseImpl } from './domain/use-cases/skillEndors/getSkillEndorsById';
+
+//ATTITUDE AREA
+import attitudeRouter from './presentation/routers/attitudeRouter';
+import { AttitudeRepository } from './domain/interfaces/repositories/attitudeRepository';
+import { AttitudeDataSource } from './data/interfaces/data-sources/attitudeDataSource';
+import { AttitudeDataSourceImpl } from './data/data-sources/attitudeDataSource';
+import { AttitudeRepositoryImpl } from './domain/respositories/attitudeRepository';
+import { GetAllAttitudeUseCaseImpl } from './domain/use-cases/attitude/getAllAttitude';
+import { CreateAttitudeUseCaseImpl } from './domain/use-cases/attitude/createAttitude';
+import { UpdateAttitudeUseCaseImpl } from './domain/use-cases/attitude/updateAttitude';
+import { DeleteAttitudeUseCaseImpl } from './domain/use-cases/attitude/deleteAttitude';
+import { GetAttitudeByIdUseCaseImpl } from './domain/use-cases/attitude/getAttitudeById';
+
+//ATTITUDE ENDORS AREA
+import attitudeEndorsRouter from './presentation/routers/attitudeEndorsRouter';
+import { AttitudeEndorsRepository } from './domain/interfaces/repositories/attitudeEndorsRepository';
+import { AttitudeEndorsDataSource } from './data/interfaces/data-sources/attitudeEndorsDataSource';
+import { AttitudeEndorsDataSourceImpl } from './data/data-sources/attitudeEndorsDataSource';
+import { AttitudeEndorsRepositoryImpl } from './domain/respositories/attitudeEndorsRepository';
+import { GetAllAttitudeEndorsUseCaseImpl } from './domain/use-cases/attitudeEndors/getAllAttitudeEndors';
+import { CreateAttitudeEndorsUseCaseImpl } from './domain/use-cases/attitudeEndors/createAttitudeEndors';
+import { UpdateAttitudeEndorsUseCaseImpl } from './domain/use-cases/attitudeEndors/updateAttitudeEndors';
+import { DeleteAttitudeEndorsUseCaseImpl } from './domain/use-cases/attitudeEndors/deleteAttitudeEndors';
+import { GetAttitudeEndorsByIdUseCaseImpl } from './domain/use-cases/attitudeEndors/getAttitudeEndorsById';
+
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -53,12 +104,12 @@ async function getMSQL_DS(dataSourceClass: any) {
   const personDS = await getMSQL_DS(PersonDataSourceImpl)
 
   const personMiddleWare = personRouter(
-    new getAllPersonUseCaseImpl(new personRepositoryImpl(personDS)),
-    new createPersonUseCaseImpl(new personRepositoryImpl(personDS)),
-    new updatePersonUseCaseImpl(new personRepositoryImpl(personDS)),
-    new deletePersonUseCaseImpl(new personRepositoryImpl(personDS)),
-    new getPersonByIdUseCaseImpl(new personRepositoryImpl(personDS)),
-    new getPersonAccountInfoUseCaseImpl(new personRepositoryImpl(personDS)),
+    new GetAllPersonUseCaseImpl(new PersonRepositoryImpl(personDS)),
+    new CreatePersonUseCaseImpl(new PersonRepositoryImpl(personDS)),
+    new UpdatePersonUseCaseImpl(new PersonRepositoryImpl(personDS)),
+    new DeletePersonUseCaseImpl(new PersonRepositoryImpl(personDS)),
+    new GetPersonByIdUseCaseImpl(new PersonRepositoryImpl(personDS)),
+    new GetPersonAccountInfoUseCaseImpl(new PersonRepositoryImpl(personDS)),
   )
 
   //New routes for advanced search
@@ -66,14 +117,56 @@ async function getMSQL_DS(dataSourceClass: any) {
   const areaDS = await getMSQL_DS(AreaDataSourceImpl)
   const languageDS = await getMSQL_DS(LanguageDataSourceImpl)
   const seniorityDS = await getMSQL_DS(SeniorityDataSourceImpl)
-  const areaMiddleWare = areaRouter(new getAllAreasUseCaseImpl(new areaRepositoryImpl(areaDS)))
-  const languageMiddleWare = languageRouter(new getAllLanguagesUseCaseImpl(new languageRepositoryImpl(languageDS)))
-  const seniorityMiddleWare = seniorityRouter(new getAllSeniorityUseCaseImpl(new seniorityRepositoryImpl(seniorityDS)))
+  const areaMiddleWare = areaRouter(new getAllAreasUseCaseImpl(new AreaRepositoryImpl(areaDS)))
+  const languageMiddleWare = languageRouter(new getAllLanguagesUseCaseImpl(new LanguageRepositoryImpl(languageDS)))
+  const seniorityMiddleWare = seniorityRouter(new getAllSeniorityUseCaseImpl(new SeniorityRepositoryImpl(seniorityDS)))
+
+  //NEW ROUTES FOR NEW DOMAIN (SKILL, ATTITUDE, SKILL_ENDORS, ATTITUDE_ENDORS)
+  const skillDS = await getMSQL_DS(SkillDataSourceImpl)
+  const attitudeDS = await getMSQL_DS(AttitudeDataSourceImpl)
+  const skillEndorsDS = await getMSQL_DS(SkillEndorsDataSourceImpl)
+  const attitudeEndorsDS = await getMSQL_DS(AttitudeEndorsDataSourceImpl)
+
+  const skillMiddleWare = skillRouter(
+    new GetAllSkillUseCaseImpl(new SkillRepositoryImpl(skillDS)),
+    new CreateSkillUseCaseImpl(new SkillRepositoryImpl(skillDS)),
+    new UpdateSkillUseCaseImpl(new SkillRepositoryImpl(skillDS)),
+    new DeleteSkillUseCaseImpl(new SkillRepositoryImpl(skillDS)),
+    new GetSkillByIdUseCaseImpl(new SkillRepositoryImpl(skillDS)),
+  )
+
+  const skillEndorsMiddleWare = skillEndorsRouter(
+    new GetAllSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
+    new CreateSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
+    new UpdateSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
+    new DeleteSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
+    new GetSkillEndorsByIdUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
+  )
+
+  const attitudeMiddleWare = attitudeRouter(
+    new GetAllAttitudeUseCaseImpl(new AttitudeRepositoryImpl(attitudeDS)),
+    new CreateAttitudeUseCaseImpl(new AttitudeRepositoryImpl(attitudeDS)),
+    new UpdateAttitudeUseCaseImpl(new AttitudeRepositoryImpl(attitudeDS)),
+    new DeleteAttitudeUseCaseImpl(new AttitudeRepositoryImpl(attitudeDS)),
+    new GetAttitudeByIdUseCaseImpl(new AttitudeRepositoryImpl(attitudeDS)),
+  )
+
+  const attitudeEndorsMiddleWare = attitudeEndorsRouter(
+    new GetAllAttitudeEndorsUseCaseImpl(new AttitudeEndorsRepositoryImpl(attitudeEndorsDS)),
+    new CreateAttitudeEndorsUseCaseImpl(new AttitudeEndorsRepositoryImpl(attitudeEndorsDS)),
+    new UpdateAttitudeEndorsUseCaseImpl(new AttitudeEndorsRepositoryImpl(attitudeEndorsDS)),
+    new DeleteAttitudeEndorsUseCaseImpl(new AttitudeEndorsRepositoryImpl(attitudeEndorsDS)),
+    new GetAttitudeEndorsByIdUseCaseImpl(new AttitudeEndorsRepositoryImpl(attitudeEndorsDS)),
+  )
 
   server.use("/area", areaMiddleWare)
   server.use("/language", languageMiddleWare)
   server.use("/seniority", seniorityMiddleWare)
   server.use("/person", personMiddleWare)
+  server.use("/skill", skillMiddleWare)
+  server.use("/skillEndors", skillEndorsMiddleWare)
+  server.use("/attitude", attitudeMiddleWare)
+  server.use("/attitudeEndors", attitudeEndorsMiddleWare)
   server.get("/", (req, res) => res.send("This is our API!"))
   server.listen(3000, () => console.log("Running on http://localhost:3000"))
 
