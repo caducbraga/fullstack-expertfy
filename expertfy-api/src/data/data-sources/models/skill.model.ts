@@ -4,4 +4,5 @@ export interface SkillModel {
   id?: string;
   personId: string;
   skillType: string;
+  description?: string;
 }

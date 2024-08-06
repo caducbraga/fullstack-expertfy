@@ -36,8 +36,6 @@ import seniorityRouter from './presentation/routers/seniorityRouter';
 
 //SKILL AREA
 import skillRouter from './presentation/routers/skillRouter';
-import { SkillRepository } from './domain/interfaces/repositories/skillRepository';
-import { SkillDataSource } from './data/interfaces/data-sources/skillDataSource';
 import { SkillDataSourceImpl } from './data/data-sources/skillDataSource';
 import { SkillRepositoryImpl } from './domain/respositories/skillRepository';
 import { GetAllSkillUseCaseImpl } from './domain/use-cases/skill/getAllSkill';
@@ -48,8 +46,6 @@ import { GetSkillByIdUseCaseImpl } from './domain/use-cases/skill/getSkillById';
 
 //SKILL ENDORS AREA
 import skillEndorsRouter from './presentation/routers/skillEndorsRouter';
-import { SkillEndorsRepository } from './domain/interfaces/repositories/skillEndorsRepository';
-import { SkillEndorsDataSource } from './data/interfaces/data-sources/skillEndorsDataSource';
 import { SkillEndorsDataSourceImpl } from './data/data-sources/skillEndorsDataSource';
 import { SkillEndorsRepositoryImpl } from './domain/respositories/skillEndorsRepository';
 import { GetAllSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/getAllSkillEndors';
@@ -58,10 +54,18 @@ import { UpdateSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/upd
 import { DeleteSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/deleteSkillEndors';
 import { GetSkillEndorsByIdUseCaseImpl } from './domain/use-cases/skillEndors/getSkillEndorsById';
 
+//SKILL TYPE AREA
+import skillTypeRouter from './presentation/routers/skillTypeRouter';
+import { SkillTypeDataSourceImpl } from './data/data-sources/skillTypeDataSource';
+import { SkillTypeRepositoryImpl } from './domain/respositories/skillTypeRepository';
+import { GetAllSkillTypeUseCaseImpl } from './domain/use-cases/skillType/getAllSkillType';
+import { CreateSkillTypeUseCaseImpl } from './domain/use-cases/skillType/createSkillType';
+import { UpdateSkillTypeUseCaseImpl } from './domain/use-cases/skillType/updateSkillType';
+import { DeleteSkillTypeUseCaseImpl } from './domain/use-cases/skillType/deleteSkillType';
+import { GetSkillTypeByIdUseCaseImpl } from './domain/use-cases/skillType/getSkillTypeById';
+
 //ATTITUDE AREA
 import attitudeRouter from './presentation/routers/attitudeRouter';
-import { AttitudeRepository } from './domain/interfaces/repositories/attitudeRepository';
-import { AttitudeDataSource } from './data/interfaces/data-sources/attitudeDataSource';
 import { AttitudeDataSourceImpl } from './data/data-sources/attitudeDataSource';
 import { AttitudeRepositoryImpl } from './domain/respositories/attitudeRepository';
 import { GetAllAttitudeUseCaseImpl } from './domain/use-cases/attitude/getAllAttitude';
@@ -72,8 +76,6 @@ import { GetAttitudeByIdUseCaseImpl } from './domain/use-cases/attitude/getAttit
 
 //ATTITUDE ENDORS AREA
 import attitudeEndorsRouter from './presentation/routers/attitudeEndorsRouter';
-import { AttitudeEndorsRepository } from './domain/interfaces/repositories/attitudeEndorsRepository';
-import { AttitudeEndorsDataSource } from './data/interfaces/data-sources/attitudeEndorsDataSource';
 import { AttitudeEndorsDataSourceImpl } from './data/data-sources/attitudeEndorsDataSource';
 import { AttitudeEndorsRepositoryImpl } from './domain/respositories/attitudeEndorsRepository';
 import { GetAllAttitudeEndorsUseCaseImpl } from './domain/use-cases/attitudeEndors/getAllAttitudeEndors';
@@ -126,6 +128,7 @@ async function getMSQL_DS(dataSourceClass: any) {
   const attitudeDS = await getMSQL_DS(AttitudeDataSourceImpl)
   const skillEndorsDS = await getMSQL_DS(SkillEndorsDataSourceImpl)
   const attitudeEndorsDS = await getMSQL_DS(AttitudeEndorsDataSourceImpl)
+  const skillTypeDS = await getMSQL_DS(SkillTypeDataSourceImpl)
 
   const skillMiddleWare = skillRouter(
     new GetAllSkillUseCaseImpl(new SkillRepositoryImpl(skillDS)),
@@ -141,6 +144,14 @@ async function getMSQL_DS(dataSourceClass: any) {
     new UpdateSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
     new DeleteSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
     new GetSkillEndorsByIdUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
+  )
+
+  const skillTypeMiddleWare = skillTypeRouter(
+    new GetAllSkillTypeUseCaseImpl(new SkillTypeRepositoryImpl(skillTypeDS)),
+    new CreateSkillTypeUseCaseImpl(new SkillTypeRepositoryImpl(skillTypeDS)),
+    new UpdateSkillTypeUseCaseImpl(new SkillTypeRepositoryImpl(skillTypeDS)),
+    new DeleteSkillTypeUseCaseImpl(new SkillTypeRepositoryImpl(skillTypeDS)),
+    new GetSkillTypeByIdUseCaseImpl(new SkillTypeRepositoryImpl(skillTypeDS)),
   )
 
   const attitudeMiddleWare = attitudeRouter(
@@ -164,6 +175,7 @@ async function getMSQL_DS(dataSourceClass: any) {
   server.use("/seniority", seniorityMiddleWare)
   server.use("/person", personMiddleWare)
   server.use("/skill", skillMiddleWare)
+  server.use("/skillType", skillTypeMiddleWare)
   server.use("/skillEndors", skillEndorsMiddleWare)
   server.use("/attitude", attitudeMiddleWare)
   server.use("/attitudeEndors", attitudeEndorsMiddleWare)

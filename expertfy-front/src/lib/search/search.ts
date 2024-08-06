@@ -39,7 +39,7 @@ class SearchExpert {
     try {
       const response = await axios.get(this.baseApiUrl + `/competence/findByName/${name}`);
       return response.data;
-      
+
     } catch (error) {
       console.log("Error: get Suggestions" + error);
     }
@@ -56,13 +56,13 @@ class SearchExpert {
   }
 
   async getAllSuggestions() {
-    console.log(this.baseApiUrl + `/competence`);
+    console.log(this.baseApiUrl + `/skill`);
     try {
-      const response = await axios.get(this.baseApiUrl + `/competence`);
+      const response = await axios.get(this.baseApiUrl + `/skillType`);
       return response.data;
     }
     catch (error) {
-      console.log("Error: get All Suggestions" + error);
+      console.log("Error: get all Skill suggestions" + error);
     }
   }
 

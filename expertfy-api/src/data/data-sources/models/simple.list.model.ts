@@ -2,4 +2,5 @@
 export interface SimpleListModel {
   id: string;
   name: string;
+  description?: string
 }

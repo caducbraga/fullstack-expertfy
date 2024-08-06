@@ -1,24 +1,23 @@
-import { SkillModel } from "./models/skill.model";
-import { SkillDataSource } from "../interfaces/data-sources/skillDataSource";
+import { SimpleListModel } from "./models/simple.list.model";
+import { SkillTypeDataSource } from "../interfaces/data-sources/skillTypeDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
-const skillTable = "skill";
-export class SkillDataSourceImpl implements SkillDataSource {
+const skillTable = "skill_type";
+export class SkillTypeDataSourceImpl implements SkillTypeDataSource {
   private db: mysql.Connection;
   constructor(db: mysql.Connection) {
     this.db = db;
   }
 
 
-  public async createSkill(skill: SkillModel): Promise<boolean>{
+  public async createSkillType(skillType: SimpleListModel): Promise<boolean>{
     try {
       const query = `INSERT INTO ${skillTable}
-      (personId, skillType, description) VALUES (?, ?, ?)`;
+      (name, description) VALUES (?, ?, ?)`;
 
       const values = [
-        skill.personId,
-        skill.skillType,
-        skill.description
+        skillType.name,
+        skillType.description
       ]
 
       const [rows] = await this.db.execute<RowDataPacket[]>(
@@ -33,14 +32,14 @@ export class SkillDataSourceImpl implements SkillDataSource {
     }
   }
 
-  public async updateSkill(id: string, skill: SkillModel): Promise<boolean>{
+  public async updateSkillType(id: string, skillType: SimpleListModel): Promise<boolean>{
     try {
       const query = `UPDATE ${skillTable} SET
-      personId=?, skillType=?, description=? WHERE id=?`;
+      name=?, description=? WHERE id=?`;
 
       const values = [
-        skill.personId,
-        skill.skillType,
+        skillType.name,
+        skillType.description,
         id
       ]
 
@@ -56,7 +55,7 @@ export class SkillDataSourceImpl implements SkillDataSource {
     }
   }
 
-  public async deleteSkill(id: string): Promise<boolean>{
+  public async deleteSkillType(id: string): Promise<boolean>{
     try {
       const query = `DELETE FROM ${skillTable} WHERE id=?`;
 
@@ -72,7 +71,7 @@ export class SkillDataSourceImpl implements SkillDataSource {
     }
   }
 
-  public async getSkillById(id: string): Promise<SkillModel>{
+  public async getSkillTypeById(id: string): Promise<SimpleListModel>{
     try {
       const query = `SELECT * FROM ${skillTable} WHERE id=?`;
 
@@ -82,16 +81,16 @@ export class SkillDataSourceImpl implements SkillDataSource {
       );
 
       if(rows && rows.length > 0){
-        return rows[0] as SkillModel;
+        return rows[0] as SimpleListModel;
       }
 
-      return {} as SkillModel;
+      return {} as SimpleListModel;
     } catch (error) {
       console.log(error);
-      return {} as SkillModel;
+      return {} as SimpleListModel;
     }
   }
-  public async getAllSkills(): Promise<SkillModel[]>{
+  public async getAllSkillTypes(): Promise<SimpleListModel[]>{
     try {
       const query = `SELECT * FROM ${skillTable}`;
 
@@ -100,13 +99,13 @@ export class SkillDataSourceImpl implements SkillDataSource {
       );
 
       if (rows && rows.length > 0) {
-        return rows as SkillModel[];
+        return rows as SimpleListModel[];
       }
 
-      return [] as SkillModel[];
+      return [] as SimpleListModel[];
     } catch (error) {
       console.log(error);
-      return [] as SkillModel[];
+      return [] as SimpleListModel[];
     }
   }
 }
