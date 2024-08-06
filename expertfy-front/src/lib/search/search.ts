@@ -35,6 +35,7 @@ class SearchExpert {
 
   private baseApiUrl: string | undefined;
 
+  //TODO: é utilizada aonde?
   async getSuggestions(name: string) {
     try {
       const response = await axios.get(this.baseApiUrl + `/competence/findByName/${name}`);
@@ -45,6 +46,7 @@ class SearchExpert {
     }
   }
 
+  //TODO: change link api to get all experts
   async getExpertList(selectedSuggestion: Competence | null) {
     try {
       const response = await axios.get(this.baseApiUrl + `/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
@@ -56,7 +58,7 @@ class SearchExpert {
   }
 
   async getAllSuggestions() {
-    console.log(this.baseApiUrl + `/skill`);
+
     try {
       const response = await axios.get(this.baseApiUrl + `/skillType`);
       return response.data;
