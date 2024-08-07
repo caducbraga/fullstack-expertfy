@@ -21,7 +21,7 @@ export default function Page(): React.JSX.Element {
   const userId = searchParams.get('id');
   const [user, setUser] = React.useState<User>({ id: '', photo: '', firstName: '', lastName: '', birthDate: new Date(), email: '', phone: '', linkedin: '', team: '', employmentStartDate: new Date(), language: '', seniority: '', area: '', office: ''});
   const [manifestCompetences, setManifestCompetences] = React.useState<ManifestTableContent[]>([]);
-  
+
   React.useEffect(() => {
     if (!userId) {
       return;
@@ -35,7 +35,7 @@ export default function Page(): React.JSX.Element {
         setManifestCompetences(data);
       });
     }
-    
+
   }, [userId]);
 
   return (
@@ -56,7 +56,7 @@ export default function Page(): React.JSX.Element {
           <Stack direction="row" spacing={3}>
             {/* competence table */}
             <Stack spacing={3} sx={{ flex: '1 1 auto' }}>
-              <Typography variant="h4">Manifestações</Typography>
+              <Typography variant="h4">Human Tasks</Typography>
               <AccountScorePanel/>
               <ManifestTable rows={manifestCompetences} />
             </Stack>

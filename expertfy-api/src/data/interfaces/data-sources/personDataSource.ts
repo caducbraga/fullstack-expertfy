@@ -8,4 +8,5 @@ export interface PersonDataSource {
   getPersonById(id: string): Promise<PersonModel>;
   getAllPersons(): Promise<PersonModel[]>;
   getPersonAccountInfo(id: string): Promise<PersonModel>;
+  getPersonListBySkillTypeId(id: string): Promise<PersonModel[]>;
 }

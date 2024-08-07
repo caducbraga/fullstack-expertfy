@@ -12,7 +12,7 @@ class Account {
 
   async getAccountInfo(id : string) {
     try {
-      const response = await axios.get(this.baseApiUrl + `/user/accountInfo/${id}`);
+      const response = await axios.get(this.baseApiUrl + `/person/accountInfo/${id}`);
       return response.data;
     }
     catch (error) {

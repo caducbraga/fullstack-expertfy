@@ -3,6 +3,8 @@ import { PersonDataSource } from "../interfaces/data-sources/personDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const personTable = "person";
+const skillTypeTable = "skill_type";
+const skillTable = "skill";
 
 export class PersonDataSourceImpl implements PersonDataSource {
   private db: mysql.Connection;
@@ -137,6 +139,29 @@ export class PersonDataSourceImpl implements PersonDataSource {
     } catch (error) {
       console.log(error);
       return {} as PersonModel;
+    }
+  }
+
+  public async getPersonListBySkillTypeId(id: string): Promise<PersonModel[]> {
+    try {
+    const query = `
+    SELECT DISTINCT P.id, P.name, P.lastName, P.phone, P.email, P.linkedin, P.birthDate, 
+    P.employmentStartDate, P.photo, P.team, P.seniorityId, P.areaId, P.office,
+    se.name AS seniority, ar.name AS area
+    FROM ${skillTable} S 
+    JOIN ${personTable} P ON S.personId = P.id
+    JOIN seniority se ON P.seniorityId = se.id
+    JOIN area ar ON P.areaId = ar.id
+    WHERE S.skillType=?`;
+      const [rows] = await this.db.execute<RowDataPacket[]>(query, [id]);
+      
+      if(rows && rows.length > 0){
+        return rows as PersonModel[];
+      }
+      return [] as PersonModel[];
+    } catch (error) {
+      console.log(error);
+      return [] as PersonModel[];
     }
   }
 }

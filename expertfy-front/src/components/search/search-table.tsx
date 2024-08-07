@@ -57,9 +57,9 @@ export function SearchTable({
   const router = useRouter();
 
   const handleRowClick = (user: Expert) => {
-    router.push(`/search/account/?id=${user.id}`);  
+    router.push(`/search/account/?id=${user.id}`);
   }
-  
+
   const setColorView = (score: number, colorScore: ColorScore) => {
     switch (colorScore) {
       case ColorScore.GREEN:
@@ -71,9 +71,9 @@ export function SearchTable({
       default:
         return <Avatar>{score}</Avatar>;
     }
-    
+
   }
-  
+
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
@@ -86,7 +86,7 @@ export function SearchTable({
             <TableRow>
               <TableCell>Nome</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Idioma</TableCell>
+
               <TableCell>Área</TableCell>
               <TableCell>Senioridade</TableCell>
               <TableCell>Tempo na Organização</TableCell>
@@ -109,18 +109,18 @@ export function SearchTable({
                 <TableRow key={row.id} >
                   <TableCell>
                     <Stack sx={{alignItems: 'center',
-                                cursor: 'pointer', 
-                                '&:hover': { 
-                                  backgroundColor: 'lightgray', 
+                                cursor: 'pointer',
+                                '&:hover': {
+                                  backgroundColor: 'lightgray',
                                 }
-                              }} 
+                              }}
                     direction="row" spacing={2} onClick={() => {handleRowClick(row)}}>
                       <Avatar src={row.photo} />
                       <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.language}</TableCell>
+
                   <TableCell>{row.area}</TableCell>
                   <TableCell>{row.seniority}</TableCell>
                   <TableCell>{dateToRealYear(row.employmentStartDate)}</TableCell>

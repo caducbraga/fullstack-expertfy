@@ -8,16 +8,18 @@ import { searchExpert } from '@/lib/search/search';
 import useSearchStore from '@/store/searchStore';
 import useTableStore from '@/store/tableStore';
 import type { AdvancedFilters } from '@/components/search/advanced-search';
-import { Alert } from '@mui/material';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 import { ColorScore } from '@/types/colorScore';
+import { Alert, CardContent, CardMedia, InputAdornment } from '@mui/material';
 
 
 
 
 export default function Page(): React.JSX.Element {
 
-  
-  
+
+
   const { experts, filteredExperts, setExperts, setFilteredExperts } = useSearchStore();
   const { count,  page, rowsPerPage, paginatedExperts, setCount, setPage, setRowsPerPage, setPaginatedExperts } = useTableStore();
 
@@ -56,13 +58,13 @@ export default function Page(): React.JSX.Element {
     else {
       filteredExpertsLocal = experts;
     }
-    
+
     // Default: none filter
     if (!filters.useArea && !filters.useLanguage && !filters.useSeniority) {
       setPaginatedExperts(applyPagination(experts, page, rowsPerPage));
       setFilteredExperts(experts);
       setCount(experts.length);
-    
+
     }
     // Some filter was selected
     else {
@@ -86,15 +88,15 @@ export default function Page(): React.JSX.Element {
 
   // Pagination control
   React.useEffect(() => {
-    
+
     setPaginatedExperts(applyPagination(filteredExperts, page, rowsPerPage));
-    
-    
+
+
   }, [page, rowsPerPage]);
 
 
   const calculateAndSetColorScale = (experts_local: Expert[]) => {
-    const TENPERCENT = Math.ceil(experts_local.length/10); 
+    const TENPERCENT = Math.ceil(experts_local.length/10);
     const FOURYPERCENT = Math.ceil(experts_local.length * (4/10));
     console.log(TENPERCENT);
     console.log(FOURYPERCENT);
@@ -116,8 +118,14 @@ export default function Page(): React.JSX.Element {
 
   return (
     <Stack spacing={3}>
+      <Card sx={{ p: 2 }}>
+        <CardContent sx={{ textAlign: 'center' }}>
+          <Typography variant="h4" sx={{ mb: 1 }}>Bem vindo ao Expertfy! </Typography>
+          <Typography variant="body1">Para comecar, selecione uma habilidade para começar a sua busca.</Typography>
+        </CardContent>
+      </Card>
       <SearchFilters selection={handleFilterSelect} filter={handleAdvancedFilters} />
-      {showAlertWarningEmptyExperts && <Alert severity="warning">Busque por uma competência antes de utilizar os filtros avançados</Alert>}
+      {showAlertWarningEmptyExperts && <Alert severity="warning">Busque por uma habilidade antes de utilizar os filtros avançados</Alert>}
       {experts.length > 0 && (
         <SearchTable
           count={count}

@@ -6,6 +6,7 @@ import { UpdatePersonUseCase } from "../../domain/interfaces/use-cases/person/up
 import { DeletePersonUseCase } from "../../domain/interfaces/use-cases/person/deletePerson";
 import { GetPersonByIdUseCase } from "../../domain/interfaces/use-cases/person/getPersonById";
 import { GetPersonAccountInfoUseCaseImpl } from '../../domain/use-cases/person/getPersonAccountInfo';
+import { GetPersonListBySkillTypeIdUseCaseImpl } from '../../domain/use-cases/person/getPersonListBySkillTypeId';
 
 export default function personRouter(
   getAllPersonUseCase: GetAllPersonUseCase,
@@ -13,7 +14,9 @@ export default function personRouter(
   updatePersonUseCase: UpdatePersonUseCase,
   deletePersonUseCase: DeletePersonUseCase,
   getPersonByIdUseCase: GetPersonByIdUseCase,
-  getPersonAccountInfoUseCaseImpl: GetPersonAccountInfoUseCaseImpl
+  getPersonAccountInfoUseCaseImpl: GetPersonAccountInfoUseCaseImpl,
+  getPersonListBySkillTypeIdUseCaseImpl: GetPersonListBySkillTypeIdUseCaseImpl
+
 ) {
 
   const router = express.Router();
@@ -68,6 +71,15 @@ export default function personRouter(
     try {
       const accountInfo = await getPersonAccountInfoUseCaseImpl.execute(req.params.id);
       res.status(200).send(accountInfo);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
+    }
+  });
+
+  router.get("/listBySkillTypeId/:id", async (req: Request, res: Response) => {
+    try {
+      const persons = await getPersonListBySkillTypeIdUseCaseImpl.execute(req.params.id);
+      res.status(200).send(persons);
     } catch (error) {
       res.status(500).send({ error: "error fetching data", message: error });
     }

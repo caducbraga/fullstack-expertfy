@@ -14,7 +14,7 @@ import { UpdatePersonUseCaseImpl } from './domain/use-cases/person/updatePerson'
 import { DeletePersonUseCaseImpl } from './domain/use-cases/person/deletePerson'
 import { GetPersonByIdUseCaseImpl } from './domain/use-cases/person/getPersonById'
 import { GetPersonAccountInfoUseCaseImpl } from './domain/use-cases/person/getPersonAccountInfo'
-
+import { GetPersonListBySkillTypeIdUseCaseImpl } from './domain/use-cases/person/getPersonListBySkillTypeId';
 //ADVANCED SEARCH AREA
 
 //Area
@@ -112,6 +112,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new DeletePersonUseCaseImpl(new PersonRepositoryImpl(personDS)),
     new GetPersonByIdUseCaseImpl(new PersonRepositoryImpl(personDS)),
     new GetPersonAccountInfoUseCaseImpl(new PersonRepositoryImpl(personDS)),
+    new GetPersonListBySkillTypeIdUseCaseImpl(new PersonRepositoryImpl(personDS))
   )
 
   //New routes for advanced search
