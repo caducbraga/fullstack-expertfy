@@ -3,7 +3,7 @@ import { HumanTaskDataSource } from "../interfaces/data-sources/humanTaskDataSou
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const humanTaskTable = "human_task";
-//TODO: Implement data source when database is ready
+
 export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
   private db: mysql.Connection;
 
@@ -32,8 +32,70 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
       return false;
     }
   }
-  public async updateHumanTask(id: string, taskOut: HumanTaskModel): Promise<boolean>;
-  public async deleteHumanTask(id: string): Promise<boolean>;
-  public async getHumanTaskById(id: string): Promise<HumanTaskModel>;
-  public async getAllHumanTasks(): Promise<HumanTaskModel[]>;
+  public async updateHumanTask(id: string, humanTask: HumanTaskModel): Promise<boolean>{
+    try {
+      const query = `UPDATE ${humanTaskTable} SET
+      skillId=?, taskOutputId=?, taskType=? WHERE id=?`;
+
+      const values = [
+        humanTask.skillId,
+        humanTask.taskOutputId,
+        humanTask.taskType,
+        id
+      ];
+
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query,
+        values
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+  public async deleteHumanTask(id: string): Promise<boolean>{
+    try {
+      const query = `DELETE FROM ${humanTaskTable} WHERE id=?`;
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query,
+        [id]
+      );
+      return true;
+
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+  public async getHumanTaskById(id: string): Promise<HumanTaskModel>{
+    try {
+      const query = `SELECT * FROM ${humanTaskTable} WHERE id=?`;
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query,
+        [id]
+      );
+      return rows[0] as HumanTaskModel;
+
+    } catch (error) {
+      console.log(error);
+      return {} as HumanTaskModel;
+    }
+  }
+  public async getAllHumanTasks(): Promise<HumanTaskModel[]>{
+    try {
+      const query = `SELECT * FROM ${humanTaskTable}`;
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query
+      );
+
+      if (rows && rows.length > 0)
+        return rows as HumanTaskModel[];
+
+      return [] as HumanTaskModel[];
+    } catch (error) {
+      console.log(error);
+      return [] as HumanTaskModel[];
+    }
+  }
 }

@@ -84,6 +84,25 @@ import { UpdateAttitudeEndorsUseCaseImpl } from './domain/use-cases/attitudeEndo
 import { DeleteAttitudeEndorsUseCaseImpl } from './domain/use-cases/attitudeEndors/deleteAttitudeEndors';
 import { GetAttitudeEndorsByIdUseCaseImpl } from './domain/use-cases/attitudeEndors/getAttitudeEndorsById';
 
+//TASK OUTPUT AREA
+import taskOutputRouter from './presentation/routers/taskOutputRouter';
+import { TaskOutputDataSourceImpl } from './data/data-sources/taskOutputDataSource';
+import { TaskOutputRepositoryImpl } from './domain/respositories/taskOutputRepository';
+import { GetAllTaskOutputUseCaseImpl } from './domain/use-cases/taskOutput/getAllTaskOutput';
+import { CreateTaskOutputUseCaseImpl } from './domain/use-cases/taskOutput/createTaskOutput';
+import { UpdateTaskOutputUseCaseImpl } from './domain/use-cases/taskOutput/updateTaskOutput';
+import { DeleteTaskOutputUseCaseImpl } from './domain/use-cases/taskOutput/deleteTaskOutput';
+import { GetTaskOutputByIdUseCaseImpl } from './domain/use-cases/taskOutput/getTaskOutputById';
+
+//HUMAN TASK AREA
+import humanTaskRouter from './presentation/routers/humanTaskRouter';
+import { HumanTaskDataSourceImpl } from './data/data-sources/humanTaskDataSource';
+import { HumanTaskRepositoryImpl } from './domain/respositories/humanTaskRepository';
+import { GetAllHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/getAllHumanTask';
+import { CreateHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/createHumanTask';
+import { UpdateHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/updateHumanTask';
+import { DeleteHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/deleteHumanTask';
+import { GetHumanTaskByIdUseCaseImpl } from './domain/use-cases/humanTask/getHumanTaskById';
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -130,6 +149,8 @@ async function getMSQL_DS(dataSourceClass: any) {
   const skillEndorsDS = await getMSQL_DS(SkillEndorsDataSourceImpl)
   const attitudeEndorsDS = await getMSQL_DS(AttitudeEndorsDataSourceImpl)
   const skillTypeDS = await getMSQL_DS(SkillTypeDataSourceImpl)
+  const taskOutputDS = await getMSQL_DS(TaskOutputDataSourceImpl)
+  const humanTaskDS = await getMSQL_DS(HumanTaskDataSourceImpl)
 
   const skillMiddleWare = skillRouter(
     new GetAllSkillUseCaseImpl(new SkillRepositoryImpl(skillDS)),
@@ -171,6 +192,22 @@ async function getMSQL_DS(dataSourceClass: any) {
     new GetAttitudeEndorsByIdUseCaseImpl(new AttitudeEndorsRepositoryImpl(attitudeEndorsDS)),
   )
 
+  const taskOutputMiddleWare = taskOutputRouter(
+    new GetAllTaskOutputUseCaseImpl(new TaskOutputRepositoryImpl(taskOutputDS)),
+    new CreateTaskOutputUseCaseImpl(new TaskOutputRepositoryImpl(taskOutputDS)),
+    new UpdateTaskOutputUseCaseImpl(new TaskOutputRepositoryImpl(taskOutputDS)),
+    new DeleteTaskOutputUseCaseImpl(new TaskOutputRepositoryImpl(taskOutputDS)),
+    new GetTaskOutputByIdUseCaseImpl(new TaskOutputRepositoryImpl(taskOutputDS)),
+  )
+
+  const humanTaskMiddleWare = humanTaskRouter(
+    new GetAllHumanTaskUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+    new CreateHumanTaskUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+    new UpdateHumanTaskUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+    new DeleteHumanTaskUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+    new GetHumanTaskByIdUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+  )
+
   server.use("/area", areaMiddleWare)
   server.use("/language", languageMiddleWare)
   server.use("/seniority", seniorityMiddleWare)
@@ -180,6 +217,8 @@ async function getMSQL_DS(dataSourceClass: any) {
   server.use("/skillEndors", skillEndorsMiddleWare)
   server.use("/attitude", attitudeMiddleWare)
   server.use("/attitudeEndors", attitudeEndorsMiddleWare)
+  server.use("/taskOutput", taskOutputMiddleWare)
+  server.use("/humanTask", humanTaskMiddleWare)
   server.get("/", (req, res) => res.send("This is our API!"))
   server.listen(3000, () => console.log("Running on http://localhost:3000"))
 
