@@ -105,6 +105,8 @@ import { DeleteHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/deleteH
 import { GetHumanTaskByIdUseCaseImpl } from './domain/use-cases/humanTask/getHumanTaskById';
 import { GetCountGroupByPersonHumanTasksUsecaseImpl } from './domain/use-cases/humanTask/getCountGroupByPersonHumanTasks';
 import { GetHumanTaskTableListByPersonIdUseCaseImpl } from './domain/use-cases/humanTask/getHumanTaskTableListByPersonId';
+import { GetCountHumanTaskByPersonGroupBySkillUsecaseImpl } from './domain/use-cases/humanTask/getCountHumanTaskByPersonGroupBySkill';
+import { GetTotalCountHumanTaskGroupBySkillUsecaseImpl } from './domain/use-cases/humanTask/getTotalCountHumanTaskGroupBySkill';
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -210,7 +212,8 @@ async function getMSQL_DS(dataSourceClass: any) {
     new GetHumanTaskByIdUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
     new GetCountGroupByPersonHumanTasksUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
     new GetHumanTaskTableListByPersonIdUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
-    
+    new GetCountHumanTaskByPersonGroupBySkillUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+    new GetTotalCountHumanTaskGroupBySkillUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
   )
 
   server.use("/area", areaMiddleWare)

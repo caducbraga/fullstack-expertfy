@@ -3,9 +3,12 @@ import { HumanTaskDataSource } from "../interfaces/data-sources/humanTaskDataSou
 import mysql, { RowDataPacket } from "mysql2/promise";
 import { PersonCountDTO } from "../../domain/models/personCountDTO";
 import { PersonTableDTO } from "../../domain/models/personTableDTO";
+import { HumanTaskCountDTO } from "../../domain/models/humanTaskCountDTO";
 
 
 const humanTaskTable = "human_task";
+const skillTable = "skill";
+const skillTypeTable = "skill_type";
 
 export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
   private db: mysql.Connection;
@@ -106,7 +109,7 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
     try {
       
       const query = `SELECT COUNT(*) as count, S.personId FROM ${humanTaskTable} H
-            JOIN skill S ON H.skillId = S.id
+            JOIN ${skillTable} S ON H.skillId = S.id
             WHERE S.skillType = ${skillTypeId}
             GROUP BY S.personId ;`;
 
@@ -126,11 +129,11 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
     try {
       const query = `SELECT H.id, T.name AS taskname, T.ref AS artefact, S.skilltype, ST.name AS skillname, ST.description, date 
             FROM ${humanTaskTable} H
-            JOIN skill S ON H.skillId = S.id
-            JOIN skill_type ST ON S.skillType = ST.id
+            JOIN ${skillTable} S ON H.skillId = S.id
+            JOIN ${skillTypeTable} ST ON S.skillType = ST.id
             JOIN task_output T ON H.taskOutputId = T.id 
             where S.personId = ${personId};`;
-            
+
       const [rows] = await this.db.execute<RowDataPacket[]>(
         query
       )
@@ -139,6 +142,43 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
     } catch (error) {
       console.log(error);
       return [] as PersonTableDTO[]
+    }
+  }
+
+  public async getCountHumanTaskByPersonGroupBySkill(personId: string): Promise<HumanTaskCountDTO[]>{
+    try {
+      const query = `SELECT skillType AS id, ST.name, COUNT(*) AS total FROM ${humanTaskTable} H
+            JOIN ${skillTable} S ON H.skillId = S.id
+            JOIN ${skillTypeTable} ST ON S.skillType = ST.id
+            WHERE S.personId = ${personId}
+            GROUP BY S.skillType;`;
+
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query
+      )
+
+      return rows as HumanTaskCountDTO[]
+    } catch (error) {
+      console.log(error);
+      return [] as HumanTaskCountDTO[]
+    }
+  }
+
+  public async getTotalCountHumanTaskGroupBySkill(): Promise<HumanTaskCountDTO[]>{
+    try {
+      const query = `SELECT skillType AS id, ST.name, COUNT(*) AS total FROM ${humanTaskTable} H
+            JOIN ${skillTable} S ON H.skillId = S.id
+            JOIN ${skillTypeTable} ST ON S.skillType = ST.id
+            GROUP BY S.skillType;`;
+
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query
+      )
+
+      return rows as HumanTaskCountDTO[]
+    } catch (error) {
+      console.log(error);
+      return [] as HumanTaskCountDTO[]
     }
   }
 }
