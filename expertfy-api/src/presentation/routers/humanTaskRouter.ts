@@ -6,6 +6,7 @@ import { UpdateHumanTaskUseCase } from "../../domain/interfaces/use-cases/humanT
 import { DeleteHumanTaskUseCase } from "../../domain/interfaces/use-cases/humanTask/deleteHumanTask";
 import { GetHumanTaskByIdUseCase } from "../../domain/interfaces/use-cases/humanTask/getHumanTaskById";
 import { GetCountGroupByPersonHumanTasksUsecase } from '../../domain/interfaces/use-cases/humanTask/getCountGroupByPersonHumanTasks';
+import { GetHumanTaskTableListByPersonIdUseCase } from '../../domain/interfaces/use-cases/humanTask/getHumanTaskTableListByPersonId';
 
 export default function humanTaskRouter(
   getAllHumanTaskUseCase: GetAllHumanTaskUseCase,
@@ -13,7 +14,8 @@ export default function humanTaskRouter(
   updateHumanTaskUseCase: UpdateHumanTaskUseCase,
   deleteHumanTaskUseCase: DeleteHumanTaskUseCase,
   getHumanTaskByIdUseCase: GetHumanTaskByIdUseCase,
-  getCountGroupByPersonHumanTasksUsecase: GetCountGroupByPersonHumanTasksUsecase
+  getCountGroupByPersonHumanTasksUsecase: GetCountGroupByPersonHumanTasksUsecase,
+  getHumanTaskTableListByPersonIdUseCase: GetHumanTaskTableListByPersonIdUseCase
 ) {
 
   const router = express.Router();
@@ -72,6 +74,16 @@ export default function humanTaskRouter(
       res.status(500).send({ error: "error fetching data", message: error });
     }
   });
+
+  router.get("/tableListByPersonId/:id", async (req: Request, res: Response) => {
+    try {
+      const tableListByPersonId = await getHumanTaskTableListByPersonIdUseCase.execute(req.params.id);
+      res.status(200).send(tableListByPersonId);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
+    }
+  });
+
   return router;
 
 

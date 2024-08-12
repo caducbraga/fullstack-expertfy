@@ -1,5 +1,6 @@
 import { HumanTaskModel } from "../../../data/data-sources/models/human.task.model";
 import { PersonCountDTO } from "../../models/personCountDTO";
+import { PersonTableDTO } from "../../models/personTableDTO";
 export interface HumanTaskRepository {
   createHumanTask(human_task: HumanTaskModel): Promise<boolean>;
   updateHumanTask(id: string, human_task: HumanTaskModel): Promise<boolean>;
@@ -7,4 +8,5 @@ export interface HumanTaskRepository {
   getHumanTaskById(id: string): Promise<HumanTaskModel>;
   getAllHumanTasks(): Promise<HumanTaskModel[]>;
   getCountGroupByPersonHumanTasksBySkillType(skillTypeId: string): Promise<PersonCountDTO[]>
+  getHumanTaskTableListByPersonId(personId: string): Promise<PersonTableDTO[]>
 }

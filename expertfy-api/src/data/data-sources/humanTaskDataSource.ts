@@ -2,6 +2,7 @@ import { HumanTaskModel } from "./models/human.task.model";
 import { HumanTaskDataSource } from "../interfaces/data-sources/humanTaskDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
 import { PersonCountDTO } from "../../domain/models/personCountDTO";
+import { PersonTableDTO } from "../../domain/models/personTableDTO";
 
 
 const humanTaskTable = "human_task";
@@ -118,6 +119,26 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
     } catch (error) {
       console.log(error);
       return [] as PersonCountDTO[]
+    }
+  }
+
+  public async getHumanTaskTableListByPersonId(personId: string): Promise<PersonTableDTO[]>{
+    try {
+      const query = `SELECT H.id, T.name AS taskname, T.ref AS artefact, S.skilltype, ST.name AS skillname, ST.description, date 
+            FROM ${humanTaskTable} H
+            JOIN skill S ON H.skillId = S.id
+            JOIN skill_type ST ON S.skillType = ST.id
+            JOIN task_output T ON H.taskOutputId = T.id 
+            where S.personId = ${personId};`;
+            
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query
+      )
+
+      return rows as PersonTableDTO[]
+    } catch (error) {
+      console.log(error);
+      return [] as PersonTableDTO[]
     }
   }
 }
