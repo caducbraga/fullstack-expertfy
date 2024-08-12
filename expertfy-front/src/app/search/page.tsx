@@ -18,27 +18,54 @@ import { Alert, CardContent, CardMedia, InputAdornment } from '@mui/material';
 
 export default function Page(): React.JSX.Element {
 
-
+  interface CountScore {
+    personId: string;
+    count: number;
+  }
 
   const { experts, filteredExperts, setExperts, setFilteredExperts } = useSearchStore();
   const { count,  page, rowsPerPage, paginatedExperts, setCount, setPage, setRowsPerPage, setPaginatedExperts } = useTableStore();
 
   const [showAlertWarningEmptyExperts, setShowAlertWarningEmptyExperts] = React.useState<boolean>(false);
 
+  const ajustAndReorder = (data: Expert[], listPerson: CountScore[]) => {
+    //Pre tratamento pra inserir o score na lista de experts
+    for (let i = 0; i < data.length; i++) {
+      data[i].skillScore = 0;
+      for (let j = 0; j < listPerson.length; j++) {
+        if (data[i].id === listPerson[j].personId) {
+          data[i].skillScore = listPerson[j].count;
+          break;
+        }
+      }
+    }
+
+    //Reordena a lista de experts de acordo com o score
+    data.sort((a, b) => b.skillScore - a.skillScore);
+
+    return data;
+  }
   // Get the selected Competence and apply the filter
   const handleFilterSelect = (selection: Competence | null) => {
     if (selection !== null) {
-      const expert_list_pr = searchExpert.getExpertList(selection);
-      expert_list_pr.then((data) => {
-        //initial experts list
-        calculateAndSetColorScale(data)
-        setExperts(data);
-        setFilteredExperts(data);
-        setCount(data.length);
-        setPaginatedExperts(applyPagination(data, page, rowsPerPage));
-        setShowAlertWarningEmptyExperts(false);
-        console.log(data)
+      const scoreCountPerson = searchExpert.getCountScore(selection);
+      scoreCountPerson.then((listPerson: CountScore[]) => {
+        console.log(listPerson)
+
+        const expert_list_pr = searchExpert.getExpertList(selection);
+        expert_list_pr.then((data: Expert[]) => {
+          ajustAndReorder(data, listPerson)
+          //initial experts list
+          calculateAndSetColorScale(data)
+          setExperts(data);
+          setFilteredExperts(data);
+          setCount(data.length);
+          setPaginatedExperts(applyPagination(data, page, rowsPerPage));
+          setShowAlertWarningEmptyExperts(false);
+          console.log(data)
+        });
       });
+
 
     }
   }
@@ -98,8 +125,6 @@ export default function Page(): React.JSX.Element {
   const calculateAndSetColorScale = (experts_local: Expert[]) => {
     const TENPERCENT = Math.ceil(experts_local.length/10);
     const FOURYPERCENT = Math.ceil(experts_local.length * (4/10));
-    console.log(TENPERCENT);
-    console.log(FOURYPERCENT);
     var count = 1;
     experts_local.forEach(e => {
       if (count <= TENPERCENT){

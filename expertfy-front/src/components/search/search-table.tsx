@@ -32,7 +32,7 @@ function dateToRealYear(date: Date): string {
 }
 
 export interface Expert extends User{
-  competenceCount: number;
+  skillScore: number;
   colorScore: ColorScore;
 }
 
@@ -125,7 +125,7 @@ export function SearchTable({
                   <TableCell>{row.seniority}</TableCell>
                   <TableCell>{dateToRealYear(row.employmentStartDate)}</TableCell>
                   <TableCell>{row.team}</TableCell>
-                  <TableCell>{setColorView(row.competenceCount, row.colorScore)}</TableCell>
+                  <TableCell>{setColorView(row.skillScore, row.colorScore)}</TableCell>
                 </TableRow>
               );
             })}

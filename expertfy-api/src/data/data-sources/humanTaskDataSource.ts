@@ -104,7 +104,7 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
   public async getCountGroupByPersonHumanTasksBySkillType(skillTypeId: string): Promise<PersonCountDTO[]>{
     try {
       
-      const query = `SELECT COUNT(*), S.personId FROM ${humanTaskTable} H
+      const query = `SELECT COUNT(*) as count, S.personId FROM ${humanTaskTable} H
             JOIN skill S ON H.skillId = S.id
             WHERE S.skillType = ${skillTypeId}
             GROUP BY S.personId ;`;

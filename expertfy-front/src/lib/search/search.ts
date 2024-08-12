@@ -46,6 +46,15 @@ class SearchExpert {
     }
   }
 
+  async getCountScore(selectedSuggestion: Competence | null) {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/humanTask/countGroupByPersonBySkillTypeId/${selectedSuggestion?.id}`);
+      return response.data;
+    } catch (error) {
+      console.log("Error: get Count Score" + error);
+    }
+  }
+
   async getAllSuggestions() {
 
     try {
