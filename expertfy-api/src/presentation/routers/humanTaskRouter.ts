@@ -5,7 +5,7 @@ import { CreateHumanTaskUseCase } from "../../domain/interfaces/use-cases/humanT
 import { UpdateHumanTaskUseCase } from "../../domain/interfaces/use-cases/humanTask/updateHumanTask";
 import { DeleteHumanTaskUseCase } from "../../domain/interfaces/use-cases/humanTask/deleteHumanTask";
 import { GetHumanTaskByIdUseCase } from "../../domain/interfaces/use-cases/humanTask/getHumanTaskById";
-
+import { GetCountGroupByPersonHumanTasksUsecase } from '../../domain/interfaces/use-cases/humanTask/getCountGroupByPersonHumanTasks';
 
 export default function humanTaskRouter(
   getAllHumanTaskUseCase: GetAllHumanTaskUseCase,
@@ -13,6 +13,7 @@ export default function humanTaskRouter(
   updateHumanTaskUseCase: UpdateHumanTaskUseCase,
   deleteHumanTaskUseCase: DeleteHumanTaskUseCase,
   getHumanTaskByIdUseCase: GetHumanTaskByIdUseCase,
+  getCountGroupByPersonHumanTasksUsecase: GetCountGroupByPersonHumanTasksUsecase
 ) {
 
   const router = express.Router();
@@ -63,6 +64,15 @@ export default function humanTaskRouter(
     }
   });
 
+  router.get("/countGroupByPersonBySkillTypeId/:id", async (req: Request, res: Response) => {
+    try {
+      const countGroupByPersonBySkillTypeId = await getCountGroupByPersonHumanTasksUsecase.execute(req.params.id);
+      res.status(200).send(countGroupByPersonBySkillTypeId);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
+    }
+  });
   return router;
+
 
 }

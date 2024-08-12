@@ -1,6 +1,7 @@
 import { HumanTaskModel } from "../../data/data-sources/models/human.task.model";
 import { HumanTaskRepository } from "../interfaces/repositories/humanTaskRepository";
 import { HumanTaskDataSource } from "../../data/interfaces/data-sources/humanTaskDataSource";
+import { PersonCountDTO } from "../models/personCountDTO";
 
 export class HumanTaskRepositoryImpl implements HumanTaskRepository {
   private humanTaskDataSource: HumanTaskDataSource;
@@ -27,5 +28,9 @@ export class HumanTaskRepositoryImpl implements HumanTaskRepository {
 
   public async getAllHumanTasks(): Promise<HumanTaskModel[]> {
     return await this.humanTaskDataSource.getAllHumanTasks();
+  }
+
+  public async getCountGroupByPersonHumanTasksBySkillType(skillTypeId: string): Promise<PersonCountDTO[]> {
+    return await this.humanTaskDataSource.getCountGroupByPersonHumanTasksBySkillType(skillTypeId);
   }
 }

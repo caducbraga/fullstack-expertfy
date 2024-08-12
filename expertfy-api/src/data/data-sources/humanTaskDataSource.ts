@@ -1,6 +1,8 @@
 import { HumanTaskModel } from "./models/human.task.model";
 import { HumanTaskDataSource } from "../interfaces/data-sources/humanTaskDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
+import { PersonCountDTO } from "../../domain/models/personCountDTO";
+
 
 const humanTaskTable = "human_task";
 
@@ -96,6 +98,26 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
     } catch (error) {
       console.log(error);
       return [] as HumanTaskModel[];
+    }
+  }
+
+  public async getCountGroupByPersonHumanTasksBySkillType(skillTypeId: string): Promise<PersonCountDTO[]>{
+    try {
+      
+      const query = `SELECT COUNT(*), S.personId FROM ${humanTaskTable} H
+            JOIN skill S ON H.skillId = S.id
+            WHERE S.skillType = ${skillTypeId}
+            GROUP BY S.personId ;`;
+
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query
+      )
+
+      return rows as PersonCountDTO[]
+
+    } catch (error) {
+      console.log(error);
+      return [] as PersonCountDTO[]
     }
   }
 }

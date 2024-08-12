@@ -103,6 +103,7 @@ import { CreateHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/createH
 import { UpdateHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/updateHumanTask';
 import { DeleteHumanTaskUseCaseImpl } from './domain/use-cases/humanTask/deleteHumanTask';
 import { GetHumanTaskByIdUseCaseImpl } from './domain/use-cases/humanTask/getHumanTaskById';
+import { GetCountGroupByPersonHumanTasksUsecaseImpl } from './domain/use-cases/humanTask/getCountGroupByPersonHumanTasks';
 
 dotenv.config();
 const { MYSQL_HOST, MYSQL_DB, MYSQL_USER, MYSQL_PASSWORD } = process.env;
@@ -206,6 +207,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new UpdateHumanTaskUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
     new DeleteHumanTaskUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
     new GetHumanTaskByIdUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+    new GetCountGroupByPersonHumanTasksUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
   )
 
   server.use("/area", areaMiddleWare)

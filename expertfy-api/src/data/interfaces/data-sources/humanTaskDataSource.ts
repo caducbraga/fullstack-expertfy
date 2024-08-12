@@ -1,4 +1,5 @@
 import { HumanTaskModel } from "../../data-sources/models/human.task.model";
+import { PersonCountDTO } from "../../../domain/models/personCountDTO";
 
 export interface HumanTaskDataSource {
   createHumanTask(taskOut: HumanTaskModel): Promise<boolean>;
@@ -6,4 +7,5 @@ export interface HumanTaskDataSource {
   deleteHumanTask(id: string): Promise<boolean>;
   getHumanTaskById(id: string): Promise<HumanTaskModel>;
   getAllHumanTasks(): Promise<HumanTaskModel[]>;
+  getCountGroupByPersonHumanTasksBySkillType(skillType: string): Promise<PersonCountDTO[]>;
 }
