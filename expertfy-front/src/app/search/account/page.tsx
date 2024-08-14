@@ -18,6 +18,7 @@ interface CountSkillScore{
   id: string;
   name: string;
   total: number;
+  skillId: string;
 }
 
 export default function Page(): React.JSX.Element {
@@ -42,24 +43,54 @@ export default function Page(): React.JSX.Element {
 
           setScorePanel(data.map((item) => {
             return {
+              id: item.id,
               actual_value: item.total,
               total_value: total.find((element) => element.id === item.id)?.total ?? 0,
               name: item.name
             }
+
           }))
+          console.log(data)
+          console.log(total)
         })
       })
 
       accountInfo.getTableListByUser(userId).then((data) => {
+        console.log(data)
         setManifestCompetences(data);
       })
     }
 
   }, [userId]);
 
-  React.useEffect(() => {
-    console.log(scorePanel)
-  }, [scorePanel]);
+  const createSkillEndorsement = (skilltypeId: string) => {
+    //Mockado o usuário 999 como o criador do endorsement
+    //Pois não teremos login no projeto
+    const personId = '999';
+    var skillId = '999';
+
+    let tableList : ManifestTableContent[] = [...manifestCompetences];
+    if (tableList.length > 0) {
+      for (let i = 0; i < tableList.length; i++) {
+        if (tableList[i].skilltype === skilltypeId) {
+          skillId = tableList[i].skillId;
+          break;
+        }
+      }
+    }
+    else
+      console.log("erro")
+
+
+
+    accountInfo.createSkillEndorsement(skillId, personId)
+      .then((data) => {
+        if (data)
+          alert('Endorsoamento realizado com sucesso!')
+        else
+          alert('Erro ao realizar o endorsoamento!')
+      })
+  }
 
   return (
     <Stack spacing={3}>
@@ -80,7 +111,7 @@ export default function Page(): React.JSX.Element {
             {/* competence table */}
             <Stack spacing={3} sx={{ flex: '1 1 auto' }}>
               <Typography variant="h4">Habilidades</Typography>
-              <AccountScorePanel score={scorePanel}/>
+              <AccountScorePanel score={scorePanel} createSE={createSkillEndorsement}/>
               <ManifestTable rows={manifestCompetences} />
             </Stack>
           </Stack>

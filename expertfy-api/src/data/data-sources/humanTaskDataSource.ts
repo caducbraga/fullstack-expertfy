@@ -127,7 +127,7 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
 
   public async getHumanTaskTableListByPersonId(personId: string): Promise<PersonTableDTO[]>{
     try {
-      const query = `SELECT H.id, T.name AS taskname, T.ref AS artefact, S.skilltype, ST.name AS skillname, ST.description, date 
+      const query = `SELECT H.id, T.name AS taskname, T.ref AS artefact, S.skilltype, ST.name AS skillname, ST.description, date, H.skillId as skillId 
             FROM ${humanTaskTable} H
             JOIN ${skillTable} S ON H.skillId = S.id
             JOIN ${skillTypeTable} ST ON S.skillType = ST.id

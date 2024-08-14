@@ -59,6 +59,20 @@ class Account {
     }
   }
 
+  async createSkillEndorsement(skillId : string, personId : string) {
+    try {
+
+      const jsonPost = { skillId, personId, description: "uma descrição", date: '2020-08-17' };
+      console.log(jsonPost);
+
+      const response = await axios.post(this.baseApiUrl + `/skillEndors`, jsonPost);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: create Skill Endorsement" + error);
+    }
+  }
+
 }
 
 export const accountInfo = new Account();

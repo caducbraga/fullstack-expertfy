@@ -6,4 +6,5 @@ export interface PersonTableDTO {
   skillname: string;
   description: string;
   date: Date;
+  skillId: string;
 }

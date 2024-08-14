@@ -22,6 +22,7 @@ export interface ManifestTableContent{
   date: Date;
   description: string;
   id: string;
+  skillId: string;
   skillname: string;
   skilltype: string;
   taskname: string;

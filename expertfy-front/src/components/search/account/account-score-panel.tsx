@@ -6,20 +6,26 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
 export interface PanelTableScoreProps {
+  id: string;
   actual_value: number;
   total_value: number;
   name: string;
+
+
 }
 
 interface PanelTableProps {
   score: PanelTableScoreProps[];
+  createSE?: (skilltypeId: string) => void;
 }
 
 const MIN_SCORE = 0;
 //normaliza entre 0 e 100
 const normalise = (value: number, max_value: number) => ((value - MIN_SCORE)*100) / (max_value - MIN_SCORE);
 
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number, name: string, max_value: number, color?: string }) {
+function LinearProgressWithLabel(props: LinearProgressProps & {id: string, value: number, name: string, max_value: number,
+  createSE?: (skilltypeId: string) => void,
+  color?: string }) {
   return (
     <Box sx={{ display: 'flex',  width: '100%', mr: 1 , flexDirection: 'column' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -38,7 +44,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number, n
               <Typography variant="bold" color="black" size="md">{props.value}</Typography>
             </Box>
             <Box sx={{  minWidth: 35}}>
-              <Typography variant="body2" color="text.secondary">{"Joinha"}</Typography>
+              <Typography variant="body2" color="text.secondary" onClick={() => {props.createSE && props.createSE(props.id)}}>{"Joinha"}</Typography>
             </Box>
           </Box>
 
@@ -57,14 +63,23 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number, n
   );
 }
 
-export default function AccountScorePanel({score = []}: PanelTableProps) {
+export default function AccountScorePanel({score = [], createSE}: PanelTableProps) {
 
   return (
     <Card >
       <CardContent>
         {/* map de todas as habilidades */}
+
         {score.map((item) => (
-          <LinearProgressWithLabel value={item.actual_value} max_value={item.total_value} name={item.name} />
+          console.log(item),
+
+          <LinearProgressWithLabel
+          key={item.id}
+          id = {item.id}
+          value={item.actual_value}
+          max_value={item.total_value}
+          name={item.name}
+          createSE={createSE}  />
         ))}
       </CardContent>
     </Card>
