@@ -213,7 +213,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new GetCountGroupByPersonHumanTasksUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
     new GetHumanTaskTableListByPersonIdUseCaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
     new GetCountHumanTaskByPersonGroupBySkillUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
-    new GetTotalCountHumanTaskGroupBySkillUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS)),
+    new GetTotalCountHumanTaskGroupBySkillUsecaseImpl(new HumanTaskRepositoryImpl(humanTaskDS))
   )
 
   server.use("/area", areaMiddleWare)

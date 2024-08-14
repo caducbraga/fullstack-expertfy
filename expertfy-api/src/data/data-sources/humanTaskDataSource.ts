@@ -132,7 +132,8 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
             JOIN ${skillTable} S ON H.skillId = S.id
             JOIN ${skillTypeTable} ST ON S.skillType = ST.id
             JOIN task_output T ON H.taskOutputId = T.id 
-            where S.personId = ${personId};`;
+            where S.personId = ${personId}
+            ORDER BY date DESC;`;
 
       const [rows] = await this.db.execute<RowDataPacket[]>(
         query
@@ -175,7 +176,10 @@ export class HumanTaskDataSourceImpl implements HumanTaskDataSource {
         query
       )
 
-      return rows as HumanTaskCountDTO[]
+      if (rows && rows.length > 0)
+        return rows as HumanTaskCountDTO[]
+
+      return [] as HumanTaskCountDTO[]
     } catch (error) {
       console.log(error);
       return [] as HumanTaskCountDTO[]

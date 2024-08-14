@@ -5,27 +5,67 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+export interface PanelTableScoreProps {
+  actual_value: number;
+  total_value: number;
+  name: string;
+}
+
+interface PanelTableProps {
+  score: PanelTableScoreProps[];
+}
+
+const MIN_SCORE = 0;
+//normaliza entre 0 e 100
+const normalise = (value: number, max_value: number) => ((value - MIN_SCORE)*100) / (max_value - MIN_SCORE);
+
+function LinearProgressWithLabel(props: LinearProgressProps & { value: number, name: string, max_value: number, color?: string }) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
+    <Box sx={{ display: 'flex',  width: '100%', mr: 1 , flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        {/* Nome da habilidade */}
+        <Box sx={{ width: '10%', mr: 1 , alignSelf: 'start'}}>
+          <Typography variant="h6" color="text.secondary">{props.name}</Typography>
+        </Box>
+
+        <Box sx={{ width: '90%', mr: 1 }}>
+          {/* Barra de progresso da habilidade */}
+          <Box sx={{ width: '100%', mr: 1 , display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Box sx={{ width: '100%', mr: 1 }}>
+              <LinearProgress variant="determinate" value={normalise(props.value, props.max_value)} color={props.color} />
+            </Box>
+            <Box sx={{  minWidth: 35, ml: 1}}>
+              <Typography variant="bold" color="black" size="md">{props.value}</Typography>
+            </Box>
+            <Box sx={{  minWidth: 35}}>
+              <Typography variant="body2" color="text.secondary">{"Joinha"}</Typography>
+            </Box>
+          </Box>
+
+          {/* Legenda numérica da habilidade */}
+          <Box sx={{ width: '100%', mr: 1 , display: 'flex', justifyContent: 'space-between', marginBottom: 1, paddingRight: 8}}>
+            <Box sx={{ minWidth: 35 }}>
+              <Typography variant="body2" color="text.secondary">{MIN_SCORE}</Typography>
+            </Box>
+            <Box sx={{  minWidth: 35 }}>
+              <Typography variant="body2" color="text.secondary">{props.max_value}</Typography>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
 }
 
-export default function AccountScorePanel() {
-  
+export default function AccountScorePanel({score = []}: PanelTableProps) {
+
   return (
     <Card >
       <CardContent>
-        <LinearProgressWithLabel value={50} />
+        {/* map de todas as habilidades */}
+        {score.map((item) => (
+          <LinearProgressWithLabel value={item.actual_value} max_value={item.total_value} name={item.name} />
+        ))}
       </CardContent>
     </Card>
   );

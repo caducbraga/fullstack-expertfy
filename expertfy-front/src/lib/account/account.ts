@@ -30,6 +30,35 @@ class Account {
     }
   }
 
+  async getCountScoreByUser(id : string) {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/humanTask/countByPersonGroupBySkill/${id}`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get Count Score" + error);
+    }
+  }
+
+  async getTotalScoreForAll() {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/humanTask/total/CountGroupBySkill`);
+      return response.data;
+    } catch (error) {
+      console.log("Error: get Count Total Score" + error);
+    }
+  }
+
+  async getTableListByUser(id : string) {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/humanTask/tableListByPersonId/${id}`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get Skill List By User" + error);
+    }
+  }
+
 }
 
 export const accountInfo = new Account();

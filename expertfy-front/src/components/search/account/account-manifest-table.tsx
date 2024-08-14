@@ -18,17 +18,19 @@ interface ManifestTableProps {
 }
 
 export interface ManifestTableContent{
-  id: string;
-  name: string;
+  artefact: string;
+  date: Date;
   description: string;
-  timestamp: string;
-  link: string;
+  id: string;
+  skillname: string;
+  skilltype: string;
+  taskname: string;
 }
 
 export function ManifestTable({
   rows = [],
-}: ManifestTableProps): React.JSX.Element {  
-  
+}: ManifestTableProps): React.JSX.Element {
+
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
@@ -39,8 +41,8 @@ export function ManifestTable({
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
             <TableRow>
-              <TableCell>Competência</TableCell>
-              <TableCell>Evidência</TableCell>
+              <TableCell>Habilidade</TableCell>
+              <TableCell>Nome da Tarefa</TableCell>
               <TableCell>Artefato</TableCell>
               <TableCell>Data de Ocorrência</TableCell>
             </TableRow>
@@ -50,10 +52,10 @@ export function ManifestTable({
 
               return (
                 <TableRow hover key={row.id} >
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.description}</TableCell>
-                  <TableCell><a href={row.link}>{row.link}</a></TableCell>
-                  <TableCell>{format(new Date(row.timestamp), 'dd/MM/yyyy')}</TableCell>
+                  <TableCell>{row.skillname}</TableCell>
+                  <TableCell>{row.taskname}</TableCell>
+                  <TableCell><a href={row.artefact}>{row.artefact}</a></TableCell>
+                  <TableCell>{format(new Date(row.date), 'dd/MM/yyyy')}</TableCell>
                 </TableRow>
               );
             })}
@@ -61,7 +63,7 @@ export function ManifestTable({
         </Table>
       </Box>
 
-      
+
     </Card>
   );
 }

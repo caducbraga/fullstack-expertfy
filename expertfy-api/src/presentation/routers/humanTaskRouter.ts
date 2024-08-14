@@ -98,7 +98,7 @@ export default function humanTaskRouter(
     }
   });
 
-  router.get("/totalCountGroupBySkill/:id", async (req: Request, res: Response) => {
+  router.get("/total/CountGroupBySkill", async (req: Request, res: Response) => {
     try {
       const totalCountGroupBySkill = await getTotalCountHumanTaskGroupBySkillUsecase.execute();
       res.status(200).send(totalCountGroupBySkill);
