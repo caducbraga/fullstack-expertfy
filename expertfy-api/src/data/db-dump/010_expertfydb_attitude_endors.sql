@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: expertfydb
 -- ------------------------------------------------------
--- Server version	8.1.0
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,30 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `area`
+-- Table structure for table `attitude_endors`
 --
--- Seleciona o banco de dados expertfydb
 USE expertfydb;
-
-DROP TABLE IF EXISTS `area`;
+DROP TABLE IF EXISTS `attitude_endors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `area` (
+CREATE TABLE `attitude_endors` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `attitudeId` int NOT NULL,
+  `personId` int NOT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk-person-endors-attitude_idx` (`personId`),
+  KEY `fk-attitude-endors_idx` (`attitudeId`),
+  CONSTRAINT `fk-attitude-endors` FOREIGN KEY (`attitudeId`) REFERENCES `attitude` (`id`),
+  CONSTRAINT `fk-person-endors-attitude` FOREIGN KEY (`personId`) REFERENCES `person` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `area`
+-- Dumping data for table `attitude_endors`
 --
 
-LOCK TABLES `area` WRITE;
-/*!40000 ALTER TABLE `area` DISABLE KEYS */;
-INSERT INTO `area` VALUES (2,'Desenvolvimento'),(4,'DevOps'),(1,'Gerência'),(3,'QA'),(6,'Security'),(5,'UX');
-/*!40000 ALTER TABLE `area` ENABLE KEYS */;
+LOCK TABLES `attitude_endors` WRITE;
+/*!40000 ALTER TABLE `attitude_endors` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attitude_endors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-19 12:02:33
+-- Dump completed on 2024-08-18 21:56:11

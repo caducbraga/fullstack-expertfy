@@ -3,4 +3,5 @@ export interface HumanTaskModel {
   skillId: string;
   taskOutputId: string;
   taskType: string;
+  date: Date;
 }

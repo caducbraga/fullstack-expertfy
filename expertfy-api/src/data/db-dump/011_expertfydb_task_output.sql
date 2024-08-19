@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: expertfydb
 -- ------------------------------------------------------
--- Server version	8.1.0
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,30 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `area`
+-- Table structure for table `task_output`
 --
--- Seleciona o banco de dados expertfydb
 USE expertfydb;
-
-DROP TABLE IF EXISTS `area`;
+DROP TABLE IF EXISTS `task_output`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `area` (
+CREATE TABLE `task_output` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(100) DEFAULT NULL,
+  `ref` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `area`
+-- Dumping data for table `task_output`
 --
 
-LOCK TABLES `area` WRITE;
-/*!40000 ALTER TABLE `area` DISABLE KEYS */;
-INSERT INTO `area` VALUES (2,'Desenvolvimento'),(4,'DevOps'),(1,'Gerência'),(3,'QA'),(6,'Security'),(5,'UX');
-/*!40000 ALTER TABLE `area` ENABLE KEYS */;
+LOCK TABLES `task_output` WRITE;
+/*!40000 ALTER TABLE `task_output` DISABLE KEYS */;
+INSERT INTO `task_output` VALUES (1,'exemplo1','https://www.umartefato.com.br/artefato1'),(2,'exemplo2','https://www.umartefato.com.br/artefato2'),(3,'task3','https://www.umartefato.com.br/artefato3'),(4,'task4','https://www.umartefato.com.br/artefato4'),(5,'task5','https://www.umartefato.com.br/artefato5');
+/*!40000 ALTER TABLE `task_output` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-19 12:02:33
+-- Dump completed on 2024-08-18 21:56:11

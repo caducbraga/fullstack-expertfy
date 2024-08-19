@@ -46,6 +46,7 @@ CREATE TABLE `skill_endors` (
 
 LOCK TABLES `skill_endors` WRITE;
 /*!40000 ALTER TABLE `skill_endors` DISABLE KEYS */;
+INSERT INTO `skill_endors` VALUES (2,999,1,'uma','2020-08-17'),(3,999,1,'uma','2020-08-17'),(4,999,2,'uma','2020-08-17'),(16,999,26,'uma descrição','2020-08-17'),(17,999,26,'uma descrição','2020-08-17'),(18,999,2,'uma descrição','2020-08-17'),(19,999,14,'uma descrição','2020-08-17');
 /*!40000 ALTER TABLE `skill_endors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

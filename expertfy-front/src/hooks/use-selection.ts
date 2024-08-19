@@ -23,7 +23,7 @@ export function useSelection<T = string>(keys: T[] = []): Selection<T> {
   }, []);
 
   const handleDeselectOne = React.useCallback((key: T) => {
-    setSelected((prev) => {
+    setSelected((prev: Iterable<unknown> | null | undefined) => {
       const copy = new Set(prev);
       copy.delete(key);
       return copy;
@@ -35,7 +35,7 @@ export function useSelection<T = string>(keys: T[] = []): Selection<T> {
   }, [keys]);
 
   const handleSelectOne = React.useCallback((key: T) => {
-    setSelected((prev) => {
+    setSelected((prev: Iterable<unknown> | null | undefined) => {
       const copy = new Set(prev);
       copy.add(key);
       return copy;

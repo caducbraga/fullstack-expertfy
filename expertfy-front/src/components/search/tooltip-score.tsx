@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 export default function ScoreTooltip() {
   return (
-    <Tooltip sx={{fontSize: "1rem"}} title="Em verde são os 10% mais bem avaliados, em amarelo são os 40% mais bem avaliados e em vermelho o restante."> 
+    <Tooltip sx={{fontSize: "1rem"}} title="Os elementos destacados em verde estão no P10 (percentil 10). Em amarelo, estão os que se encontram no P40. Já em vermelho, estão os que estão fora do P40.">
       <HelpRoundedIcon/>
     </Tooltip>
   );

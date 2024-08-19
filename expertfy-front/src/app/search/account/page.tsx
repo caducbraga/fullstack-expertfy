@@ -86,9 +86,9 @@ export default function Page(): React.JSX.Element {
     accountInfo.createSkillEndorsement(skillId, personId)
       .then((data) => {
         if (data)
-          alert('Endorsoamento realizado com sucesso!')
+          alert('Recomendação realizado com sucesso!')
         else
-          alert('Erro ao realizar o endorsoamento!')
+          alert('Erro ao realizar o recomendação!')
       })
   }
 

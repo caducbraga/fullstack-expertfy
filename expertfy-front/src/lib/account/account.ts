@@ -20,16 +20,6 @@ class Account {
     }
   }
 
-  async getManifestCompListByUser(id : string) {
-    try {
-      const response = await axios.get(this.baseApiUrl + `/manifest/user/${id}`);
-      return response.data;
-    }
-    catch (error) {
-      console.log("Error: get Manifest Comp List By User" + error);
-    }
-  }
-
   async getCountScoreByUser(id : string) {
     try {
       const response = await axios.get(this.baseApiUrl + `/humanTask/countByPersonGroupBySkill/${id}`);
@@ -37,6 +27,18 @@ class Account {
     }
     catch (error) {
       console.log("Error: get Count Score" + error);
+    }
+  }
+
+
+
+  async getTableListByUser(id : string) {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/humanTask/tableListByPersonId/${id}`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get Skill List By User" + error);
     }
   }
 
@@ -49,19 +51,9 @@ class Account {
     }
   }
 
-  async getTableListByUser(id : string) {
-    try {
-      const response = await axios.get(this.baseApiUrl + `/humanTask/tableListByPersonId/${id}`);
-      return response.data;
-    }
-    catch (error) {
-      console.log("Error: get Skill List By User" + error);
-    }
-  }
-
   async createSkillEndorsement(skillId : string, personId : string) {
     try {
-
+      //TODO: criar a data de agora e formatar para yyyy-mm-dd
       const jsonPost = { skillId, personId, description: "uma descrição", date: '2020-08-17' };
       console.log(jsonPost);
 
