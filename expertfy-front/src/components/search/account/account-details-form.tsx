@@ -54,7 +54,7 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
                   label="Data de Nascimento"
                   name="birthDate"
                   type="date"
-                /> 
+                />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
@@ -71,7 +71,7 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Idioma</InputLabel>
+                <InputLabel>Idiomas</InputLabel>
                 <OutlinedInput readOnly label="Idioma" name="language" value={user.language} />
               </FormControl>
             </Grid>

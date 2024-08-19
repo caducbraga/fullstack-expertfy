@@ -110,6 +110,7 @@ export function SearchTable({
                   <TableCell>
                     <Stack sx={{alignItems: 'center',
                                 cursor: 'pointer',
+                                borderRadius: '20px',
                                 '&:hover': {
                                   backgroundColor: 'lightgray',
                                 }

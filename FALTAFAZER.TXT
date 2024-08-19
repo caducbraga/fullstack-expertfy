@@ -1,3 +1,4 @@
 Fazer modal de BEM VINDO
 Conseguir dar um 'GET' nos idiomas (montar a query)
 Filtrar por Idiomas
+Se der tempo consertar o segundo click do filtro

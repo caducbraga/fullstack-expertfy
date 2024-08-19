@@ -13,7 +13,7 @@ import type { ManifestTableContent } from '@/components/search/account/account-m
 import AccountScorePanel from '@/components/search/account/account-score-panel';
 import type { PanelTableScoreProps } from '@/components/search/account/account-score-panel';
 import { Alert } from '@mui/material';
-
+import useTableStore from '@/store/tableStore';
 
 interface CountSkillScore{
   id: string;
@@ -29,8 +29,9 @@ export default function Page(): React.JSX.Element {
   const [user, setUser] = React.useState<User>({ id: '', photo: '', firstName: '', lastName: '', birthDate: new Date(), email: '', phone: '', linkedin: '', team: '', employmentStartDate: new Date(), language: '', seniority: '', area: '', office: ''});
   const [manifestCompetences, setManifestCompetences] = React.useState<ManifestTableContent[]>([]);
   const [scorePanel, setScorePanel] = React.useState<PanelTableScoreProps[]>([]);
-
   const [alertSuccess, setAlertSuccess] = React.useState(0);
+  const {count, page, rowsPerPage, paginatedTasks, setCount , setPage, setRowsPerPage, setPaginatedTasks} = useTableStore();
+
   const disableAlertAfter2Seconds = () => {
     setTimeout(() => {
       setAlertSuccess(0);
@@ -71,10 +72,20 @@ export default function Page(): React.JSX.Element {
       accountInfo.getTableListByUser(userId).then((data) => {
         console.log(data)
         setManifestCompetences(data);
+        setCount(data.length);
+        setPaginatedTasks(applyPagination(data, page, rowsPerPage));
       })
     }
 
   }, [userId]);
+
+   // Pagination control
+  React.useEffect(() => {
+
+    setPaginatedTasks(applyPagination(manifestCompetences, page, rowsPerPage));
+
+
+  }, [page, rowsPerPage]);
 
   const createSkillEndorsement = (skilltypeId: string) => {
     //Mockado o usuário 999 como o criador do endorsement
@@ -129,11 +140,23 @@ export default function Page(): React.JSX.Element {
               { alertSuccess === 1 && <Alert severity="success">Habilidade Recomendada!</Alert>  }
               { alertSuccess === 2 && <Alert severity="error">Erro ao recomendar habilidade!</Alert> }
               <AccountScorePanel score={scorePanel} createSE={createSkillEndorsement}/>
-              <ManifestTable rows={manifestCompetences} />
+              <Typography variant="h4">Tarefas</Typography>
+              <ManifestTable
+              rows={paginatedTasks}
+              count={count}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              setPage={setPage}
+              setRowsPerPage={setRowsPerPage}
+              />
             </Stack>
           </Stack>
         </Grid>
       </Grid>
     </Stack>
   );
+}
+
+function applyPagination(rows: ManifestTableContent[], page: number, rowsPerPage: number): ManifestTableContent[] {
+  return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 }

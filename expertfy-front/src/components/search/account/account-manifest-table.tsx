@@ -9,14 +9,24 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { format } from 'date-fns';
+import Divider from '@mui/material/Divider';
+import TablePagination from '@mui/material/TablePagination';
+
 
 
 interface ManifestTableProps {
 
   rows?: ManifestTableContent[];
-
+  count?: number;
+  page?: number;
+  rowsPerPage?: number;
+  setPage?: (page: number) => void;
+  setRowsPerPage?: (rowsPerPage: number) => void;
 }
 
+function noop(): void {
+  // do nothing
+}
 export interface ManifestTableContent{
   artefact: string;
   date: Date;
@@ -30,6 +40,11 @@ export interface ManifestTableContent{
 
 export function ManifestTable({
   rows = [],
+  count = 0,
+  page = 0,
+  rowsPerPage = 0,
+  setPage = noop,
+  setRowsPerPage = noop,
 }: ManifestTableProps): React.JSX.Element {
 
   const rowIds = React.useMemo(() => {
@@ -63,7 +78,16 @@ export function ManifestTable({
           </TableBody>
         </Table>
       </Box>
-
+      <Divider />
+      <TablePagination
+        component="div"
+        count={count}
+        onPageChange={(e, newPage) => setPage(newPage)}
+        onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
 
     </Card>
   );
