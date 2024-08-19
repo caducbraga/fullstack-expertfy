@@ -1,9 +1,12 @@
 import { SkillEndorsementModel } from "./models/skill.endorsement.model";
 import { SkillEndorsDataSource } from "../interfaces/data-sources/skillEndorsDataSource";
 import mysql, { RowDataPacket } from "mysql2/promise";
+import { SkillEndorsListDTO } from "../../domain/models/skillEndorsListDTO";
 
 
 const skillEndorsementTable = "skill_endors";
+const skillTable = "skill";
+const skillTypeTable = "skill_type";
 export class SkillEndorsDataSourceImpl implements SkillEndorsDataSource {
 
   private db: mysql.Connection;
@@ -108,6 +111,28 @@ export class SkillEndorsDataSourceImpl implements SkillEndorsDataSource {
     } catch (error) {
       console.log(error);
       return [] as SkillEndorsementModel[];
+    }
+  }
+
+  public async getCountSkillEndorsByPersonId(personId: string): Promise<SkillEndorsListDTO[]>{
+    try {
+      const query = `SELECT st.id, st.name, COUNT(*) as total FROM ${skillEndorsementTable} se JOIN
+                    ${skillTable} s ON se.skillId = s.id JOIN
+                    ${skillTypeTable} st ON s.skillType = st.id
+                    WHERE s.personId = ${personId}
+                    GROUP BY se.skillId;`;
+      const [rows] = await this.db.execute<RowDataPacket[]>(
+        query,
+        [personId]
+      );
+      if(rows && rows.length > 0){
+        return rows as SkillEndorsListDTO[];
+      }
+      return [] as SkillEndorsListDTO[];
+
+    } catch (error) {
+      console.log(error);
+      return [] as SkillEndorsListDTO[];
     }
   }
 }

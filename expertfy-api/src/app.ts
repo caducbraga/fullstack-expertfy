@@ -53,6 +53,7 @@ import { CreateSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/cre
 import { UpdateSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/updateSkillEndors';
 import { DeleteSkillEndorsUseCaseImpl } from './domain/use-cases/skillEndors/deleteSkillEndors';
 import { GetSkillEndorsByIdUseCaseImpl } from './domain/use-cases/skillEndors/getSkillEndorsById';
+import { GetCountSkillEndorsByPersonIdUseCaseImpl } from './domain/use-cases/skillEndors/getCountSkillEndorsByPersonId';
 
 //SKILL TYPE AREA
 import skillTypeRouter from './presentation/routers/skillTypeRouter';
@@ -170,6 +171,7 @@ async function getMSQL_DS(dataSourceClass: any) {
     new UpdateSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
     new DeleteSkillEndorsUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
     new GetSkillEndorsByIdUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
+    new GetCountSkillEndorsByPersonIdUseCaseImpl(new SkillEndorsRepositoryImpl(skillEndorsDS)),
   )
 
   const skillTypeMiddleWare = skillTypeRouter(

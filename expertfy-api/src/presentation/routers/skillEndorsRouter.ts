@@ -5,6 +5,7 @@ import { CreateSkillEndorsUseCase } from "../../domain/interfaces/use-cases/skil
 import { UpdateSkillEndorsUseCase } from "../../domain/interfaces/use-cases/skillEndors/updateSkillEndors";
 import { DeleteSkillEndorsUseCase } from "../../domain/interfaces/use-cases/skillEndors/deleteSkillEndors";
 import { GetSkillEndorsByIdUseCase } from "../../domain/interfaces/use-cases/skillEndors/getSkillEndorsById";
+import { GetCountSkillEndorsByPersonIdUseCase } from '../../domain/interfaces/use-cases/skillEndors/getCountSkillEndorsByPersonId';
 
 
 export default function skillEndorsRouter(
@@ -13,6 +14,7 @@ export default function skillEndorsRouter(
   updateSkillEndorsUseCase: UpdateSkillEndorsUseCase,
   deleteSkillEndorsUseCase: DeleteSkillEndorsUseCase,
   getSkillEndorsByIdUseCase: GetSkillEndorsByIdUseCase,
+  getCountSkillEndorsByPersonIdUseCase: GetCountSkillEndorsByPersonIdUseCase
 ) {
 
   const router = express.Router();
@@ -60,6 +62,15 @@ export default function skillEndorsRouter(
       res.status(200).send(deletedSkillEndors);
     } catch (error) {
       res.status(500).send({ error: "error deleting data", message: error });
+    }
+  });
+
+  router.get("/person/:id", async (req: Request, res: Response) => {
+    try {
+      const countSkillEndors = await getCountSkillEndorsByPersonIdUseCase.execute(req.params.id);
+      res.status(200).send(countSkillEndors);
+    } catch (error) {
+      res.status(500).send({ error: "error fetching data", message: error });
     }
   });
 

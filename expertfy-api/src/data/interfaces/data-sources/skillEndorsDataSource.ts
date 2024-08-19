@@ -1,3 +1,4 @@
+import { SkillEndorsListDTO } from "../../../domain/models/skillEndorsListDTO";
 import { SkillEndorsementModel } from "../../data-sources/models/skill.endorsement.model";
 
 export interface SkillEndorsDataSource {
@@ -6,4 +7,5 @@ export interface SkillEndorsDataSource {
   deleteSkillEndors(id: string): Promise<boolean>;
   getSkillByIdEndors(id: string): Promise<SkillEndorsementModel>;
   getAllSkillsEndors(): Promise<SkillEndorsementModel[]>;
+  getCountSkillEndorsByPersonId(personId: string): Promise<SkillEndorsListDTO[]>;
 }

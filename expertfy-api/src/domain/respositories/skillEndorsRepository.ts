@@ -1,6 +1,7 @@
 import { SkillEndorsementModel } from "../../data/data-sources/models/skill.endorsement.model";
 import { SkillEndorsRepository } from "../interfaces/repositories/skillEndorsRepository";
 import { SkillEndorsDataSource } from "../../data/interfaces/data-sources/skillEndorsDataSource";
+import { SkillEndorsListDTO } from "../models/skillEndorsListDTO";
 
 export class SkillEndorsRepositoryImpl implements SkillEndorsRepository {
 
@@ -28,5 +29,9 @@ export class SkillEndorsRepositoryImpl implements SkillEndorsRepository {
 
   public async getAllSkillsEndors(): Promise<SkillEndorsementModel[]> {
     return await this.skillEndorsDataSource.getAllSkillsEndors();
+  }
+
+  public async getCountSkillEndorsByPersonId(personId: string): Promise<SkillEndorsListDTO[]> {
+    return await this.skillEndorsDataSource.getCountSkillEndorsByPersonId(personId);
   }
 }

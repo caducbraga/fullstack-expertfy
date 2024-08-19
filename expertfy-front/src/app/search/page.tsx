@@ -11,7 +11,7 @@ import type { AdvancedFilters } from '@/components/search/advanced-search';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { ColorScore } from '@/types/colorScore';
-import { Alert, CardContent, CardMedia, InputAdornment } from '@mui/material';
+import { Alert } from '@mui/material';
 
 
 
@@ -141,12 +141,6 @@ export default function Page(): React.JSX.Element {
 
   return (
     <Stack spacing={3}>
-      <Card sx={{ p: 2 }}>
-        <CardContent sx={{ textAlign: 'center' }}>
-          <Typography variant="h4" sx={{ mb: 1 }}>Bem vindo ao Expertfy! </Typography>
-          <Typography variant="body1">Para comecar, selecione uma habilidade para começar a sua busca.</Typography>
-        </CardContent>
-      </Card>
       <SearchFilters selection={handleFilterSelect} filter={handleAdvancedFilters} />
       {showAlertWarningEmptyExperts && <Alert severity="warning">Busque por uma habilidade antes de utilizar os filtros avançados</Alert>}
       {experts.length > 0 && (

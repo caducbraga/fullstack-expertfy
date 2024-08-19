@@ -66,6 +66,16 @@ class Account {
     }
   }
 
+  async getCountEndorsementByUser(id : string) {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/skillEndors/person/${id}`);
+      return response.data;
+    }
+    catch (error) {
+      console.log("Error: get Count Endorsement" + error);
+    }
+  }
+
   public static formatDate(date: Date): string {
     var dateSTR = ''
     try {

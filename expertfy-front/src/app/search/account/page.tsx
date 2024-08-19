@@ -12,6 +12,7 @@ import { ManifestTable } from '@/components/search/account/account-manifest-tabl
 import type { ManifestTableContent } from '@/components/search/account/account-manifest-table';
 import AccountScorePanel from '@/components/search/account/account-score-panel';
 import type { PanelTableScoreProps } from '@/components/search/account/account-score-panel';
+import { Alert } from '@mui/material';
 
 
 interface CountSkillScore{
@@ -29,6 +30,13 @@ export default function Page(): React.JSX.Element {
   const [manifestCompetences, setManifestCompetences] = React.useState<ManifestTableContent[]>([]);
   const [scorePanel, setScorePanel] = React.useState<PanelTableScoreProps[]>([]);
 
+  const [alertSuccess, setAlertSuccess] = React.useState(0);
+  const disableAlertAfter2Seconds = () => {
+    setTimeout(() => {
+      setAlertSuccess(0);
+    }, 2000);
+  }
+
   React.useEffect(() => {
     if (!userId) {
       return;
@@ -38,20 +46,25 @@ export default function Page(): React.JSX.Element {
         setUser(data);
       });
 
+
+
       accountInfo.getTotalScoreForAll().then((total: CountSkillScore[]) => {
         accountInfo.getCountScoreByUser(userId).then((data : CountSkillScore[]) => {
+          accountInfo.getCountEndorsementByUser(userId).then((endors : CountSkillScore[]) => {
 
-          setScorePanel(data.map((item) => {
-            return {
-              id: item.id,
-              actual_value: item.total,
-              total_value: total.find((element) => element.id === item.id)?.total ?? 0,
-              name: item.name
-            }
+            setScorePanel(data.map((item) => {
+              return {
+                id: item.id,
+                actual_value: item.total,
+                total_value: total.find((element) => element.id === item.id)?.total ?? 0,
+                name: item.name,
+                endorsement: endors.find((element) => element.id === item.id)?.total ?? 0
+              }
 
-          }))
-          console.log(data)
-          console.log(total)
+            }))
+          })
+          // console.log(data)
+          // console.log(total)
         })
       })
 
@@ -86,9 +99,11 @@ export default function Page(): React.JSX.Element {
     accountInfo.createSkillEndorsement(skillId, personId)
       .then((data) => {
         if (data)
-          alert('Recomendação realizado com sucesso!')
+          setAlertSuccess(1);
         else
-          alert('Erro ao realizar o recomendação!')
+          setAlertSuccess(2);
+
+        disableAlertAfter2Seconds()
       })
   }
 
@@ -111,6 +126,8 @@ export default function Page(): React.JSX.Element {
             {/* competence table */}
             <Stack spacing={3} sx={{ flex: '1 1 auto' }}>
               <Typography variant="h4">Habilidades</Typography>
+              { alertSuccess === 1 && <Alert severity="success">Habilidade Recomendada!</Alert>  }
+              { alertSuccess === 2 && <Alert severity="error">Erro ao recomendar habilidade!</Alert> }
               <AccountScorePanel score={scorePanel} createSE={createSkillEndorsement}/>
               <ManifestTable rows={manifestCompetences} />
             </Stack>

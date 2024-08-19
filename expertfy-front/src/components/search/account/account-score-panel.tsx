@@ -15,6 +15,7 @@ export interface PanelTableScoreProps {
   actual_value: number;
   total_value: number;
   name: string;
+  endorsement: number;
 }
 
 interface PanelTableProps {
@@ -26,9 +27,10 @@ const MIN_SCORE = 0;
 //normaliza entre 0 e 100
 const normalise = (value: number, max_value: number) => ((value - MIN_SCORE)*100) / (max_value - MIN_SCORE);
 
-function LinearProgressWithLabel(props: LinearProgressProps & {id: string, value: number, name: string, max_value: number,
+function LinearProgressWithLabel(props: LinearProgressProps & {id: string, value: number, name: string, max_value: number, endorsement: number,
   createSE?: (skilltypeId: string) => void,
   color?: string }) {
+    const [isDisabled, setIsDisabled] = React.useState(false);
   return (
     <Box sx={{ display: 'flex',  width: '100%', mr: 1 , flexDirection: 'column' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -47,12 +49,14 @@ function LinearProgressWithLabel(props: LinearProgressProps & {id: string, value
               <Typography variant="bold" color="black" size="md">{props.value}</Typography>
             </Box>
             <Box sx={{  minWidth: 35 , display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-              <IconButton onClick={() => {
+              <IconButton disabled={isDisabled}
+                        onClick={() => {
                           props.createSE && props.createSE(props.id);
+                          setIsDisabled(true);
                         }} aria-label="delete">
                 <RecommendIcon />
               </IconButton>
-              <Typography variant="body2" color="text.secondary">{20}</Typography>
+              <Typography variant="body2" color="text.secondary">{props.endorsement}</Typography>
             </Box>
           </Box>
 
@@ -88,6 +92,7 @@ export default function AccountScorePanel({score = [], createSE}: PanelTableProp
           value={item.actual_value}
           max_value={item.total_value}
           name={item.name}
+          endorsement={item.endorsement}
           createSE={createSE}  />
         ))}
       </CardContent>

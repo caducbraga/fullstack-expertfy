@@ -1,0 +1,3 @@
+Fazer modal de BEM VINDO
+Conseguir dar um 'GET' nos idiomas (montar a query)
+Filtrar por Idiomas
