@@ -29,7 +29,7 @@ Acesse o aplicativo em seu navegador acessando `http://localhost:5173` e utilize
 
 ## Comandos uteis
 
-Caso deseje rebuildar as imagens dos containers utilize os comandos
+Caso deseje rebuildar as imagens dos containers em execução utilize os comandos
 
    ```
    docker-compose build api-expertfy
