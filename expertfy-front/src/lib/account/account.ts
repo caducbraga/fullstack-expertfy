@@ -53,8 +53,9 @@ class Account {
 
   async createSkillEndorsement(skillId : string, personId : string) {
     try {
-      //TODO: criar a data de agora e formatar para yyyy-mm-dd
-      const jsonPost = { skillId, personId, description: "uma descrição", date: '2020-08-17' };
+
+      const dateStringFormat = Account.formatDate(new Date());
+      const jsonPost = { skillId, personId, description: "uma descrição", date: dateStringFormat };
       console.log(jsonPost);
 
       const response = await axios.post(this.baseApiUrl + `/skillEndors`, jsonPost);
@@ -63,6 +64,20 @@ class Account {
     catch (error) {
       console.log("Error: create Skill Endorsement" + error);
     }
+  }
+
+  public static formatDate(date: Date): string {
+    var dateSTR = ''
+    try {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses começam do 0
+      const day = String(date.getDate()).padStart(2, '0');
+      dateSTR = `${year}-${month}-${day}`
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(dateSTR);
+    return dateSTR
   }
 
 }
