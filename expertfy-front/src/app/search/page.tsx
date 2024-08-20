@@ -12,6 +12,7 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { ColorScore } from '@/types/colorScore';
 import { Alert } from '@mui/material';
+import ModalWelcomeTutorial from '@/components/search/modal-welcome-tutorial';
 
 
 
@@ -153,6 +154,7 @@ export default function Page(): React.JSX.Element {
           setRowsPerPage={setRowsPerPage}
         />
       )}
+      <ModalWelcomeTutorial />
     </Stack>
   );
 }
