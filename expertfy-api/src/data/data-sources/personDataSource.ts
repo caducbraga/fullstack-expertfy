@@ -120,14 +120,16 @@ export class PersonDataSourceImpl implements PersonDataSource {
   public async getPersonAccountInfo(id: string): Promise<PersonModel> {
     try {
       const query = `
-      SELECT
-        persons.*,
+      SELECT persons.*,
         s.name AS seniority,
-        a.name AS area
+        a.name AS area,
+        GROUP_CONCAT(l.name ORDER BY l.name ASC SEPARATOR ', ') AS languages
       FROM ${personTable} persons
       JOIN seniority s ON persons.seniorityId = s.id
       JOIN area a ON persons.areaId = a.id
-      WHERE persons.id = ?;
+      LEFT JOIN language_person lp ON persons.id = lp.personId
+      LEFT JOIN language l ON lp.languageId = l.id 
+      WHERE persons.id = ${id};
     `;
       const [rows] = await this.db.execute<RowDataPacket[]>(query, [id]);
       
