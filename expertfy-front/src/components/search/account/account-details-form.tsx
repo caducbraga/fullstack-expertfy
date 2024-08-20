@@ -21,7 +21,7 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
   const languageArray = (user.languages ?? '').split(',').map(lang => lang.trim()).filter(lang => lang.length > 0);
   // console.log(typeof user.languages);
   // console.log(user.languages.split(','));
-  console.log(languageArray);
+  // console.log(languageArray);
   const formatPhoneNumber = (phone: string): string => {
     try {
       return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');

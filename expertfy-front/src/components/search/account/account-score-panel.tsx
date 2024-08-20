@@ -84,7 +84,7 @@ export default function AccountScorePanel({score = [], createSE}: PanelTableProp
         {/* map de todas as habilidades */}
 
         {score.map((item) => (
-          console.log(item),
+          // console.log(item),
 
           <LinearProgressWithLabel
           key={item.id}
