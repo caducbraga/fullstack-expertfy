@@ -5,7 +5,7 @@ import useModalStore from '@/store/modalStore';
 export default function ModalWelcomeTutorial() : React.JSX.Element {
   const {open, setOpen} = useModalStore()
   const handleClose = () => setOpen(false);
-  console.log(open)
+  // console.log(open)
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
       <DialogTitle>Bem-vindo ao ExpertFY!</DialogTitle>

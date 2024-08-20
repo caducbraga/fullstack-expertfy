@@ -51,7 +51,7 @@ export default function Page(): React.JSX.Element {
     if (selection !== null) {
       const scoreCountPerson = searchExpert.getCountScore(selection);
       scoreCountPerson.then((listPerson: CountScore[]) => {
-        console.log(listPerson)
+        // console.log(listPerson)
 
         const expert_list_pr = searchExpert.getExpertList(selection);
         expert_list_pr.then((data: Expert[]) => {
@@ -77,13 +77,17 @@ export default function Page(): React.JSX.Element {
       setShowAlertWarningEmptyExperts(true);
       return;
     }
-    let filteredExpertsLocal: Expert[] = [];
-    if (filteredExperts.length !== 0) {
-      filteredExpertsLocal = filteredExperts;
-    }
-    else {
-      filteredExpertsLocal = experts;
-    }
+    let filteredExpertsLocal: Expert[] = experts;
+    // if (filteredExperts.length !== 0) {
+    //   filteredExpertsLocal = filteredExperts;
+    //   console.log(filteredExpertsLocal)
+    // }
+    // else {
+    //   filteredExpertsLocal = experts;
+    //   console.log(filteredExpertsLocal)
+    // }
+
+
 
     // Default: none filter
     if (!filters.useArea && !filters.useLanguage && !filters.useSeniority) {
