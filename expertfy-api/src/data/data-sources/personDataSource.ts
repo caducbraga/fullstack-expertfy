@@ -1,10 +1,13 @@
 import { PersonModel } from "./models/person.model";
 import { PersonDataSource } from "../interfaces/data-sources/personDataSource";
+import { ExpertListDTO } from "../../domain/models/expertListDTO";
 import mysql, { RowDataPacket } from "mysql2/promise";
 
 const personTable = "person";
 const skillTypeTable = "skill_type";
 const skillTable = "skill";
+const languageTable = "language";
+const languagePersonTable = "language_person";
 
 export class PersonDataSourceImpl implements PersonDataSource {
   private db: mysql.Connection;
@@ -144,26 +147,36 @@ export class PersonDataSourceImpl implements PersonDataSource {
     }
   }
 
-  public async getPersonListBySkillTypeId(id: string): Promise<PersonModel[]> {
+  public async getPersonListBySkillTypeId(id: string): Promise<ExpertListDTO[]> {
     try {
     const query = `
-    SELECT DISTINCT P.id, P.name, P.lastName, P.phone, P.email, P.linkedin, P.birthDate, 
-    P.employmentStartDate, P.photo, P.team, P.seniorityId, P.areaId, P.office,
-    se.name AS seniority, ar.name AS area
-    FROM ${skillTable} S 
-    JOIN ${personTable} P ON S.personId = P.id
-    JOIN seniority se ON P.seniorityId = se.id
-    JOIN area ar ON P.areaId = ar.id
-    WHERE S.skillType=?`;
-      const [rows] = await this.db.execute<RowDataPacket[]>(query, [id]);
+          SELECT P.id, P.name, P.lastName, P.phone, P.email, P.linkedin, P.birthDate, 
+          P.employmentStartDate, P.photo, P.team, P.seniorityId, P.areaId, P.office,
+          se.name AS seniority, ar.name AS area,
+          GROUP_CONCAT(l.name ORDER BY l.name ASC SEPARATOR ', ') AS languages
+      FROM (
+          SELECT DISTINCT personId
+          FROM ${skillTable}
+          WHERE skillType = ${id}
+      ) AS unique_skills
+      JOIN ${personTable} P ON unique_skills.personId = P.id
+      JOIN seniority se ON P.seniorityId = se.id
+      JOIN area ar ON P.areaId = ar.id
+      LEFT JOIN ${languagePersonTable} lp ON P.id = lp.personId
+      LEFT JOIN ${languageTable} l ON lp.languageId = l.id
+      GROUP BY P.id, P.name, P.lastName, P.phone, P.email, P.linkedin, P.birthDate, 
+          P.employmentStartDate, P.photo, P.team, P.seniorityId, P.areaId, P.office,
+          se.name, ar.name`;
+
+      const [rows] = await this.db.execute<RowDataPacket[]>(query);
       
       if(rows && rows.length > 0){
-        return rows as PersonModel[];
+        return rows as ExpertListDTO[];
       }
-      return [] as PersonModel[];
+      return [] as ExpertListDTO[];
     } catch (error) {
       console.log(error);
-      return [] as PersonModel[];
+      return [] as ExpertListDTO[];
     }
   }
 }

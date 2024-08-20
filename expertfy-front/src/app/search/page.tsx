@@ -99,7 +99,10 @@ export default function Page(): React.JSX.Element {
     // Some filter was selected
     else {
       if(filters.useLanguage) {
-        filteredExpertsLocal = filteredExpertsLocal.filter((e) => e.language === filters.perLanguage);
+        filteredExpertsLocal = filteredExpertsLocal.filter((e) => {
+          const languagesArray = e.languages.split(",").map((language) => language.trim());
+          return languagesArray.includes(filters.perLanguage);
+        });
       }
       if(filters.useArea) {
         filteredExpertsLocal = filteredExpertsLocal.filter((e) => e.area === filters.perArea);
