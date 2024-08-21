@@ -35,19 +35,10 @@ class SearchExpert {
 
   private baseApiUrl: string | undefined;
 
-  async getSuggestions(name: string) {
-    try {
-      const response = await axios.get(this.baseApiUrl + `/competence/findByName/${name}`);
-      return response.data;
-      
-    } catch (error) {
-      console.log("Error: get Suggestions" + error);
-    }
-  }
 
   async getExpertList(selectedSuggestion: Competence | null) {
     try {
-      const response = await axios.get(this.baseApiUrl + `/user/listAllByCompetenceId/${selectedSuggestion?.id}`);
+      const response = await axios.get(this.baseApiUrl + `/person/listBySkillTypeId/${selectedSuggestion?.id}`);
       return response.data;
     }
     catch (error) {
@@ -55,14 +46,23 @@ class SearchExpert {
     }
   }
 
-  async getAllSuggestions() {
-    console.log(this.baseApiUrl + `/competence`);
+  async getCountScore(selectedSuggestion: Competence | null) {
     try {
-      const response = await axios.get(this.baseApiUrl + `/competence`);
+      const response = await axios.get(this.baseApiUrl + `/humanTask/countGroupByPersonBySkillTypeId/${selectedSuggestion?.id}`);
+      return response.data;
+    } catch (error) {
+      console.log("Error: get Count Score" + error);
+    }
+  }
+
+  async getAllSuggestions() {
+
+    try {
+      const response = await axios.get(this.baseApiUrl + `/skillType`);
       return response.data;
     }
     catch (error) {
-      console.log("Error: get All Suggestions" + error);
+      console.log("Error: get all Skill suggestions" + error);
     }
   }
 

@@ -40,7 +40,7 @@ CREATE TABLE `language` (
 
 LOCK TABLES `language` WRITE;
 /*!40000 ALTER TABLE `language` DISABLE KEYS */;
-INSERT INTO `language` VALUES (3,'Espanhol'),(5,'Francês'),(2,'Inglês'),(4,'Italiano'),(1,'Português');
+INSERT INTO `language` VALUES (3,'Espanhol'),(5,'Francês'),(2,'Inglês'),(4,'Italiano'),(6,'Others'),(1,'Português');
 /*!40000 ALTER TABLE `language` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

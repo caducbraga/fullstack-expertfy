@@ -1,9 +1,9 @@
 import express from "express";
 import { Request, Response } from "express";
-import { getAllLanguagesUseCase } from "../../domain/interfaces/use-cases/language/getAllLanguage";
+import { GetAllLanguagesUseCase } from "../../domain/interfaces/use-cases/language/getAllLanguage";
 
 export default function languageRouter(
-  getAllLanguagesUseCase: getAllLanguagesUseCase
+  getAllLanguagesUseCase: GetAllLanguagesUseCase
 ) {
 
   const router = express.Router();

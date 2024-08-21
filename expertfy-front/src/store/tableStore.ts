@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import type { Expert } from '@/components/search/search-table';
-
+import type { ManifestTableContent } from '@/components/search/account/account-manifest-table';
 interface TableState {
   count: number;
   page: number;
@@ -11,6 +11,7 @@ interface TableState {
   setPage: (page: number) => void;
   setRowsPerPage: (rowsPerPage: number) => void;
   setPaginatedExperts: (paginatedExperts: Expert[]) => void;
+  setPaginatedTasks: (paginatedTasks: ManifestTableContent[]) => void;
 }
 
 const useTableStore = create<TableState>((set) => ({
@@ -23,6 +24,7 @@ const useTableStore = create<TableState>((set) => ({
   setPage: (page) => set({ page }),
   setRowsPerPage: (rowsPerPage) => set({ rowsPerPage }),
   setPaginatedExperts: (paginatedExperts) => set({ paginatedExperts }),
+  setPaginatedTasks: (paginatedTasks) => set({ paginatedTasks }),
 }));
 
 export default useTableStore;

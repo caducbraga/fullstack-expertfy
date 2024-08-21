@@ -2,29 +2,29 @@
   "openapi": "3.1.0",
   "info": {
     "title": "ExpertFY API",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "ExpertFY API Documentation"
   },
   "basePath": "/",
   "paths": {
-    "/user": {
+    "/person": {
       "post": {
         "tags": [
-          "User"
+          "Person"
         ],
-        "summary": "Create a new user",
+        "summary": "Create a new person",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Person"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "User created successfully"
+            "description": "Person created successfully"
           },
           "400": {
             "description": "Invalid input"
@@ -32,17 +32,17 @@
         }
       },
       "get": {
-        "tags": ["User"],
-        "summary": "List all users",
+        "tags": ["Person"],
+        "summary": "List all persons",
         "responses": {
           "200": {
-            "description": "Users found",
+            "description": "Persons found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/Person"
                   }
                 }
               }
@@ -54,16 +54,16 @@
         }
       }
     },
-    "/user/{id}": {
+    "/person/{id}": {
       "put": {
-        "tags": ["User"],
-        "summary": "Update a user",
+        "tags": ["Person"],
+        "summary": "Update a person",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "User id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -73,14 +73,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Person"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "User updated successfully"
+            "description": "Person updated successfully"
           },
           "400": {
             "description": "Invalid input"
@@ -88,14 +88,14 @@
         }
       },
       "delete": {
-        "tags": ["User"],
-        "summary": "Delete a user",
+        "tags": ["Person"],
+        "summary": "Delete a person",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "User id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -103,24 +103,22 @@
         ],
         "responses": {
           "200": {
-            "description": "User deleted successfully"
+            "description": "Person deleted successfully"
           },
           "400": {
             "description": "Invalid input"
           }
         }
-      }
-    },
-    "/user/listAllByCompetenceId/{id}": {
+      },
       "get": {
-        "tags": ["User"],
-        "summary": "List all users by competence id",
+        "tags": ["Person"],
+        "summary": "Get a person",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Competence id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -128,14 +126,11 @@
         ],
         "responses": {
           "200": {
-            "description": "Users found",
+            "description": "Person found",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ExpertList"
-                  }
+                  "$ref": "#/components/schemas/Person"
                 }
               }
             }
@@ -146,16 +141,16 @@
         }
       }
     },
-    "/user/accountInfo/{id}": {
+    "/person/accountInfo/{id}": {
       "get": {
-        "tags": ["User"],
-        "summary": "Get user account info",
+        "tags": ["Person"],
+        "summary": "Get person account info",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "User id",
+            "description": "Person id",
             "schema": {
               "type": "string"
             }
@@ -163,289 +158,11 @@
         ],
         "responses": {
           "200": {
-            "description": "User account info found",
+            "description": "Person account info found",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExpertList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/competence":{
-      "post": {
-        "tags": [
-          "Competence"
-        ],
-        "summary": "Create a new competence",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Competence"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Competence created successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "get": {
-        "tags": ["Competence"],
-        "summary": "List all competences",
-        "responses": {
-          "200": {
-            "description": "Competences found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Competence"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/competence/{id}":{
-      "put": {
-        "tags": ["Competence"],
-        "summary": "Update a competence",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Competence id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Competence"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Competence updated successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Competence"],
-        "summary": "Delete a competence",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Competence id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Competence deleted successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/competence/findbyname/{name}":{
-      "get": {
-        "tags": ["Competence"],
-        "summary": "Find a competence by name",
-        "parameters": [
-          {
-            "name": "name",
-            "in": "path",
-            "required": true,
-            "description": "Competence name",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Competences found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Competence"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/manifest":{
-      "post": {
-        "tags": [
-          "manifestCompetence"
-        ],
-        "summary": "Create a new manifestCompetence",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/manifestCompetence"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "manifestCompetence created successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "get": {
-        "tags": ["manifestCompetence"],
-        "summary": "Get all manifestCompetences",
-        "responses": {
-          "200": {
-            "description": "manifestCompetences found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/manifestCompetence"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/manifest/{id}":{
-      "put": {
-        "tags": ["manifestCompetence"],
-        "summary": "Update a manifestCompetence",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "manifestCompetence id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/manifestCompetence"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "manifestCompetence updated successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["manifestCompetence"],
-        "summary": "Delete a manifestCompetence",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "manifestCompetence id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "manifestCompetence deleted successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/manifest/user/{id}":{
-      "get": {
-        "tags": ["manifestCompetence"],
-        "summary": "Get all manifestCompetences by user id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "User id",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "manifestCompetences found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/manifestCompAndCompetence"
-                  }
                 }
               }
             }
@@ -527,11 +244,514 @@
           }
         }
       }
+    },
+    "/attitude":{
+      "get": {
+        "tags": ["Attitude"],
+        "summary": "Get all attitudes",
+        "responses": {
+          "200": {
+            "description": "Attitudes found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Attitude"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Attitude"],
+        "summary": "Create a new attitude",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Attitude"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attitude created successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/attitude/{id}": {
+      "get": {
+        "tags": ["Attitude"],
+        "summary": "Get an attitude",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Attitude id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attitude found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attitude"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Attitude"],
+        "summary": "Update an attitude",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Attitude id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Attitude"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attitude updated successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Attitude"],
+        "summary": "Delete an attitude",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Attitude id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attitude deleted successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/attitudeEndors": {
+      "get": {
+        "tags": ["AttitudeEndors"],
+        "summary": "Get all attitudeEndors",
+        "responses": {
+          "200": {
+            "description": "AttitudeEndors found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttitudeEndors"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "post": {
+        "tags": ["AttitudeEndors"],
+        "summary": "Create a new attitudeEndors",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttitudeEndors"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "AttitudeEndors created successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/attitudeEndors/{id}": {
+      "get": {
+        "tags": ["AttitudeEndors"],
+        "summary": "Get an attitudeEndors",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "AttitudeEndors id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AttitudeEndors found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttitudeEndors"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": ["AttitudeEndors"],
+        "summary": "Update an attitudeEndors",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "AttitudeEndors id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttitudeEndors"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "AttitudeEndors updated successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["AttitudeEndors"],
+        "summary": "Delete an attitudeEndors",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "AttitudeEndors id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AttitudeEndors deleted successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/skill": {
+      "get": {
+        "tags": ["Skill"],
+        "summary": "Get all skills",
+        "responses": {
+          "200": {
+            "description": "Skills found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Skill"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Skill"],
+        "summary": "Create a new skill",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Skill"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Skill created successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/skill/{id}":{
+      "get": {
+        "tags": ["Skill"],
+        "summary": "Get a skill",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Skill id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Skill found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Skill"],
+        "summary": "Update a skill",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Skill id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Skill"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Skill updated successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Skill"],
+        "summary": "Delete a skill",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Skill id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Skill deleted successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/skillEndors":{
+      "get": {
+        "tags": ["SkillEndors"],
+        "summary": "Get all skillEndors",
+        "responses": {
+          "200": {
+            "description": "SkillEndors found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SkillEndors"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "post": {
+        "tags": ["SkillEndors"],
+        "summary": "Create a new skillEndors",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkillEndors"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SkillEndors created successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/skillEndors/{id}":{
+      "get": {
+        "tags": ["SkillEndors"],
+        "summary": "Get a skillEndors",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "SkillEndors id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SkillEndors found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillEndors"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": ["SkillEndors"],
+        "summary": "Update a skillEndors",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "SkillEndors id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["SkillEndors"],
+        "summary": "Delete a skillEndors",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "SkillEndors id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
-      "User": {
+      "Person": {
         "type": "object",
         "properties": {
           "id": {
@@ -569,134 +789,11 @@
           "office": {
             "type": "string"
           },
-          "languageId": {
-            "type": "number"
-          },
           "seniorityId": {
             "type": "number"
           },
           "areaId": {
             "type": "number"
-          }
-        }
-      },
-      "Competence": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          }
-        }
-      },
-      "manifestCompetence": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date"
-          },
-          "description": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "number"
-          },
-          "competenceId": {
-            "type": "number"
-          },
-          "link": {
-            "type": "string"
-          }
-        }
-      },
-      "ExpertList": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "birthDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "email": {
-            "type": "string"
-          },
-          "photo": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string"
-          },
-          "linkedin": {
-            "type": "string"
-          },
-          "team": {
-            "type": "string"
-          },
-          "employmentStartDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "office": {
-            "type": "string"
-          },
-          "language": {
-            "type": "string"
-          },
-          "seniority": {
-            "type": "string"
-          },
-          "area": {
-            "type": "string"
-          },
-          "languageId": {
-            "type": "number"
-          },
-          "seniorityId": {
-            "type": "number"
-          },
-          "areaId": {
-            "type": "number"
-          }
-        }
-      },
-      "manifestCompAndCompetence": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date"
-          },
-          "description": {
-            "type": "string"
-          },
-          "userId": {
-            "number": "number"
-          },
-          "competenceId": {
-            "number": "number"
-          },
-          "name": {
-            "type": "string"
           }
         }
       },
@@ -708,6 +805,76 @@
           },
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "Attitude": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "attitudeType": {
+            "type": "string"
+          }
+        }
+      },
+      "AttitudeEndorsement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "attitudeId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "Skill": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "skillType": {
+            "type": "string"
+          }
+        }
+      },
+      "SkillEndorsement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "skillId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
           }
         }
       }

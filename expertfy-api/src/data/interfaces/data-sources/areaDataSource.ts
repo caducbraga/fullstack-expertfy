@@ -1,5 +1,5 @@
 import { SimpleListModel } from "../../../domain/models/simpleListModel";
 
-export interface areaDataSource{
+export interface AreaDataSource{
     getAllAreas(): Promise<SimpleListModel[]>;
 }

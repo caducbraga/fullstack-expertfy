@@ -15,6 +15,9 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
 import type { User } from '@/types/user';
+import { ColorScore } from '@/types/colorScore';
+import { red, yellow, green } from '@mui/material/colors';
+import ScoreTooltip from './tooltip-score';
 
 
 function noop(): void {
@@ -25,12 +28,12 @@ function dateToRealYear(date: Date): string {
   const today = new Date();
   const employmentStartDate = new Date(date);
   const years = today.getFullYear() - employmentStartDate.getFullYear();
-  console.log(years);
   return `${years} anos`;
 }
 
 export interface Expert extends User{
-  competenceCount: number;
+  skillScore: number;
+  colorScore: ColorScore;
 }
 
 interface SearchTableProps {
@@ -54,10 +57,23 @@ export function SearchTable({
   const router = useRouter();
 
   const handleRowClick = (user: Expert) => {
-    router.push(`/search/account/?id=${user.id}`);  
+    router.push(`/search/account/?id=${user.id}`);
   }
-  
-  
+
+  const setColorView = (score: number, colorScore: ColorScore) => {
+    switch (colorScore) {
+      case ColorScore.GREEN:
+        return <Avatar sx={{ bgcolor: green[300] }}>{score}</Avatar>;
+      case ColorScore.YELLOW:
+        return <Avatar sx={{ bgcolor: yellow[300] }}>{score}</Avatar>;
+      case ColorScore.RED:
+        return <Avatar sx={{ bgcolor: red[300] }}>{score}</Avatar>;
+      default:
+        return <Avatar>{score}</Avatar>;
+    }
+
+  }
+
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
@@ -70,12 +86,12 @@ export function SearchTable({
             <TableRow>
               <TableCell>Nome</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Idioma</TableCell>
+
               <TableCell>Área</TableCell>
               <TableCell>Senioridade</TableCell>
               <TableCell>Tempo na Organização</TableCell>
               <TableCell>Time</TableCell>
-              <TableCell>Nível de Conhecimento</TableCell>
+              <TableCell>Score <ScoreTooltip/></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -93,23 +109,24 @@ export function SearchTable({
                 <TableRow key={row.id} >
                   <TableCell>
                     <Stack sx={{alignItems: 'center',
-                                cursor: 'pointer', 
-                                '&:hover': { 
-                                  backgroundColor: 'lightgray', 
+                                cursor: 'pointer',
+                                borderRadius: '20px',
+                                '&:hover': {
+                                  backgroundColor: 'lightgray',
                                 }
-                              }} 
+                              }}
                     direction="row" spacing={2} onClick={() => {handleRowClick(row)}}>
                       <Avatar src={row.photo} />
                       <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.language}</TableCell>
+
                   <TableCell>{row.area}</TableCell>
                   <TableCell>{row.seniority}</TableCell>
                   <TableCell>{dateToRealYear(row.employmentStartDate)}</TableCell>
                   <TableCell>{row.team}</TableCell>
-                  <TableCell>{row.competenceCount}</TableCell>
+                  <TableCell>{setColorView(row.skillScore, row.colorScore)}</TableCell>
                 </TableRow>
               );
             })}

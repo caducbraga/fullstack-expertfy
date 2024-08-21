@@ -1,9 +1,9 @@
 import express from "express";
 import { Request, Response } from "express";
-import { getAllSeniorityUseCase } from "../../domain/interfaces/use-cases/seniority/getAllSeniority";
+import { GetAllSeniorityUseCase } from "../../domain/interfaces/use-cases/seniority/getAllSeniority";
 
 export default function seniorityRouter(
-  getAllSeniorityUseCase: getAllSeniorityUseCase
+  getAllSeniorityUseCase: GetAllSeniorityUseCase
 ) {
 
   const router = express.Router();

@@ -1,5 +1,5 @@
 import { SimpleListModel } from "../../../models/simpleListModel";
 
-export interface getAllLanguagesUseCase{
+export interface GetAllLanguagesUseCase{
     getAllLanguages(): Promise<SimpleListModel[]>;
 }

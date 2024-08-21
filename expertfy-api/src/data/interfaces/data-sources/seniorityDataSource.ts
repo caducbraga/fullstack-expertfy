@@ -1,5 +1,5 @@
 import { SimpleListModel } from "../../../domain/models/simpleListModel";
 
-export interface seniorityDataSource{
+export interface SeniorityDataSource{
     getAllSeniority(): Promise<SimpleListModel[]>;
 }

@@ -1,5 +1,5 @@
-import { SimpleListModel } from "../../models/simpleListModel";
+import { SimpleListDTO } from "../../models/simpleListDTO";
 
-export interface areaRepository{
-    getAllAreas(): Promise<SimpleListModel[]>;
+export interface AreaRepository{
+    getAllAreas(): Promise<SimpleListDTO[]>;
 }

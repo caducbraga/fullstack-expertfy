@@ -1,5 +1,5 @@
 import { SimpleListModel } from "../../../models/simpleListModel";
 
-export interface getAllAreasUseCase{
+export interface GetAllAreasUseCase{
     getAllAreas(): Promise<SimpleListModel[]>;
 }

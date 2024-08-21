@@ -1,9 +1,9 @@
 import express from "express";
 import { Request, Response } from "express";
-import { getAllAreasUseCase } from "../../domain/interfaces/use-cases/area/getAllArea";
+import { GetAllAreasUseCase } from "../../domain/interfaces/use-cases/area/getAllArea";
 
 export default function areaRouter(
-  getAllAreasUseCase: getAllAreasUseCase
+  getAllAreasUseCase: GetAllAreasUseCase
 ) {
 
   const router = express.Router();

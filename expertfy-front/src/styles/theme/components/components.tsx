@@ -12,6 +12,9 @@ import { MuiTab } from './tab';
 import { MuiTableBody } from './table-body';
 import { MuiTableCell } from './table-cell';
 import { MuiTableHead } from './table-head';
+import { MuiDialog } from './dialog';
+import { MuiDialogActions } from './dialog-actions';
+
 
 export const components = {
   MuiAvatar,
@@ -25,4 +28,6 @@ export const components = {
   MuiTableBody,
   MuiTableCell,
   MuiTableHead,
+  MuiDialog,
+  MuiDialogActions,
 } satisfies Components<Theme>;

@@ -9,7 +9,7 @@ export interface User {
   linkedin?: string;
   team?: string;
   employmentStartDate: Date;
-  language: string;
+  languages: string;
   seniority: string;
   area: string;
   office: string;

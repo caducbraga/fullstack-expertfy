@@ -18,8 +18,18 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
     return dateObj.toISOString().split('T')[0];
   };
 
+  const languageArray = (user.languages ?? '').split(',').map(lang => lang.trim()).filter(lang => lang.length > 0);
+  // console.log(typeof user.languages);
+  // console.log(user.languages.split(','));
+  // console.log(languageArray);
   const formatPhoneNumber = (phone: string): string => {
-    return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    try {
+      return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    } catch (error) {
+      console.log(error);
+    }
+
+    return '';
   }
 
   return (
@@ -54,7 +64,7 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
                   label="Data de Nascimento"
                   name="birthDate"
                   type="date"
-                /> 
+                />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
@@ -71,8 +81,8 @@ export function AccountDetailsForm(user: User): React.JSX.Element {
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Idioma</InputLabel>
-                <OutlinedInput readOnly label="Idioma" name="language" value={user.language} />
+                <InputLabel>Idiomas</InputLabel>
+                <OutlinedInput readOnly label="Idiomas" name="languages" value={languageArray.map(lang => lang).join(', ')} />
               </FormControl>
             </Grid>
           </Grid>

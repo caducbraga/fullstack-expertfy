@@ -38,7 +38,7 @@ CREATE TABLE `area` (
 
 LOCK TABLES `area` WRITE;
 /*!40000 ALTER TABLE `area` DISABLE KEYS */;
-INSERT INTO `area` VALUES (3,'Atendimento'),(2,'Desenvolvimento'),(4,'Operador'),(1,'Vendas');
+INSERT INTO `area` VALUES (2,'Desenvolvimento'),(4,'DevOps'),(1,'Gerência'),(3,'QA'),(6,'Security'),(5,'UX');
 /*!40000 ALTER TABLE `area` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

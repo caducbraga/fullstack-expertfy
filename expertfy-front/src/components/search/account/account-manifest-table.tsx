@@ -9,26 +9,44 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { format } from 'date-fns';
+import Divider from '@mui/material/Divider';
+import TablePagination from '@mui/material/TablePagination';
+
 
 
 interface ManifestTableProps {
 
   rows?: ManifestTableContent[];
-
+  count?: number;
+  page?: number;
+  rowsPerPage?: number;
+  setPage?: (page: number) => void;
+  setRowsPerPage?: (rowsPerPage: number) => void;
 }
 
+function noop(): void {
+  // do nothing
+}
 export interface ManifestTableContent{
-  id: string;
-  name: string;
+  artefact: string;
+  date: Date;
   description: string;
-  timestamp: string;
-  link: string;
+  id: string;
+  skillId: string;
+  skillname: string;
+  skilltype: string;
+  taskname: string;
 }
 
 export function ManifestTable({
   rows = [],
-}: ManifestTableProps): React.JSX.Element {  
-  
+  count = 0,
+  page = 0,
+  rowsPerPage = 0,
+  setPage = noop,
+  setRowsPerPage = noop,
+}: ManifestTableProps): React.JSX.Element {
+
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
@@ -39,8 +57,8 @@ export function ManifestTable({
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
             <TableRow>
-              <TableCell>Competência</TableCell>
-              <TableCell>Evidência</TableCell>
+              <TableCell>Habilidade</TableCell>
+              <TableCell>Nome da Tarefa</TableCell>
               <TableCell>Artefato</TableCell>
               <TableCell>Data de Ocorrência</TableCell>
             </TableRow>
@@ -50,18 +68,27 @@ export function ManifestTable({
 
               return (
                 <TableRow hover key={row.id} >
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.description}</TableCell>
-                  <TableCell><a href={row.link}>{row.link}</a></TableCell>
-                  <TableCell>{format(new Date(row.timestamp), 'dd/MM/yyyy')}</TableCell>
+                  <TableCell>{row.skillname}</TableCell>
+                  <TableCell>{row.taskname}</TableCell>
+                  <TableCell><a href={row.artefact}>{row.artefact}</a></TableCell>
+                  <TableCell>{format(new Date(row.date), 'dd/MM/yyyy')}</TableCell>
                 </TableRow>
               );
             })}
           </TableBody>
         </Table>
       </Box>
+      <Divider />
+      <TablePagination
+        component="div"
+        count={count}
+        onPageChange={(e, newPage) => setPage(newPage)}
+        onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
 
-      
     </Card>
   );
 }

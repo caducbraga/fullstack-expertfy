@@ -1,5 +1,5 @@
-import { SimpleListModel } from "../../models/simpleListModel";
+import { SimpleListDTO } from "../../models/simpleListDTO";
 
-export interface languageRepository{
-    getAllLanguages(): Promise<SimpleListModel[]>;
+export interface LanguageRepository{
+    getAllLanguages(): Promise<SimpleListDTO[]>;
 }
