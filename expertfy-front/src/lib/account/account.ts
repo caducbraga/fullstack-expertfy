@@ -77,6 +77,18 @@ class Account {
     }
   }
 
+  async getSkillIdByPersonAndSkillType(personId : string, skillTypeId : string) {
+    try {
+      const response = await axios.get(this.baseApiUrl + `/person/getSkillIdByPersonAndSkillType/${personId}/${skillTypeId}`);
+
+      var skillId = response.data.skillId
+      console.log(skillId)
+      return skillId
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   public static formatDate(date: Date): string {
     var dateSTR = ''
     try {
@@ -90,6 +102,8 @@ class Account {
     console.log(dateSTR);
     return dateSTR
   }
+
+
 
 }
 
