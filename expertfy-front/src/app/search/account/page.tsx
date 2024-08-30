@@ -70,7 +70,7 @@ export default function Page(): React.JSX.Element {
       })
 
       accountInfo.getTableListByUser(userId).then((data) => {
-        console.log(data)
+        // console.log(data)
         setManifestCompetences(data);
         setCount(data.length);
         setPaginatedTasks(applyPagination(data, page, rowsPerPage));
@@ -90,14 +90,14 @@ export default function Page(): React.JSX.Element {
   const createSkillEndorsement = (skilltypeId: string) => {
     //Mockado o usuário 999 como o criador do endorsement
     //Pois não teremos login no projeto
-    console.log(skilltypeId)
-    console.log(user)
+    // console.log(skilltypeId)
+    // console.log(user)
     const personId = '999';
     var skillId = '999';
 
     accountInfo.getSkillIdByPersonAndSkillType(user.id, skilltypeId).then((data) => {
       skillId = data;
-      console.log(skillId, personId)
+      // console.log(skillId, personId)
       accountInfo.createSkillEndorsement(skillId, personId).then((anotherData) => {
         if (anotherData)
           setAlertSuccess(1);
